@@ -32,5 +32,9 @@ public interface MathService {
 	@Path("/getusers")
 	@GET
 	public List<UserEntity> getUserList();
+	
+	@Path("/getusers2")
+	@GET
+	public Response getUsers();
 
 }

@@ -65,6 +65,7 @@
 	</aop:config>
 	
 	<import resource="classpath:applicationContext-source.xml" />
+	<import resource="classpath:applicationContext-beans.xml" />
 	<!-- <import resource="classpath:applicationContext-quartz.xml" /> -->
 	<import resource="classpath:applicationContext-cxf.xml" />
 
