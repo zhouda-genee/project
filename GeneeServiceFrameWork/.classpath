@@ -100,7 +100,7 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javax.ws.rs-api-2.0.jar" sourcepath="/Users/zhouda/work/opensource/javax.ws.rs-api-2.0-sources.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jaxb-api-2.2.11.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jaxb-core-2.2.10-b140310.1920.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jaxb-impl-2.2.10-b140310.1920.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jaxb-impl-2.2.10-b140310.1920.jar" sourcepath="/Users/zhouda/work/opensource/javax.ws.rs-api-2.0-sources.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jaxb-xjc-2.2.10-b140310.1920.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jcl-over-slf4j-1.7.7.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jettison-1.3.5.jar"/>
@@ -148,7 +148,7 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-framework-bom-3.2.6.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-instrument-3.2.6.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-instrument-tomcat-3.2.6.RELEASE.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-jdbc-3.2.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-jdbc-3.2.6.RELEASE.jar" sourcepath="/Users/zhouda/work/opensource/spring-framework-3.2.6.RELEASE/libs/spring-jdbc-3.2.6.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-jms-3.2.6.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-orm-3.2.6.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-oxm-3.2.6.RELEASE.jar"/>
@@ -164,6 +164,7 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-beanutils-1.8.0.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mysql-connector-java-5.1.31.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/c3p0-0.9.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/ojdbc14.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>
