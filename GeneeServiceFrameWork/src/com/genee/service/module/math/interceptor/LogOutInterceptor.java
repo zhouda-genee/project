@@ -1,7 +1,6 @@
 package com.genee.service.module.math.interceptor;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,6 +10,7 @@ import org.apache.cxf.message.MessageContentsList;
 import org.apache.cxf.phase.AbstractPhaseInterceptor;
 import org.apache.cxf.phase.Phase;
 import org.apache.cxf.transport.http.AbstractHTTPDestination;
+import org.apache.log4j.Logger;
 
 import com.genee.service.framework.utils.datautil.DateUtil;
 import com.genee.service.framework.utils.json.JsonUtil;
@@ -49,7 +49,7 @@ public class LogOutInterceptor extends AbstractPhaseInterceptor<Message> {
 				java.util.Map<?, ?> result = (java.util.Map<?, ?>)obj;
 				msg = JsonUtil.getJsonString4JavaPOJO(result);
 			} else {
-				throw new Fault("无该类型", logger);
+				msg = "无该返回类型";
 			}
 		}
 		sb.append("\t").append("返回结果：" + msg);
