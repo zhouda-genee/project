@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import oracle.jdbc.OracleTypes;
+import oracle.jdbc.driver.OracleTypes;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.CallableStatementCallback;
@@ -17,8 +17,7 @@ import com.genee.web.framework.core.base.PageSupport;
 
 public class OracleBaseDao extends BaseDao {
 	
-	@Override
-	protected Object querySequencesId(String seqName) {
+	public int querySequencesId(String seqName) {
 		String sql = "select " + seqName + ".nextval from dual";
 		JdbcTemplateParam jdbcTemplateParam = new JdbcTemplateParam(sql);
 		return queryForInt(jdbcTemplateParam);
@@ -26,7 +25,7 @@ public class OracleBaseDao extends BaseDao {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	protected List<Map<String, Object>> procedureForList(String productName, final Object... inparam) {
+	public List<Map<String, Object>> procedureForList(String productName, final Object... inparam) {
 		StringBuffer str = new StringBuffer();
 		for (int i = 0; i < inparam.length + 3; i++) {
 			str.append("?, ");
@@ -86,12 +85,12 @@ public class OracleBaseDao extends BaseDao {
 	}
 
 	@Override
-	protected Map<String, Object> procedureForMap(String productName, Object... inparam) {
+	public Map<String, Object> procedureForMap(String productName, Object... inparam) {
 		return procedureForList(productName, inparam).get(0);
 	}
 
 	@Override
-	protected void queryForList(JdbcTemplateParam param, PageSupport page) {
+	public void queryForList(JdbcTemplateParam param, PageSupport page) {
 		String sql = param.getSql();
 		// 查询总记录数
 		param.setSql(getSQLCount(sql));
@@ -111,9 +110,16 @@ public class OracleBaseDao extends BaseDao {
 	}
 	
 	private String getSQLCount(String sql){
-//		String sqlBak = sql.toLowerCase();
 		String sqlCount = "select count(*) from ("+ sql + ")";
 		return sqlCount;
+	}
+
+	@Override
+	public int insert(JdbcTemplateParam param) {
+		String sql = param.getSql();
+		Object[] args = param.getArgs();
+		int[] argTypes = param.getArgType();
+		return jdbcTemplate.update(sql, args, argTypes);
 	}
 
 }

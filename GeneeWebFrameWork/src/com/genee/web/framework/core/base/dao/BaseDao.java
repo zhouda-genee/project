@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.genee.web.framework.core.base.dao;
 
 import java.io.BufferedReader;
@@ -71,7 +68,7 @@ public abstract class BaseDao {
 		}
 	}
 	
-	protected Map<String, Object> getResult(ResultSet rs) throws SQLException{
+	public Map<String, Object> getResult(ResultSet rs) throws SQLException{
 		ResultSetMetaData rsmd = rs.getMetaData();
 	    int columnCount = rsmd.getColumnCount();
 	    Map<String, Object> result = new HashMap<String, Object>(columnCount);
@@ -126,11 +123,10 @@ public abstract class BaseDao {
 	 * @return
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	protected List<Map<String, Object>> queryForList(JdbcTemplateParam param) {
+	public List<Map<String, Object>> queryForList(JdbcTemplateParam param) {
 		String sql = param.getSql();
 		Object[] args = param.getArgs();
 		int[] argTypes = param.getArgType();
-		logger.warn("执行sql---> " + sql);
 		List<Map<String, Object>> results = jdbcTemplate.query(sql, args, argTypes, new RowMapper(){
 			@Override
 			public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -146,26 +142,25 @@ public abstract class BaseDao {
 	 * @param sql
 	 * @return
 	 */
-	protected Map<String, Object> queryForMap(JdbcTemplateParam param) {
+	public Map<String, Object> queryForMap(JdbcTemplateParam param) {
 		List<Map<String, Object>> result = queryForList(param);
 		return result.size() > 0 ? result.get(0) : new HashMap<String, Object>();
 	}
 	
-	protected int queryForInt(JdbcTemplateParam param) {
+	public int queryForInt(JdbcTemplateParam param) {
 		Object obj = queryForObject(param, Integer.class);
 		return obj == null ? 0 : (Integer)obj;
 	}
 	
-	protected String queryForString(JdbcTemplateParam param) {
+	public String queryForString(JdbcTemplateParam param) {
 		Object obj = queryForObject(param, String.class);
 		return obj == null ? "" : (String)obj; 
 	}
 	
-	protected Object queryForObject(JdbcTemplateParam param, Class<?> clazz) {
+	public Object queryForObject(JdbcTemplateParam param, Class<?> clazz) {
 		String sql = param.getSql();
 		Object[] args = param.getArgs();
 		int[] argTypes = param.getArgType();
-		logger.warn("执行sql---> " + param.getSql());
 		List<?> result = jdbcTemplate.queryForList(sql, args, argTypes, clazz);
 		if (result.size() == 0) {
 			return null;
@@ -173,31 +168,22 @@ public abstract class BaseDao {
 		return result.get(0);
 	}
 	
-	protected int update(JdbcTemplateParam param) {
+	public int update(JdbcTemplateParam param) {
 		String sql = param.getSql();
 		Object[] args = param.getArgs();
 		int[] argTypes = param.getArgType();
-		logger.warn("执行sql---> " + sql);
-		return jdbcTemplate.update(sql, args, argTypes);
-	}
-	
-	protected int insert(JdbcTemplateParam param){
-		String sql = param.getSql();
-		Object[] args = param.getArgs();
-		int[] argTypes = param.getArgType();
-		logger.warn("执行sql---> " + sql);
 		return jdbcTemplate.update(sql, args, argTypes);
 	}
 	
 	/**
 	 * 
-	 * @Title: querySequencesId 
-	 * @Description: 返回主键 
-	 * @param seqName	序列名称
-	 * @return Object
+	 * @Title: insert 
+	 * @Description: 添加记录
+	 * @param param
+	 * @return int
 	 * @throws
 	 */
-	protected abstract Object querySequencesId(String seqName);
+	public abstract int insert(JdbcTemplateParam param);
 	
 	/**
 	 * 
@@ -208,7 +194,7 @@ public abstract class BaseDao {
 	 * @return List<Map<String,Object>>
 	 * @throws
 	 */
-	protected abstract List<Map<String, Object>> procedureForList(String productName, final Object... inparam);
+	public abstract List<Map<String, Object>> procedureForList(String productName, final Object... inparam);
 	
 	/**
 	 * 
@@ -219,7 +205,7 @@ public abstract class BaseDao {
 	 * @return Map<String, Object>
 	 * @throws
 	 */
-	protected abstract Map<String, Object> procedureForMap(String productName, final Object... inparam);
+	public abstract Map<String, Object> procedureForMap(String productName, final Object... inparam);
 	
 	/**
 	 * 
@@ -230,6 +216,6 @@ public abstract class BaseDao {
 	 * @return void
 	 * @throws
 	 */
-	protected abstract void queryForList(JdbcTemplateParam param, PageSupport page);
+	public abstract void queryForList(JdbcTemplateParam param, PageSupport page);
 
 }
