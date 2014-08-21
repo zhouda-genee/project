@@ -84,7 +84,8 @@ public class IndexUsedDuration extends IndexBase {
 	
 	private List<Map<String, Object>> queryResult(long startDate, long endDate){
 		String sql = "select a.dtstart as start, a.dtend as end, a.user_id as userid, a.equipment_id as equipmentid "
-				+ "from eq_record a where a.dtstart between ? and ? "
+				+ "from eq_record a "
+				+ "where a.dtstart between ? and ? "
 				+ "or a.dtend between ? and ? "
 				+ "or ? between a.dtstart and a.dtend "
 				+ "or ? between a.dtstart and a.dtend";

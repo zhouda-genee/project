@@ -54,8 +54,8 @@ public abstract class IndexBase {
 	 * 
 	 * @Title: run 
 	 * @Description: 执行指标入口
-	 * @param startDate	开始时间时间戳10位
-	 * @param endDate	结束时间时间戳10位
+	 * @param startDate	开始时间时间戳10位	年月日时分秒
+	 * @param endDate	结束时间时间戳10位	年月日时分秒
 	 * @param equipments	如果指标是仪器，则key为equipmentId，如果指标是使用者，则key为equipmentId#userId
 	 * @return void
 	 * @throws

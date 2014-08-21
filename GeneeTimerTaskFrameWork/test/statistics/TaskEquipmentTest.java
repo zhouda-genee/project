@@ -21,7 +21,7 @@ public class TaskEquipmentTest extends BaseTest {
 	public void test() throws NumberFormatException, ParseException {
 		
 		String startDate = "2011-09-01";
-		String endDate = "2011-09-02";
+		String endDate = "2011-09-01";
 		
 		taskEquipmentIndex.run(DateUtil.string2Date(startDate), DateUtil.string2Date(endDate));
 		

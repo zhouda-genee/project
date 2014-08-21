@@ -20,7 +20,7 @@ public class IndexDao {
 	private BaseDao baseDao;
 	
 	public List<IndexEntity> queryIndexs() {
-		String sql = "select s_id as indexId, s_name as indexName, s_code as indexCode, s_flag as indexFlag, s_sort as indexSort, s_onoff as indexOnOff, t_id as indexType from s_index order by s_sort";
+		String sql = "select s_id as indexId, s_name as indexName, s_code as indexCode, s_flag as indexFlag, s_sort as indexSort, s_onoff as indexOnOff, t_id as indexType from s_index where s_onoff = 0 order by s_sort";
 		JdbcTemplateParam param = new JdbcTemplateParam(sql);
 		List<Map<String, Object>> results = baseDao.queryForList(param);
 		return MapToBeanUtil.MapToBean(IndexEntity.class, results);
