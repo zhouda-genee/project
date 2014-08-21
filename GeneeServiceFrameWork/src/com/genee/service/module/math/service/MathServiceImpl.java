@@ -18,8 +18,8 @@ public class MathServiceImpl implements MathService {
 	private MathDao mathDao;
 	
 	@Override
-	public int add(int a, int b) {
-		return a + b;
+	public int add(String a, String b) {
+		return Integer.parseInt(a) + Integer.parseInt(b);
 	}
 
 	@Override

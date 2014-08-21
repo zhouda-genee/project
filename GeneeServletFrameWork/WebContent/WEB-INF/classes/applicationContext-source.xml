@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:ehcache="http://www.springmodules.org/schema/ehcache"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-3.2.xsd 
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-3.2.xsd 
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+
+	<!-- 命名空间，使用注解注入bean 需要 xmlns:context 和它底下的schema文件 -->
+	<!-- 属性占位符,多个文件用逗号隔开 jdbc_oracle.properties 数据库配置文件 -->
+	<context:property-placeholder location="classpath:jdbc_postgresql.properties" />
+
+
+	<!-- BasicDataSource -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass">
+			<value>${connection.driverclassname}</value>
+		</property>
+		<property name="jdbcUrl">
+			<value>${connection.url}</value>
+		</property>
+
+		<property name="user">
+			<value>${connection.username}</value>
+		</property>
+		<property name="password">
+			<value>${connection.password}</value>
+		</property>
+
+		<!-- Connection Pooling c3p0 -->
+		<!--最大空闲时间,1800秒内未使用则连接被丢弃,若为0则永不丢弃。Default: 0 -->
+		<property name="maxIdleTime" value="120" />
+
+		<!-- 连接池初始化连接数 -->
+		<property name="initialPoolSize" value="1" />
+		<!--连接池中保留的最小连接数 -->
+		<property name="minPoolSize" value="0" />
+		<!--连接池中保留的最大连接数 -->
+		<property name="maxPoolSize" value="200" />
+		<!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数,Default:3 -->
+		<property name="acquireIncrement" value="3" />
+		<!--JDBC的标准参数，用以控制数据源内加载的 PreparedStatements数量 -->
+		<property name="maxStatements" value="3000" />
+		<!--定义在从数据库获取新连接失败后重复尝试的次数,Default:30 -->
+		<property name="acquireRetryAttempts" value="30" />
+		<!-- 获取新连接失败后重复两次连接中间隔时间,单位毫秒,Default:1000 -->
+		<property name="acquireRetryDelay" value="1000" />
+		<!--当连接池用完时客户端调用getConnection()后等待获取新连接的时间,超时后将抛出 SQLException,如设为0则无限期等待,单位毫秒,Default:0 -->
+		<property name="checkoutTimeout" value="30000" />
+		<!--c3p0是异步操作的,缓慢的JDBC操作通过帮助进程完成,扩展这些操作可以有效的提升性能通过多线程实现多个操作同时被执行,Default:3 -->
+		<property name="numHelperThreads" value="10" />
+		<!-- <property name="defaultAutoCommit" value="true" /> -->
+	</bean>
+
+</beans>

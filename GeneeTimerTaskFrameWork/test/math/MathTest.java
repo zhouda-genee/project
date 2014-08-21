@@ -1,15 +1,19 @@
 package math;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import org.junit.Test;
 
-import com.genee.web.framework.core.base.test.BaseTest;
-import com.genee.web.framework.utils.http.HttpClientUtil;
+import sun.misc.BASE64Encoder;
+
+import com.genee.timertask.framework.core.base.test.BaseTest;
+import com.genee.timertask.framework.utils.http.HttpClientUtil;
 
 public class MathTest extends BaseTest {
 
@@ -53,7 +57,7 @@ public class MathTest extends BaseTest {
 		System.out.println(result);
 	}
 	
-	public static void main(String[] args){
+	public static void main(String[] args) throws ParseException{
 		/*Date date = new Date(1407995906 * 1000L);
 //		System.out.println(date.getTime() * 1000);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -63,9 +67,21 @@ public class MathTest extends BaseTest {
 		System.out.println(date.getTime());
 		System.out.println(date.getTime()/1000L);*/
 		
-		long time = 1230739200; 
+		/*long time = 1230739200; 
 		Timestamp timestamp = new Timestamp(time);
-		System.out.println(timestamp.getTime());
+		System.out.println(timestamp.getTime());*/
+		
+		/*String uuid = UUID.randomUUID().toString();
+		System.out.println(uuid + ": " + uuid.length());
+		String base64 = new BASE64Encoder().encode(uuid.getBytes());
+		System.out.println(base64 + ": " + base64.length());*/
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String str1 = "2014-08-08";
+		String str2 = "2014-08-08 00:00:00";
+		System.out.println(sdf.parse(str1).getTime());
+		System.out.println(sdf1.parse(str2).getTime());
 		
 	}
 	
