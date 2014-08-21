@@ -50,13 +50,9 @@ public class IndexOpenDuration extends IndexBase {
 			long[] times = entry.getValue();
 			if (equipments.containsKey(key)){
 				EquipmentIndexEntity equipment = equipments.get(key);
-				equipment.setUsedDur(times[0]);
-				equipment.setOwnerUsedDur(times[1]);
 				equipment.setOpenDur(times[0] - times[1]);
 			} else {
 				EquipmentIndexEntity equipment = new EquipmentIndexEntity(getId(), Long.parseLong(key), startDate);
-				equipment.setUsedDur(times[0]);
-				equipment.setOwnerUsedDur(times[1]);
 				equipment.setOpenDur(times[0] - times[1]);
 				equipments.put(key, equipment);
 			}

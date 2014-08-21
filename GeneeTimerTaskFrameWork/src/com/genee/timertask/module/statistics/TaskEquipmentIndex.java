@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.genee.timertask.framework.core.context.SpringContext;
 import com.genee.timertask.framework.utils.dateutil.DateUtil;
 import com.genee.timertask.framework.utils.dateutil.DateUtil.DateType;
-import com.genee.timertask.framework.utils.json.JsonUtil;
 import com.genee.timertask.framework.utils.timestamp.TimestampUtil;
 import com.genee.timertask.module.statistics.dao.EquipmentIndexDao;
 import com.genee.timertask.module.statistics.dao.IndexDao;
@@ -99,8 +98,7 @@ public class TaskEquipmentIndex {
 					logger.info("执行[" + index.getIndexCode() + "][" + DateUtil.date2String(calcDate) + "]指标开始");
 					logger.info("\t参数:"
 							+"\n\tstartdate:" + lStartDate
-							+"\n\tenddate:" + lEndDate
-							+"\n\tequipments:" + JsonUtil.getJsonString4JavaPOJO(equipments));
+							+"\n\tenddate:" + lEndDate);
 					indexBase.run(lStartDate, lEndDate, equipments);
 					logger.info("执行[" + index.getIndexCode() + "][" + DateUtil.date2String(calcDate) + "]指标结束");
 				}
