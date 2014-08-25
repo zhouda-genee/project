@@ -8,7 +8,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -26,13 +29,13 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.ServletContextAware;
 
 import com.genee.web.framework.core.base.PageSupport;
 
-
 public abstract class BaseController implements ServletContextAware {
-	
+	protected List<Map<String, Object>> errResults = new ArrayList<Map<String, Object>>();
 	protected final Logger logger = Logger.getLogger(getClass());
 	protected ServletContext servletContext;
 	protected static ObjectMapper mapper = new ObjectMapper();
@@ -56,10 +59,11 @@ public abstract class BaseController implements ServletContextAware {
 		if (jsonConfig == null) {
 			if (obj instanceof java.util.List)
 				outJsonString(response, JSONArray.fromObject(obj).toString());
-			else 
+			else
 				outJsonString(response, JSONObject.fromObject(obj).toString());
 		} else {
-			outJsonString(response, JSONObject.fromObject(obj, jsonConfig).toString());
+			outJsonString(response, JSONObject.fromObject(obj, jsonConfig)
+					.toString());
 		}
 
 	}
@@ -99,74 +103,95 @@ public abstract class BaseController implements ServletContextAware {
 		PageSupport pageSupport = new PageSupport();
 		Map<String, String[]> param = request.getParameterMap();
 		for (Entry<String, String[]> entry : param.entrySet()) {
-			pageSupport.getQueryBuilder().put(entry.getKey(), entry.getValue()[0]);
+			pageSupport.getQueryBuilder().put(entry.getKey(),
+					entry.getValue()[0]);
 		}
-		
+
 		if (!StringUtils.isEmpty(request.getParameter("page")))
 			pageSupport.setPage(Integer.parseInt(request.getParameter("page")));
 		if (!StringUtils.isEmpty(request.getParameter("size"))) {
-			pageSupport.setPageSize(Integer.parseInt(request.getParameter("size")));
+			pageSupport.setPageSize(Integer.parseInt(request
+					.getParameter("size")));
 		}
 		return pageSupport;
 	}
-	
-	/** 
-     * 将一个 Map 对象转化为一个 JavaBean 
-     * @param type 要转化的类型 
-     * @param map 包含属性值的 map 
-     * @return 转化出来的 JavaBean 对象 
-     * @throws IntrospectionException 如果分析类属性失败 
-     * @throws IllegalAccessException 如果实例化 JavaBean 失败 
-     * @throws InstantiationException 如果实例化 JavaBean 失败 
-     * @throws InvocationTargetException 如果调用属性的 setter 方法失败 
-     */ 
-	public Object MapToBean(Class<?> type, HttpServletRequest request)  
-            throws IntrospectionException, IllegalAccessException,  
-            InstantiationException, InvocationTargetException {  
-        BeanInfo beanInfo = Introspector.getBeanInfo(type); // 获取类属性   
-        Object obj = type.newInstance(); // 创建 JavaBean 对象   
-  
-        Map<String, String[]> map = request.getParameterMap();
-        // 给 JavaBean 对象的属性赋值   
-        PropertyDescriptor[] propertyDescriptors =  beanInfo.getPropertyDescriptors();  
-        for (int i = 0; i< propertyDescriptors.length; i++) {  
-            PropertyDescriptor descriptor = propertyDescriptors[i];  
-            String propertyName = descriptor.getName().toLowerCase();  
-            
-            if (map.containsKey(propertyName)) {
-                // 下面一句可以 try 起来，这样当一个属性赋值失败的时候就不会影响其他属性赋值。
-            	try {
+
+	/**
+	 * 将一个 Map 对象转化为一个 JavaBean
+	 * 
+	 * @param type
+	 *            要转化的类型
+	 * @param map
+	 *            包含属性值的 map
+	 * @return 转化出来的 JavaBean 对象
+	 * @throws IntrospectionException
+	 *             如果分析类属性失败
+	 * @throws IllegalAccessException
+	 *             如果实例化 JavaBean 失败
+	 * @throws InstantiationException
+	 *             如果实例化 JavaBean 失败
+	 * @throws InvocationTargetException
+	 *             如果调用属性的 setter 方法失败
+	 */
+	public Object MapToBean(Class<?> type, HttpServletRequest request)
+			throws IntrospectionException, IllegalAccessException,
+			InstantiationException, InvocationTargetException {
+		BeanInfo beanInfo = Introspector.getBeanInfo(type); // 获取类属性
+		Object obj = type.newInstance(); // 创建 JavaBean 对象
+
+		Map<String, String[]> map = request.getParameterMap();
+		// 给 JavaBean 对象的属性赋值
+		PropertyDescriptor[] propertyDescriptors = beanInfo
+				.getPropertyDescriptors();
+		for (int i = 0; i < propertyDescriptors.length; i++) {
+			PropertyDescriptor descriptor = propertyDescriptors[i];
+			String propertyName = descriptor.getName().toLowerCase();
+
+			if (map.containsKey(propertyName)) {
+				// 下面一句可以 try 起来，这样当一个属性赋值失败的时候就不会影响其他属性赋值。
+				try {
 					String value = request.getParameter(propertyName);
-					if (descriptor.getPropertyType().getName().equals("java.lang.String")) {
+					if (descriptor.getPropertyType().getName()
+							.equals("java.lang.String")) {
 						descriptor.getWriteMethod().invoke(obj, value);
-					} else if (descriptor.getPropertyType().getName().equals("int")) {
-						descriptor.getWriteMethod().invoke(obj, Integer.parseInt(value));
-					} else if (descriptor.getPropertyType().getName().equals("double")) {
-						descriptor.getWriteMethod().invoke(obj, Double.parseDouble(value));
+					} else if (descriptor.getPropertyType().getName()
+							.equals("int")) {
+						descriptor.getWriteMethod().invoke(obj,
+								Integer.parseInt(value));
+					} else if (descriptor.getPropertyType().getName()
+							.equals("double")) {
+						descriptor.getWriteMethod().invoke(obj,
+								Double.parseDouble(value));
 					}
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
-            }  
-        }  
-        return obj;  
-    } 
-    
-   /** 
-     * 将一个 JavaBean 对象转化为一个  Map 
-     * @param bean 要转化的JavaBean 对象 
-     * @return 转化出来的  Map 对象 
-     * @throws IntrospectionException 如果分析类属性失败 
-     * @throws IllegalAccessException 如果实例化 JavaBean 失败 
-     * @throws InvocationTargetException 如果调用属性的 setter 方法失败 
-     */ 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+			}
+		}
+		return obj;
+	}
+
+	/**
+	 * 将一个 JavaBean 对象转化为一个 Map
+	 * 
+	 * @param bean
+	 *            要转化的JavaBean 对象
+	 * @return 转化出来的 Map 对象
+	 * @throws IntrospectionException
+	 *             如果分析类属性失败
+	 * @throws IllegalAccessException
+	 *             如果实例化 JavaBean 失败
+	 * @throws InvocationTargetException
+	 *             如果调用属性的 setter 方法失败
+	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Map BeanToMap(Object bean) throws IntrospectionException,
 			IllegalAccessException, InvocationTargetException {
 		Class<?> type = bean.getClass();
 		Map returnMap = new HashMap();
 		BeanInfo beanInfo = Introspector.getBeanInfo(type);
-		PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
+		PropertyDescriptor[] propertyDescriptors = beanInfo
+				.getPropertyDescriptors();
 		for (int i = 0; i < propertyDescriptors.length; i++) {
 			PropertyDescriptor descriptor = propertyDescriptors[i];
 			String propertyName = descriptor.getName();
@@ -181,6 +206,45 @@ public abstract class BaseController implements ServletContextAware {
 			}
 		}
 		return returnMap;
-	}  
+	}
 
+	// 该处理器类中的所有方法抛出的异常都可由此方法捕获并处理
+	// 该注解也可制定多个异常类，如@ExceptionHandler(value={IOException.class,SQLException.class})
+	@ExceptionHandler(Exception.class)
+	public void handleException(Exception e, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		System.out.println("exception name: " + e.getClass().toString());// 异常名
+		System.out.println("exception cause: " + e.getCause());
+		System.out.println("exception msg: " + e.getLocalizedMessage());
+		// e.printStackTrace();
+		StackTraceElement[] ste = e.getStackTrace();
+		StringBuffer sb_e = new StringBuffer();
+		for (int j = 0; j < ste.length; j++) {
+			if (ste[j].toString().contains("xxxx")) {
+				sb_e.append(ste[j].toString() + ",  ");
+			}
+		}
+		System.out.println("Exception detail: ");// 异常详细信息
+		System.out.println(sb_e.toString());
+
+		StringBuffer sbUrl = new StringBuffer();// 拼url
+		System.out.println("request method: " + request.getMethod());// get,post
+		System.out.println("request encode: " + request.getCharacterEncoding());// 编码
+		System.out.println("request mapping: "
+				+ request.getRequestURL().toString());// 请求url方法
+		System.out.println("response:" + response);
+		sbUrl.append(request.getRequestURL().toString());
+		Enumeration<String> en = request.getParameterNames();// 请求参数-值
+		for (int i = 0; en.hasMoreElements(); i++) {
+			String arg = en.nextElement().toString();
+			if (i == 0) {
+				sbUrl.append("?");
+			} else {
+				sbUrl.append("&");
+			}
+			sbUrl.append(arg + "=" + request.getParameterValues(arg)[0]);
+		}
+		System.out.println("request url: " + sbUrl.toString());
+	}
 }

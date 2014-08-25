@@ -9,6 +9,7 @@
 	http://cxf.apache.org/jaxrs
 	http://cxf.apache.org/schemas/jaxrs.xsd">
 
+	<bean id="equipmentService" class="com.genee.service.module.equipment.EquipmentServiceImpl"/>
 	<bean id="labService" class="com.genee.service.module.lab.LabServiceImpl"/>
 	<bean id="organizationService" class="com.genee.service.module.organization.OrganizationServiceImpl"/>
 	<bean id="userService" class="com.genee.service.module.user.UserServiceImpl"/>
@@ -21,6 +22,7 @@
 	<jaxrs:server id="rest" address="/rest">
 
 		<jaxrs:serviceBeans>
+			<ref bean="equipmentService"/>
 			<ref bean="labService" />
 			<ref bean="organizationService"/>
 			<ref bean="userService"/>

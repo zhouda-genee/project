@@ -39,7 +39,7 @@ public class JsonUtil {
 	}
 
 	/**
-	 * 从json HASH表达式中获取一个map，改map支持嵌套功能
+	 * 从json HASH表达式中获取一个map，该map支持嵌套功能
 	 * 
 	 * @param jsonString
 	 * @return
