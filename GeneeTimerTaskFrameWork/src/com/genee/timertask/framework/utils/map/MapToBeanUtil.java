@@ -14,6 +14,10 @@ import java.util.Map;
 import com.genee.timertask.framework.core.error.LogInstance;
 
 public class MapToBeanUtil {
+	private MapToBeanUtil() {
+
+	}
+
 	/**
 	 * 将一个 Map 对象转化为一个 JavaBean
 	 * 
@@ -33,28 +37,34 @@ public class MapToBeanUtil {
 	 */
 	public static <T> T MapToBean(Class<T> type, Map<String, Object> map) {
 		T obj = null;
-		try{
+		try {
 			BeanInfo beanInfo = Introspector.getBeanInfo(type); // 获取类属性
 			obj = type.newInstance(); // 创建 JavaBean 对象
 			// 给 JavaBean 对象的属性赋值
-			PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
+			PropertyDescriptor[] propertyDescriptors = beanInfo
+					.getPropertyDescriptors();
 			for (int i = 0; i < propertyDescriptors.length; i++) {
 				PropertyDescriptor descriptor = propertyDescriptors[i];
 				String propertyName = descriptor.getName().toLowerCase();
-	
+
 				if (map.containsKey(propertyName)) {
 					// 下面一句可以 try 起来，这样当一个属性赋值失败的时候就不会影响其他属性赋值。
-					String value =  map.get(propertyName).toString();
-					if (descriptor.getPropertyType().getName().equals("java.lang.String")) {
+					String value = map.get(propertyName).toString();
+					if (descriptor.getPropertyType().getName()
+							.equals("java.lang.String")) {
 						descriptor.getWriteMethod().invoke(obj, value);
-					} else if (descriptor.getPropertyType().getName().equals("int")) {
-						descriptor.getWriteMethod().invoke(obj, Integer.parseInt(value));
-					} else if (descriptor.getPropertyType().getName().equals("double")) {
-						descriptor.getWriteMethod().invoke(obj, Double.parseDouble(value));
+					} else if (descriptor.getPropertyType().getName()
+							.equals("int")) {
+						descriptor.getWriteMethod().invoke(obj,
+								Integer.parseInt(value));
+					} else if (descriptor.getPropertyType().getName()
+							.equals("double")) {
+						descriptor.getWriteMethod().invoke(obj,
+								Double.parseDouble(value));
 					}
 				}
 			}
-		} catch (Exception ex){
+		} catch (Exception ex) {
 			LogInstance.error(ex);
 		}
 		return obj;
@@ -80,7 +90,8 @@ public class MapToBeanUtil {
 		BeanInfo beanInfo;
 		try {
 			beanInfo = Introspector.getBeanInfo(type);
-			PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
+			PropertyDescriptor[] propertyDescriptors = beanInfo
+					.getPropertyDescriptors();
 			for (int i = 0; i < propertyDescriptors.length; i++) {
 				PropertyDescriptor descriptor = propertyDescriptors[i];
 				String propertyName = descriptor.getName();
@@ -103,7 +114,7 @@ public class MapToBeanUtil {
 		} catch (InvocationTargetException e) {
 			LogInstance.error(e);
 		}
-		
+
 		return returnMap;
 	}
 
@@ -126,7 +137,8 @@ public class MapToBeanUtil {
 	 * @throws InvocationTargetException
 	 *             如果调用属性的 setter 方法失败
 	 */
-	public static <T> List<T> MapToBean(Class<T> type, List<Map<String, Object>> list) {
+	public static <T> List<T> MapToBean(Class<T> type,
+			List<Map<String, Object>> list) {
 		List<T> beanlist = new ArrayList<T>();
 		for (Map<String, Object> map : list) {
 			beanlist.add(MapToBean(type, map));
