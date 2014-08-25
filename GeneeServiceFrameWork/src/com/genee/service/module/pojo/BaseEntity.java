@@ -1,12 +1,11 @@
-package com.genee.service.module.math.pojo;
+package com.genee.service.module.pojo;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.genee.service.framework.utils.json.JsonUtil;
 
-@XmlRootElement(name = "userentity")
-public class UserEntity {
-
+@XmlRootElement
+public class BaseEntity {
 	private int id;
 	private String name;
 
@@ -30,5 +29,4 @@ public class UserEntity {
 	public String toString() {
 		return JsonUtil.getJsonString4JavaPOJO(this);
 	}
-
 }
