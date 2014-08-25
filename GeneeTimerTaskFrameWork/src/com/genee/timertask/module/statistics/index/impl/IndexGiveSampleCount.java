@@ -19,7 +19,7 @@ import com.genee.timertask.module.statistics.pojo.EquipmentIndexEntity;
  *
  */
 @Component("give_sam_cnt")
-public class IndexGiveSamCnt extends IndexBase {
+public class IndexGiveSampleCount extends IndexBase {
 
 	@Override
 	public void run(long startDate, long endDate,

@@ -16,15 +16,15 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.genee.timertask.framework.core.base.test.BaseTest;
-import com.genee.timertask.module.statistics.index.impl.IndexOwnerSamCnt;
+import com.genee.timertask.module.statistics.index.impl.IndexUsedSampleCount;
 import com.genee.timertask.module.statistics.pojo.EquipmentIndexEntity;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-public class IndexUsedSamCntTest extends BaseTest {
+public class IndexOwnerSampleCountTest extends BaseTest {
 
 	@Autowired
-	@Qualifier("owner_sam_cnt")
-	private IndexOwnerSamCnt indexOwnerSamCnt;
+	@Qualifier("used_sam_cnt")
+	private IndexUsedSampleCount indexUsedSamCnt;
 
 	private static SimpleDateFormat sdf = new SimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss");
@@ -38,14 +38,14 @@ public class IndexUsedSamCntTest extends BaseTest {
 				UUID.randomUUID().toString(), 2, "3", 1314806400000L);
 		equipmentIndexEntity1.setEquipmentId(2);
 		equipmentIndexEntity1.setUserId("3");
-		equipmentIndexEntity1.setUsedSamCnt(50000);
+		equipmentIndexEntity1.setOwnerSamCnt(50000);
 		equipments.put("2#3", equipmentIndexEntity1);
 
 		EquipmentIndexEntity equipmentIndexEntity2 = new EquipmentIndexEntity(
 				UUID.randomUUID().toString(), 2, "3", 1314806400000L);
 		equipmentIndexEntity2.setEquipmentId(2);
 		equipmentIndexEntity2.setUserId("3");
-		equipmentIndexEntity2.setUsedSamCnt(20000);
+		equipmentIndexEntity2.setOwnerSamCnt(20000);
 		equipments.put("2#3", equipmentIndexEntity2);
 
 		String startDate = "2014-08-21 00:00:00";
@@ -54,7 +54,7 @@ public class IndexUsedSamCntTest extends BaseTest {
 		long lStartDate = sdf.parse(startDate).getTime() / 1000L;
 		long lEndDate = sdf.parse(endDate).getTime() / 1000L;
 
-		indexOwnerSamCnt.run(lStartDate, lEndDate, equipments);
+		indexUsedSamCnt.run(lStartDate, lEndDate, equipments);
 
 		Assert.assertEquals(1, equipments.size());
 		for (Iterator<EquipmentIndexEntity> iter = equipments.values()

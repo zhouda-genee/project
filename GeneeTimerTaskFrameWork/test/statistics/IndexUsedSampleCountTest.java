@@ -16,16 +16,15 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.genee.timertask.framework.core.base.test.BaseTest;
-import com.genee.timertask.module.statistics.index.impl.IndexStuSamCnt;
-import com.genee.timertask.module.statistics.index.impl.IndexUsedSamCnt;
+import com.genee.timertask.module.statistics.index.impl.IndexOwnerSampleCount;
 import com.genee.timertask.module.statistics.pojo.EquipmentIndexEntity;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-public class IndexStuSamCntTest extends BaseTest {
+public class IndexUsedSampleCountTest extends BaseTest {
 
 	@Autowired
-	@Qualifier("stu_sam_cnt")
-	private IndexStuSamCnt indexStuSamCnt;
+	@Qualifier("owner_sam_cnt")
+	private IndexOwnerSampleCount indexOwnerSamCnt;
 
 	private static SimpleDateFormat sdf = new SimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss");
@@ -39,14 +38,14 @@ public class IndexStuSamCntTest extends BaseTest {
 				UUID.randomUUID().toString(), 2, "3", 1314806400000L);
 		equipmentIndexEntity1.setEquipmentId(2);
 		equipmentIndexEntity1.setUserId("3");
-		equipmentIndexEntity1.setStuSamCnt(50000);
+		equipmentIndexEntity1.setUsedSamCnt(50000);
 		equipments.put("2#3", equipmentIndexEntity1);
 
 		EquipmentIndexEntity equipmentIndexEntity2 = new EquipmentIndexEntity(
 				UUID.randomUUID().toString(), 2, "3", 1314806400000L);
 		equipmentIndexEntity2.setEquipmentId(2);
 		equipmentIndexEntity2.setUserId("3");
-		equipmentIndexEntity2.setStuSamCnt(20000);
+		equipmentIndexEntity2.setUsedSamCnt(20000);
 		equipments.put("2#3", equipmentIndexEntity2);
 
 		String startDate = "2014-08-21 00:00:00";
@@ -55,7 +54,7 @@ public class IndexStuSamCntTest extends BaseTest {
 		long lStartDate = sdf.parse(startDate).getTime() / 1000L;
 		long lEndDate = sdf.parse(endDate).getTime() / 1000L;
 
-		indexStuSamCnt.run(lStartDate, lEndDate, equipments);
+		indexOwnerSamCnt.run(lStartDate, lEndDate, equipments);
 
 		Assert.assertEquals(1, equipments.size());
 		for (Iterator<EquipmentIndexEntity> iter = equipments.values()
@@ -63,7 +62,7 @@ public class IndexStuSamCntTest extends BaseTest {
 			EquipmentIndexEntity equipment = iter.next();
 
 			if (StringUtils.isEmpty(equipment.getUserId())) {
-				Assert.assertEquals(70000, equipment.getStuSamCnt());
+				Assert.assertEquals(70000, equipment.getUsedSamCnt());
 			}
 		}
 	}
