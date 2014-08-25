@@ -55,7 +55,7 @@ public class OrganizationTest extends BaseTest {
 						OrganizationEntity.class);
 
 		// 查询根节点下的所有子节点
-		String curl = "http://localhost:8088/geneeservicefw/api/rest/organization/child/"
+		String curl = "http://localhost:8088/geneeservicefw/api/rest/organization/child?id="
 				+ organizationEntity.getId();
 		String cresult = HttpClientUtil.get(curl, headers);
 		Map cmap = JsonUtil.getMap4Json(cresult);
