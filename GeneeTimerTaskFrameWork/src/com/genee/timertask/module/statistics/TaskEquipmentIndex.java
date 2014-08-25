@@ -90,17 +90,19 @@ public class TaskEquipmentIndex {
 			long lStartDate = TimestampUtil.dateToTimestamp10(DateUtil.string2Timestamp(sStartDate));
 			long lEndDate = TimestampUtil.dateToTimestamp10(DateUtil.string2Timestamp(sEndDate));
 			
+			logger.info("开始计算[" + DateUtil.date2String(calcDate) + "]任务");
+			
 			for (IndexEntity index : indexs) {
 				IndexBase indexBase = (IndexBase)SpringContext.getBean(index.getIndexCode());
 				if (indexBase == null){
-					logger.error("没有找到[" + index.getIndexCode() + "]对应的指标类");
+					logger.error("\t没有找到[" + index.getIndexCode() + "]对应的指标类");
 				} else {
-					logger.info("执行[" + index.getIndexCode() + "][" + DateUtil.date2String(calcDate) + "]指标开始");
-					logger.info("\t参数:"
-							+"\n\tstartdate:" + lStartDate
-							+"\n\tenddate:" + lEndDate);
+					logger.info("\t执行[" + index.getIndexCode() + "]指标开始");
+					logger.info("\t\t参数:"
+							+"\n\t\tstartdate:" + lStartDate
+							+"\n\t\tenddate:" + lEndDate);
 					indexBase.run(lStartDate, lEndDate, equipments);
-					logger.info("执行[" + index.getIndexCode() + "][" + DateUtil.date2String(calcDate) + "]指标结束");
+					logger.info("\t执行[" + index.getIndexCode() + "]指标结束");
 				}
 			}
 			
@@ -112,6 +114,8 @@ public class TaskEquipmentIndex {
 				EquipmentIndexEntity equipmentIndex = iter.next();
 				equipmentIndexDao.insertEquipmentIndexByUser(equipmentIndex);
 			}
+			
+			logger.info("结束计算[" + DateUtil.date2String(calcDate) + "]任务，当天共有:" + equipments.size() + "条记录");
 			
 			calcDate = DateUtil.addDate(startDate, DateType.DAY, i);
 			i++;
