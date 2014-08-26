@@ -44,8 +44,7 @@ public class JsonUtil {
 	 * @param jsonString
 	 * @return
 	 */
-	@SuppressWarnings("rawtypes")
-	public static Map getMap4Json(String jsonString) {
+	public static Map<String, Object> getMap4Json(String jsonString) {
 		JSONObject jsonObject = JSONObject.fromObject(jsonString);
 		return getMap4Json(jsonObject);
 	}
@@ -59,12 +58,12 @@ public class JsonUtil {
 	 * @return Map
 	 * @throws
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static Map getMap4Json(JSONObject jsonObject) {
+	@SuppressWarnings({ "rawtypes" })
+	public static Map<String, Object> getMap4Json(JSONObject jsonObject) {
 		Iterator keyIter = jsonObject.keys();
 		String key;
 		Object value;
-		Map valueMap = new HashMap();
+		Map<String, Object> valueMap = new HashMap<String, Object>();
 		while (keyIter.hasNext()) {
 			key = (String) keyIter.next();
 			value = jsonObject.get(key);

@@ -25,13 +25,13 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 
-public class HttpClientUtil {
+public class HttpClientUtil2 {
 	
 	private static Logger logger = Logger.getLogger("genee");
 
-	public static String post(String url, Map<String, String> params, Map<String, String> headers) {
+	public static String[] post(String url, Map<String, String> params, Map<String, String> headers) {
 		CloseableHttpClient httpclient = null;
-		String body = "";
+		String[] body = null;
 		try {
 			// post 执行体
 			httpclient = HttpClients.createDefault();
@@ -52,9 +52,9 @@ public class HttpClientUtil {
 		return body;
 	}
 
-	public static String get(String url, Map<String, String> headers) {
+	public static String[] get(String url, Map<String, String> headers) {
 		CloseableHttpClient httpclient = null;
-		String body = null;
+		String[] body = null;
 		try {
 			httpclient = HttpClients.createDefault();
 			HttpGet get = new HttpGet(url);
@@ -81,25 +81,26 @@ public class HttpClientUtil {
 		return body;
 	}
 
-	private static String invoke(CloseableHttpClient httpclient, HttpUriRequest httpost) throws IOException {
+	private static String[] invoke(CloseableHttpClient httpclient, HttpUriRequest httpost) throws IOException {
 
 		CloseableHttpResponse response = sendRequest(httpclient, httpost);
-		String body = paseResponse(response);
+		String[] body = paseResponse(response);
 		response.close();
 		return body;
 	}
 
-	private static String paseResponse(HttpResponse response) {
+	private static String[] paseResponse(HttpResponse response) {
 		HttpEntity entity = response.getEntity();
-		String body = null;
+		String[] responseBody = new String[2];
 		try {
-			body = EntityUtils.toString(entity);
+			responseBody[0] = String.valueOf(response.getStatusLine().getStatusCode());
+			responseBody[1] = EntityUtils.toString(entity);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} 
-		return body;
+		return responseBody;
 	}
 
 	private static CloseableHttpResponse sendRequest(CloseableHttpClient httpclient, HttpUriRequest httpost) {

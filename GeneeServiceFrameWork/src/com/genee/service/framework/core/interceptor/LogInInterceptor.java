@@ -1,16 +1,14 @@
 package com.genee.service.framework.core.interceptor;
 
 import java.util.Enumeration;
-import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.message.Message;
 import org.apache.cxf.phase.AbstractPhaseInterceptor;
 import org.apache.cxf.phase.Phase;
 import org.apache.cxf.transport.http.AbstractHTTPDestination;
-
+import org.apache.log4j.Logger;
 
 import com.genee.service.framework.utils.datautil.DateUtil;
 
@@ -28,7 +26,7 @@ public class LogInInterceptor extends AbstractPhaseInterceptor<Message> {
     }  
 
 	@Override
-	public void handleMessage(Message message) throws Fault {
+	public void handleMessage(Message message) {
 		
 		HttpServletRequest request = (HttpServletRequest)message.get(AbstractHTTPDestination.HTTP_REQUEST);
 
@@ -50,7 +48,7 @@ public class LogInInterceptor extends AbstractPhaseInterceptor<Message> {
 			String param = params.nextElement();
 			sb.append("\t\t").append(param + "：").append(request.getParameter(param)).append("\n");
 		}
-		
+        
 		logger.info(sb.toString());
 	}
 

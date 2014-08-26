@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.message.Message;
 import org.apache.cxf.message.MessageContentsList;
 import org.apache.cxf.phase.AbstractPhaseInterceptor;
@@ -28,14 +27,12 @@ public class LogOutInterceptor extends AbstractPhaseInterceptor<Message> {
 	}
 
 	@Override
-	public void handleMessage(Message message) throws Fault {
+	public void handleMessage(Message message) {
 
-		HttpServletResponse response = (HttpServletResponse) message
-				.get(AbstractHTTPDestination.HTTP_RESPONSE);
+		HttpServletResponse response = (HttpServletResponse) message.get(AbstractHTTPDestination.HTTP_RESPONSE);
 
 		StringBuilder sb = new StringBuilder();
-		sb.append(
-				"【 线程号：" + Thread.currentThread().getId() + "("
+		sb.append("【 线程号：" + Thread.currentThread().getId() + "("
 						+ Thread.currentThread().getName() + ")" + "\t结束时间："
 						+ DateUtil.currentDate() + " " + DateUtil.currentTime()
 						+ " 】").append("\n");
@@ -46,15 +43,15 @@ public class LogOutInterceptor extends AbstractPhaseInterceptor<Message> {
 		for (Object obj : objs) {
 			if (obj instanceof org.apache.cxf.jaxrs.impl.ResponseImpl) {
 				org.apache.cxf.jaxrs.impl.ResponseImpl result = (org.apache.cxf.jaxrs.impl.ResponseImpl) obj;
-				msg = result.getEntity().toString();
+				msg += result.getEntity().toString();
 			} else if (obj instanceof java.util.List) {
 				java.util.List<?> result = (java.util.List<?>) obj;
-				msg = JsonUtil.getJsonString4List(result);
+				msg += JsonUtil.getJsonString4List(result);
 			} else if (obj instanceof java.util.Map) {
 				java.util.Map<?, ?> result = (java.util.Map<?, ?>) obj;
-				msg = JsonUtil.getJsonString4JavaPOJO(result);
+				msg += JsonUtil.getJsonString4JavaPOJO(result);
 			} else {
-				msg = "无该返回类型";
+				msg += JsonUtil.getJsonString4JavaPOJO(obj);
 			}
 		}
 		sb.append("\t").append("返回结果：" + msg);
