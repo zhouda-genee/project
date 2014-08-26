@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services>
+	<service name="equipment_name" url="http://localhost:8088/geneeservicefw/api/rest/equipment/equipmentname" methodType="post" content-type="application/x-www-form-urlencoded" returnType="array">
+		<params>
+			<param name="name" type="string"/>
+		</params>
+	</service>
+	<service name="lab_name" url="http://localhost:8088/geneeservicefw/api/rest/lab/labname" methodType="post" content-type="application/x-www-form-urlencoded" returnType="array">
+		<params>
+			<param name="name" type="string"/>
+		</params>
+	</service>
+	<service name="org_root" url="http://localhost:8088/geneeservicefw/api/rest/organization/root" methodType="get" content-type="" returnType="object">
+	</service>
+	<service name="org_child" url="http://localhost:8088/geneeservicefw/api/rest/organization/child" methodType="get" content-type="" returnType="array">
+		<params>
+			<param name="id" type="int"/>
+		</params>
+	</service>
+	<service name="user_contact" url="http://localhost:8088/geneeservicefw/api/rest/user/contact" methodType="post" content-type="application/x-www-form-urlencoded" returnType="array">
+		<params>
+			<param name="name" type="string"/>
+		</params>
+	</service>
+	<service name="user_incharge" url="http://localhost:8088/geneeservicefw/api/rest/user/incharge" methodType="post" content-type="application/x-www-form-urlencoded" returnType="array">
+		<params>
+			<param name="name" type="string"/>
+		</params>
+	</service>
+	<service name="user_recuser" url="http://localhost:8088/geneeservicefw/api/rest/user/recuser" methodType="post" content-type="application/x-www-form-urlencoded" returnType="array">
+		<params>
+			<param name="name" type="string"/>
+		</params>
+	</service>
+</services>

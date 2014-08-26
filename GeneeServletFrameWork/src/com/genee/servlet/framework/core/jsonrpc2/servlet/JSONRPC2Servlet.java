@@ -2,9 +2,7 @@ package com.genee.servlet.framework.core.jsonrpc2.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletConfig;
@@ -15,10 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
-import org.springframework.http.MediaType;
 
 import com.genee.servlet.framework.core.jsonrpc2.JSONRPC2Session;
 import com.genee.servlet.framework.core.jsonrpc2.XMLServiceBuilder;
+import com.genee.servlet.framework.core.jsonrpc2.pojo.ErrorMessage;
 import com.genee.servlet.framework.core.jsonrpc2.pojo.JSONRPC2Request;
 import com.genee.servlet.framework.core.jsonrpc2.pojo.JSONRPC2Response;
 import com.genee.servlet.framework.core.jsonrpc2.pojo.XMLServiceEntity;
@@ -31,7 +29,7 @@ public class JSONRPC2Servlet extends HttpServlet {
 	
 	private static final Logger logger = Logger.getLogger("genee");
 	
-	private Map<String, XMLServiceEntity> services = null;
+	private static Map<String, XMLServiceEntity> services = null;
        
     public JSONRPC2Servlet() {
         super();
@@ -63,20 +61,17 @@ public class JSONRPC2Servlet extends HttpServlet {
 		try{
 			// 封装rpc2request
 			rpc2request = postTingRPCRequest(request);
-			String contentType = request.getContentType();
-			// 判断请求类型是否是application/json
-			if (!MediaType.APPLICATION_JSON_VALUE.equals(contentType)){
-				rpc2response = new JSONRPC2Response(rpc2request, "contentType类型应该为" + MediaType.APPLICATION_JSON_VALUE);
-			} else if (!services.containsKey(rpc2request.getMethod())) {
-				rpc2response = new JSONRPC2Response(rpc2request, "没有[" + rpc2request.getMethod() + "]服务");
+			if (!services.containsKey(rpc2request.getMethod())) {
+				rpc2response = new JSONRPC2Response(rpc2request, new ErrorMessage("没有[" + rpc2request.getMethod() + "]服务"));
 			} else {
 				XMLServiceEntity service = services.get(rpc2request.getMethod());
 				rpc2response = JSONRPC2Session.send(rpc2request, service);
 			}
 		} catch (Exception ex){
-			rpc2response = new JSONRPC2Response(rpc2request, ex.getMessage());
+			rpc2response = new JSONRPC2Response(rpc2request, new ErrorMessage(ex.toString()));
 		}
 		
+		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();  
 	    out.print(rpc2response.toString());  
 	    out.flush();  
@@ -88,15 +83,8 @@ public class JSONRPC2Servlet extends HttpServlet {
 		String id = request.getParameter("id");
 		String method = request.getParameter("method");
 		String jsonrpc = request.getParameter("jsonrpc");
-		Object params = null;
-		if (request.getParameterValues("params") != null) {
-			String[] args = request.getParameterValues("params");
-			List<String> argArray = new ArrayList<String>(args.length);
-			for (String arg : args) {
-				argArray.add(arg);
-			}
-			params = argArray;
-		} else if (request.getParameter("params") != null){
+		Map<String, Object> params = null;
+		if (request.getParameter("params") != null){
 			String arg = request.getParameter("params");
 			params = JsonUtil.getMap4Json(arg);
 		}
@@ -104,7 +92,7 @@ public class JSONRPC2Servlet extends HttpServlet {
 		JSONRPC2Request rpc2Request = new JSONRPC2Request();
 		try {
 			rpc2Request.setId(Integer.parseInt(id));
-		} catch (Exception ex){
+		} catch (NumberFormatException ex){
 			logger.error(ex.getMessage());
 			throw new NumberFormatException("参数ID转换异常");
 		}

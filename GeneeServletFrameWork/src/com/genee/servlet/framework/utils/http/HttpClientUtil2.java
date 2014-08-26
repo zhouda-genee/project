@@ -22,27 +22,35 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
-public class HttpClientUtil {
+public class HttpClientUtil2 {
 	
-
-	public static String post(String url, Map<String, String> params, Map<String, String> headers) {
+	public static String[] post(String url, Map<String, String> params, Map<String, String> headers) {
 		// post 执行体
 		DefaultHttpClient httpclient = new DefaultHttpClient();
 		
 		HttpPost post = postForm(url, params, headers);
 
-		String body = invoke(httpclient, post);
+		String[] body = invoke(httpclient, post);
 
 		httpclient.getConnectionManager().shutdown();
 
 		return body;
 	}
 
-	public static String get(String url) {
+	public static String[] get(String url, Map<String, String> headers) {
 		DefaultHttpClient httpclient = new DefaultHttpClient();
-		String body = null;
+		String[] body = null;
 
 		HttpGet get = new HttpGet(url);
+		
+		// 设置header
+		if (headers != null){
+			Set<String> keySet = headers.keySet();
+			for (String key : keySet) {
+				get.setHeader(key, headers.get(key));
+			}
+		}
+		
 		body = invoke(httpclient, get);
 
 		httpclient.getConnectionManager().shutdown();
@@ -50,27 +58,28 @@ public class HttpClientUtil {
 		return body;
 	}
 
-	private static String invoke(DefaultHttpClient httpclient,
+	private static String[] invoke(DefaultHttpClient httpclient,
 			HttpUriRequest httpost) {
 
 		HttpResponse response = sendRequest(httpclient, httpost);
-		String body = paseResponse(response);
+		String[] body = paseResponse(response);
 
 		return body;
 	}
 
-	private static String paseResponse(HttpResponse response) {
+	private static String[] paseResponse(HttpResponse response) {
 		HttpEntity entity = response.getEntity();
-		String body = null;
+		String[] responseBody = new String[2];
 		try {
-			body = EntityUtils.toString(entity);
+			responseBody[0] = String.valueOf(response.getStatusLine().getStatusCode());
+			responseBody[1] = EntityUtils.toString(entity);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		return body;
+		return responseBody;
 	}
 
 	private static HttpResponse sendRequest(DefaultHttpClient httpclient,
