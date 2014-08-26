@@ -5,6 +5,19 @@
 	http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 
+	<!-- 数据库实现bean -->
 	<bean id="basedao" class="com.genee.service.framework.core.base.dao.MysqlBaseDao" autowire="default"/>
+	
+	<!-- 业务接口bean -->
+	<bean id="labService" class="com.genee.service.module.lab.LabServiceImpl"/>
+	<bean id="organizationService" class="com.genee.service.module.organization.OrganizationServiceImpl"/>
+	<bean id="userService" class="com.genee.service.module.user.UserServiceImpl"/>
+	<bean id="equipmentService" class="com.genee.service.module.equipment.EquipmentServiceImpl"/>
+
+	<!-- 拦截器bean -->
+	<bean id="logInInterceptor" class="com.genee.service.framework.core.interceptor.LogInInterceptor" />
+	<bean id="logOutInterceptor" class="com.genee.service.framework.core.interceptor.LogOutInterceptor" />
+	<bean id= "invokeFaultExceptionInterceptor" class="com.genee.service.framework.core.interceptor.InvokeFaultExceptionInterceptor" />
+	
 	
 </beans>
