@@ -22,18 +22,9 @@ public class XMLServiceBuilder {
 	
 	private static final Logger logger = Logger.getLogger("genee");
 	
-	private static Map<String, XMLServiceEntity> services = null;
-	
 	private XMLServiceBuilder(){}
 	
-	public static synchronized Map<String, XMLServiceEntity> buildService() {
-		if (services == null){
-			services = getService();
-		}
-		return services;
-	}
-	
-	private static Map<String, XMLServiceEntity> getService() {
+	public static Map<String, XMLServiceEntity> buildService() {
 		SAXReader saxReader = new SAXReader();
         Document document = null;
         InputStream in = null;
