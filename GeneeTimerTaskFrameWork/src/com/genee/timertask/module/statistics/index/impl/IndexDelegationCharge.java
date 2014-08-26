@@ -59,7 +59,7 @@ public class IndexDelegationCharge extends IndexBase {
 				+ "and ec.source_name = 'eq_record' "
 				+ "inner join eq_sample es " 
 				+ "on es.record_id = er.id "
-				+ "where ec.mtime between ? and ? "
+				+ "where ec.ctime between ? and ? "
 				+ "group by ec.equipment_id, ec.user_id " 
 				+ "order by ec.equipment_id";
 		JdbcTemplateParam jdbcTemplateParam = new JdbcTemplateParam(sql,
