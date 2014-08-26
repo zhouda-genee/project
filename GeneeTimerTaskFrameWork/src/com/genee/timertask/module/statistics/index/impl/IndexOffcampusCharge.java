@@ -66,7 +66,7 @@ public class IndexOffcampusCharge extends IndexBase {
 		
 		String sql = "select ec.equipment_id as equipmentid, ec.user_id as userid, sum(ec.amount) as amount " 
 				+ "from eq_charge ec "
-				+ "where ec.ctime between ? and ? "
+				+ "where ec.mtime between ? and ? "
 				+ "and ec.user_id in ("
 				+ "select distinct u.id " 
 				+ "from user u "

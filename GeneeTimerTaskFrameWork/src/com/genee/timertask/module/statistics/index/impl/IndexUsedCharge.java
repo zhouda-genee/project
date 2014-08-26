@@ -54,7 +54,7 @@ public class IndexUsedCharge extends IndexBase {
 	private List<Map<String, Object>> queryResult(long startDate, long endDate) {
 		String sql = "select ec.equipment_id as equipmentid, ec.user_id as userid, sum(ec.amount) as amount "
 				+ "from eq_charge ec "
-				+ "where ec.ctime between ? and ? "
+				+ "where ec.mtime between ? and ? "
 				+ "group by ec.equipment_id, ec.user_id "
 				+ "order by ec.equipment_id";
 		JdbcTemplateParam jdbcTemplateParam = new JdbcTemplateParam(sql,
