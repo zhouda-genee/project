@@ -28,9 +28,11 @@
 			<ref bean="logOutInterceptor" />
 		</jaxrs:outInterceptors>
 
-		<!-- 异常拦截器 -->
 		<jaxrs:providers>
+			<!-- 异常拦截器 -->
 			<ref bean="invokeFaultExceptionInterceptor"/>
+			<!-- json自定义格式 -->
+			<ref bean="jsonProvider"/>
 		</jaxrs:providers>
 
 		<jaxrs:extensionMappings>

@@ -3,10 +3,8 @@ package com.genee.service.framework.utils.http;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.http.HttpEntity;
@@ -27,25 +25,11 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 
-import com.genee.service.framework.utils.datautil.DateUtil;
-
 public class HttpClientUtil {
 	
 	private static Logger logger = Logger.getLogger("genee");
 
 	public static String post(String url, Map<String, String> params, Map<String, String> headers) {
-		// ================================ 开始记录日志 =====================================
-		StringBuilder sb = new StringBuilder();
-		sb.append("【 线程号：" + Thread.currentThread().getName() + "\t地址：" + url + "\t开始时间：" + DateUtil.currentDate() + " " + DateUtil.currentTime() + " 】");
-		sb.append("\n").append("\t请求参数列表：" + params);
-		if (params != null)
-			for (Iterator<Entry<String, String>> entry = params.entrySet().iterator(); entry.hasNext();) {
-				Entry<String, String> result = entry.next();
-				sb.append("\n").append("\t\t").append(result.getKey() + "：").append(result.getValue());
-			}
-		
-		logger.warn(sb.toString());
-		
 		CloseableHttpClient httpclient = null;
 		String body = "";
 		try {
@@ -65,12 +49,6 @@ public class HttpClientUtil {
 				}
 			}
 		};
-		
-		
-		// ================================ 结束记录日志 =====================================
-		logger.warn("\t返回结果：" + body);
-		logger.warn("【 线程号：" + Thread.currentThread().getName() + "\t地址：" + url + "\t结束时间：" + DateUtil.currentDate() + " " + DateUtil.currentTime() + " 】");
-
 		return body;
 	}
 

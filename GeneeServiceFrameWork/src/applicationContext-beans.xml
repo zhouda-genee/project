@@ -8,6 +8,13 @@
 	<!-- 数据库实现bean -->
 	<bean id="basedao" class="com.genee.service.framework.core.base.dao.MysqlBaseDao" autowire="default"/>
 	
+	<!-- 返回json自定义格式配置 -->
+	<bean id="jsonProvider" class="org.apache.cxf.jaxrs.provider.json.JSONProvider">
+		<property name="dropRootElement" value="true" />
+		<property name="serializeAsArray" value="true" />
+		<property name="dropCollectionWrapperElement" value="true" />
+	</bean>
+	
 	<!-- 业务接口bean -->
 	<bean id="labService" class="com.genee.service.module.lab.LabServiceImpl"/>
 	<bean id="organizationService" class="com.genee.service.module.organization.OrganizationServiceImpl"/>

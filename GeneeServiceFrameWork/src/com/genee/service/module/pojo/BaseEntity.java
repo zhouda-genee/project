@@ -1,10 +1,13 @@
 package com.genee.service.module.pojo;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.genee.service.framework.utils.json.JsonUtil;
 
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class BaseEntity {
 	private int id;
 	private String name;
