@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.genee.service.module.pojo.OrganizationEntity;
@@ -18,7 +18,7 @@ public interface OrganizationService {
 	@GET
 	public OrganizationEntity getRootOrganization();
 
-	@Path("/child/{id}")
+	@Path("/child")
 	@GET
-	public List<OrganizationEntity> getChildOrganization(@PathParam("id") int id);
+	public List<OrganizationEntity> getChildOrganization(@QueryParam("id") int id);
 }
