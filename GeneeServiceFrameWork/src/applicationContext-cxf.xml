@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
 	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
@@ -9,18 +10,14 @@
 	http://cxf.apache.org/jaxrs
 	http://cxf.apache.org/schemas/jaxrs.xsd">
 
-	<bean id="labService" class="com.genee.service.module.lab.LabServiceImpl"/>
-	<bean id="organizationService" class="com.genee.service.module.organization.OrganizationServiceImpl"/>
-	<bean id="userService" class="com.genee.service.module.user.UserServiceImpl"/>
-
-	<bean id="logInInterceptor"
-		class="com.genee.service.framework.core.interceptor.LogInInterceptor" />
-	<bean id="logOutInterceptor"
-		class="com.genee.service.framework.core.interceptor.LogOutInterceptor" />
-
+	<bean id="equipmentService" class="com.genee.service.module.equipment.EquipmentServiceImpl"/>
+	<bean id="equipmentService" class="com.genee.service.module.equipment.EquipmentServiceImpl"/>
+	<bean id="equipmentService" class="com.genee.service.module.equipment.EquipmentServiceImpl"/>
+	
 	<jaxrs:server id="rest" address="/rest">
 
 		<jaxrs:serviceBeans>
+			<ref bean="equipmentService"/>
 			<ref bean="labService" />
 			<ref bean="organizationService"/>
 			<ref bean="userService"/>
@@ -37,8 +34,7 @@
 
 		<!-- 异常拦截器 -->
 		<jaxrs:providers>
-			<bean
-				class="com.genee.service.framework.core.interceptor.InvokeFaultExceptionInterceptor" />
+			<ref bean="invokeFaultExceptionInterceptor"/>
 		</jaxrs:providers>
 
 		<jaxrs:extensionMappings>
