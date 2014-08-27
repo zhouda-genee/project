@@ -91,7 +91,7 @@ public class IndexValidDuration extends IndexBase {
 				+ "or ? between a.dtstart and a.dtend "
 				+ "or ? between a.dtstart and a.dtend) "
 				+ "and a.id = b.record_id "
-				+ "and c.id1 = b.sender_id "
+				+ "and c.id1 = a.user_id "
 				+ "and c.id2 = a.equipment_id "
 				+ "and c.type = 'incharge'";
 		JdbcTemplateParam jdbcTemplateParam = new JdbcTemplateParam(sql,
