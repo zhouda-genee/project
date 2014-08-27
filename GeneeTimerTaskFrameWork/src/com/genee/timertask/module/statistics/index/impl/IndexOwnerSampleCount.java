@@ -55,7 +55,7 @@ public class IndexOwnerSampleCount extends IndexBase {
 		String sql = "select er.equipment_id as equipmentid, er.user_id as userid, sum(samples) as samples "
 				+ "from eq_record er "
 				+ "inner join _r_user_equipment rue on er.user_id = rue.id1 and er.equipment_id = rue.id2 "
-				+ "where er.dtstart between ? and ? "
+				+ "where er.dtend between ? and ? "
 				+ "group by er.equipment_id, er.user_id "
 				+ "order by er.equipment_id";
 		JdbcTemplateParam jdbcTemplateParam = new JdbcTemplateParam(sql,

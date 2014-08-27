@@ -54,7 +54,7 @@ public class IndexGiveSampleCount extends IndexBase {
 	private List<Map<String, Object>> queryResult(long startDate, long endDate) {
 		String sql = "select es.equipment_id as equipmentid, es.sender_id as userid, "
 				+ "sum(count) as count from eq_sample es "
-				+ "where es.status = 5 and es.dtstart between ? and ? "
+				+ "where es.status = 5 and es.dtend between ? and ? "
 				+ "group by es.equipment_id, es.sender_id "
 				+ "order by es.equipment_id";
 		JdbcTemplateParam jdbcTemplateParam = new JdbcTemplateParam(sql,
