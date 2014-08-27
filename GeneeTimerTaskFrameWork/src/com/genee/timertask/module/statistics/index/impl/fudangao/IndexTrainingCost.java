@@ -64,7 +64,7 @@ public class IndexTrainingCost extends IndexBase {
 	private List<Map<String, Object>> queryResult(long startDate, long endDate){
 		String sql = "select a.equipment_id as equipmentid, a._extra as extra "
 				+ "from eq_record a "
-				+ "where a.dtstart between ? and ? ";
+				+ "where a.dtend between ? and ? ";
 		JdbcTemplateParam jdbcTemplateParam = new JdbcTemplateParam(sql,
 				new Object[] { startDate, endDate }, 
 				new int[] { java.sql.Types.INTEGER, java.sql.Types.INTEGER });

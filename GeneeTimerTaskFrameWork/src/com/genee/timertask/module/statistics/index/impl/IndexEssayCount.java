@@ -9,6 +9,14 @@ import com.genee.timertask.framework.core.base.JdbcTemplateParam;
 import com.genee.timertask.module.statistics.index.IndexBase;
 import com.genee.timertask.module.statistics.pojo.EquipmentIndexEntity;
 
+/**
+ * 
+ * @ClassName: IndexEssayCount
+ * @Description: 论文数指标  统计时段内，该仪器关联的论文数总和
+ * @author da.zhou@geneegroup.com
+ * @date 2014年8月26日 下午4:46:01
+ *
+ */
 @Component("essay_cnt")
 public class IndexEssayCount extends IndexBase {
 

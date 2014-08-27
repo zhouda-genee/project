@@ -48,7 +48,7 @@ public class IndexUsedTimes extends IndexBase {
 	}
 	
 	private List<Map<String, Object>> queryResult(long startDate, long endDate){
-		String sql = "select equipment_id as equipmentid, user_id as userid, count(id) as times from eq_record where dtstart between ? and ? group by equipment_id, user_id";
+		String sql = "select equipment_id as equipmentid, user_id as userid, count(id) as times from eq_record where dtend between ? and ? group by equipment_id, user_id";
 		JdbcTemplateParam jdbcTemplateParam = new JdbcTemplateParam(sql,
 				new Object[] { startDate, endDate }, 
 				new int[] { java.sql.Types.INTEGER, java.sql.Types.INTEGER });
