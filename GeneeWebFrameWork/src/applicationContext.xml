@@ -60,7 +60,7 @@
 	
 	<aop:config>
 		<aop:pointcut id="cfPointCut"
-			expression="execution(* com.genee.module..*ServiceImpl.*(..)) " />
+			expression="execution(* com.genee.web.module..*ServiceImpl.*(..)) " />
 		<aop:advisor pointcut-ref="cfPointCut" advice-ref="cftxAdvice" />
 	</aop:config>
 	
