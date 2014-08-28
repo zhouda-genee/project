@@ -9,24 +9,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.management.relation.Role;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.genee.web.framework.core.base.controller.BaseController;
 import com.genee.web.framework.core.error.LogInstance;
-import com.genee.web.framework.utils.json.JsonUtil;
 import com.genee.web.module.pojo.IndexTypeEntity;
 import com.genee.web.module.pojo.RoleEntity;
-import com.genee.web.module.service.statistics.IIndexService;
+import com.genee.web.module.service.statistics.IndexService;
 
 /**
  * @author yanan.che 2014年8月13日
@@ -35,7 +31,7 @@ import com.genee.web.module.service.statistics.IIndexService;
 @RequestMapping("statistics/indexconfig/")
 public class IndexController extends BaseController {
 	@Autowired
-	private IIndexService iIndexService;
+	private IndexService iIndexService;
 	
 	/**
 	 * 指标类型明细页面
