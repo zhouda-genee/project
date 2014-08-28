@@ -19,7 +19,7 @@ public class LabTest extends BaseTest {
 	/**
 	 * 根据课题组名称模糊查询课题组
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings("unchecked")
 	@Test
 	public void getLabByName() {
 		String url = "http://localhost:8088/geneeservicefw/api/rest/lab/labname";

@@ -39,7 +39,7 @@ public class UserTest extends BaseTest {
 	/**
 	 * 模糊查询所有负责人
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings("unchecked")
 	@Test
 	public void getIncharge() {
 		String url = "http://localhost:8088/geneeservicefw/api/rest/user/incharge";
@@ -59,7 +59,7 @@ public class UserTest extends BaseTest {
 	/**
 	 * 模糊查询所有使用者
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings("unchecked")
 	@Test
 	public void getUserInRecord() {
 		String url = "http://localhost:8088/geneeservicefw/api/rest/user/recuser";
