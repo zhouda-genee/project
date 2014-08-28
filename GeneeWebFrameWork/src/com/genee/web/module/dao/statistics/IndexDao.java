@@ -4,7 +4,6 @@
 package com.genee.web.module.dao.statistics;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.genee.web.framework.core.base.JdbcTemplateParam;
-import com.genee.web.framework.core.base.PageSupport;
 import com.genee.web.framework.core.base.dao.BaseDao;
 import com.genee.web.module.pojo.IndexEntity;
 import com.genee.web.module.pojo.IndexRoleEntity;
