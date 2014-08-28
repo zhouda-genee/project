@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.genee.service.module.dao.OrganizationDao;
-import com.genee.service.module.pojo.OrganizationEntity;
+import com.genee.service.module.pojo.TagEntity;
 
 public class OrganizationServiceImpl implements OrganizationService {
 
@@ -13,12 +13,12 @@ public class OrganizationServiceImpl implements OrganizationService {
 	private OrganizationDao organizationDao;
 
 	@Override
-	public OrganizationEntity getRootOrganization() {
+	public TagEntity getRootOrganization() {
 		return organizationDao.queryRootOrganization();
 	}
 
 	@Override
-	public List<OrganizationEntity> getChildOrganization(int id) {
-		return organizationDao.queryChildOrganization(id);
+	public List<TagEntity> getChildOrganization(long id) {
+		return organizationDao.queryChildTag(id);
 	}
 }

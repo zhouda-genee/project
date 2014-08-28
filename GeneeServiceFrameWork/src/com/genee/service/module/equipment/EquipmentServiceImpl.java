@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.genee.service.module.dao.EquipmentDao;
 import com.genee.service.module.pojo.BaseEntity;
+import com.genee.service.module.pojo.TagEntity;
 
 public class EquipmentServiceImpl implements EquipmentService {
 
@@ -14,6 +15,16 @@ public class EquipmentServiceImpl implements EquipmentService {
 
 	@Override
 	public List<BaseEntity> getEquipmentByName(String name) {
-		return equipmentDao.queryLab(name);
+		return equipmentDao.queryEquipment(name);
+	}
+	
+	@Override
+	public TagEntity getRootEquipment() {
+		return equipmentDao.queryRootEquipment();
+	}
+
+	@Override
+	public List<TagEntity> getChildEquipment(long id) {
+		return equipmentDao.queryChildTag(id);
 	}
 }

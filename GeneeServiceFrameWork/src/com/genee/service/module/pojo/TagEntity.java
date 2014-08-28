@@ -8,7 +8,7 @@ import com.genee.service.framework.utils.json.JsonUtil;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class OrganizationEntity extends BaseEntity {
+public class TagEntity extends BaseEntity {
 
 	private int ccount;
 

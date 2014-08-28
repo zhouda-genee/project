@@ -8,7 +8,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import com.genee.service.module.pojo.OrganizationEntity;
+import com.genee.service.module.pojo.TagEntity;
 
 @Path("/organization")
 @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
@@ -16,9 +16,9 @@ public interface OrganizationService {
 
 	@Path("/root")
 	@GET
-	public OrganizationEntity getRootOrganization();
+	public TagEntity getRootOrganization();
 
 	@Path("/child")
 	@GET
-	public List<OrganizationEntity> getChildOrganization(@QueryParam("id") int id);
+	public List<TagEntity> getChildOrganization(@QueryParam("id") long id);
 }
