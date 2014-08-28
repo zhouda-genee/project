@@ -20,6 +20,7 @@
 	<bean id="organizationService" class="com.genee.service.module.organization.OrganizationServiceImpl"/>
 	<bean id="userService" class="com.genee.service.module.user.UserServiceImpl"/>
 	<bean id="equipmentService" class="com.genee.service.module.equipment.EquipmentServiceImpl"/>
+	<bean id="statisticsService" class="com.genee.service.module.statistics.StatisticsServiceImpl"/>
 
 	<!-- 拦截器bean -->
 	<bean id="logInInterceptor" class="com.genee.service.framework.core.interceptor.LogInInterceptor" />

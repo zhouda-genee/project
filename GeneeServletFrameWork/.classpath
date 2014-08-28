@@ -40,70 +40,25 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/tomcat7/tomcat-util.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/tomcat7/tomcat7-websocket.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/tomcat7/websocket-api.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-aop-3.2.2.RELEASE-javadoc.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-aop-3.2.2.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-aop-3.2.2.RELEASE.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-aspects-3.2.2.RELEASE-javadoc.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-aspects-3.2.2.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-aspects-3.2.2.RELEASE.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-beans-3.2.2.RELEASE-javadoc.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-beans-3.2.2.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-beans-3.2.2.RELEASE.jar" sourcepath="WebContent/WEB-INF/lib/spring-beans-3.2.2.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-build-src-3.2.2.RELEASE.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-context-3.2.2.RELEASE-javadoc.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-context-3.2.2.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-context-3.2.2.RELEASE.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-context-support-3.2.2.RELEASE-javadoc.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-context-support-3.2.2.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-context-support-3.2.2.RELEASE.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-core-3.2.2.RELEASE-javadoc.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-core-3.2.2.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-core-3.2.2.RELEASE.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-expression-3.2.2.RELEASE-javadoc.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-expression-3.2.2.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-expression-3.2.2.RELEASE.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-instrument-3.2.2.RELEASE-javadoc.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-instrument-3.2.2.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-instrument-3.2.2.RELEASE.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-instrument-tomcat-3.2.2.RELEASE-javadoc.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-instrument-tomcat-3.2.2.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-instrument-tomcat-3.2.2.RELEASE.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-jdbc-3.2.2.RELEASE-javadoc.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-jdbc-3.2.2.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-jdbc-3.2.2.RELEASE.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-jms-3.2.2.RELEASE-javadoc.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-jms-3.2.2.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-jms-3.2.2.RELEASE.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-orm-3.2.2.RELEASE-javadoc.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-orm-3.2.2.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-orm-3.2.2.RELEASE.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-oxm-3.2.2.RELEASE-javadoc.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-oxm-3.2.2.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-oxm-3.2.2.RELEASE.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-test-3.2.2.RELEASE-javadoc.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-test-3.2.2.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-test-3.2.2.RELEASE.jar" sourcepath="WebContent/WEB-INF/lib/spring-test-3.2.2.RELEASE-sources.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-tx-3.2.2.RELEASE-javadoc.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-tx-3.2.2.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-tx-3.2.2.RELEASE.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-web-3.2.2.RELEASE-javadoc.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-web-3.2.2.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-web-3.2.2.RELEASE.jar" sourcepath="WebContent/WEB-INF/lib/spring-web-3.2.2.RELEASE-sources.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-webmvc-3.2.2.RELEASE-javadoc.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-webmvc-3.2.2.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-webmvc-3.2.2.RELEASE.jar" sourcepath="WebContent/WEB-INF/lib/spring-webmvc-3.2.2.RELEASE-sources.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-webmvc-portlet-3.2.2.RELEASE-javadoc.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-webmvc-portlet-3.2.2.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-webmvc-portlet-3.2.2.RELEASE.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jsonrpc2-base-1.35-javadoc.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jsonrpc2-base-1.35-sources.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jsonrpc2-base-1.35.jar" sourcepath="WebContent/WEB-INF/lib/jsonrpc2-base-1.35-sources.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jsonrpc2-client-1.14.3-javadoc.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jsonrpc2-client-1.14.3-sources.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jsonrpc2-client-1.14.3.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jsonrpc2-server-1.10.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jsonrpc2-server-1.10.1-sources.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jsonrpc2-server-1.10.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/ezmorph-1.0.4.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jackson-core-asl-1.8.7.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jackson-mapper-asl-1.8.7.jar"/>

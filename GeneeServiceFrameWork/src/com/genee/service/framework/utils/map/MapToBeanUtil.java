@@ -90,7 +90,7 @@ public class MapToBeanUtil {
 					.getPropertyDescriptors();
 			for (int i = 0; i < propertyDescriptors.length; i++) {
 				PropertyDescriptor descriptor = propertyDescriptors[i];
-				String propertyName = descriptor.getName();
+				String propertyName = descriptor.getName().toLowerCase();
 				if (!propertyName.equals("class")) {
 					Method readMethod = descriptor.getReadMethod();
 					Object result = readMethod.invoke(bean, new Object[0]);

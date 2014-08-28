@@ -42,13 +42,13 @@ public class MysqlBaseDao extends BaseDao {
 		param.setSql(getSQLCount(sql));
 		page.setTotalCount(queryForInt(param));
 		// 设置起始值和结束值
-		int startIndex = 1;
+		int startIndex = 0;
 		if (page.getPage() != 1)
 			startIndex = (page.getPage() - 1) * page.getPageSize() + 1;
 		// 查询结果集
 		StringBuffer paginationSQL = new StringBuffer(" ");
 		paginationSQL.append(sql);
-		paginationSQL.append(" limit "+ startIndex+"," + page.getPageSize());
+		paginationSQL.append(" limit "+ startIndex+"," + (page.getPageSize() - 1));
 		param.setSql(paginationSQL.toString());
 		page.setItems(queryForList(param));
 
