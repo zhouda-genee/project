@@ -5,26 +5,28 @@ import java.util.Map;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-public class MapAdapter extends XmlAdapter<MapConvertor[], Map<String, Object>> {
+import com.genee.service.module.constants.MapEntity;
+
+public class MapAdapter extends XmlAdapter<MapEntity[], HashMap<String, String>> {
 
 	@Override
-	public Map<String, Object> unmarshal(MapConvertor[] map) throws Exception {
-		Map<String, Object> result = new HashMap<String, Object>();
+	public HashMap<String, String> unmarshal(MapEntity[] map) throws Exception {
+		HashMap<String, String> result = new HashMap<String, String>();
 		if (map != null)
-			for (MapConvertor e : map) {
+			for (MapEntity e : map) {
 				result.put(e.key, e.value);
 			}
 		return result;
 	}
 
 	@Override
-	public MapConvertor[] marshal(Map<String, Object> map) throws Exception {
-		MapConvertor[] convertor = null;
+	public MapEntity[] marshal(HashMap<String, String> map) throws Exception {
+		MapEntity[] convertor = null;
 		if (map != null){
-			convertor = new MapConvertor[map.size()];
+			convertor = new MapEntity[map.size()];
 			int index = 0;
-			for (Map.Entry<String, Object> entry : map.entrySet()) {
-				MapConvertor item = new MapConvertor();
+			for (Map.Entry<String, String> entry : map.entrySet()) {
+				MapEntity item = new MapEntity();
 	            item.key = entry.getKey();
 	            item.value = entry.getValue();
 	            convertor[index++] = item;      

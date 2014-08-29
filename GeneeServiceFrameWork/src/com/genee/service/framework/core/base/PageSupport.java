@@ -9,54 +9,51 @@ package com.genee.service.framework.core.base;
  * @version 0.1 
  */
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import com.genee.service.framework.core.adapter.ListMapAdapter;
+import com.genee.service.framework.core.adapter.ListAdapter;
 import com.genee.service.framework.core.adapter.MapAdapter;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PageSupport<T> {
-	
+
 	private int totalCount = 0;// 总记录数
 	private int pageCount;// 总页数
 	private int pageSize = 5;// 每页显示记录数
 	private int page = 1;// 当前页
-	
+
 	@XmlJavaTypeAdapter(MapAdapter.class)
-	private Map<String, String> queryBuilder; // 页面查询条件
-	
+	private HashMap<String, String> queryBuilder; // 页面查询条件
+
 	/**
 	 * 当前页之前和之后显示的页数个数 如：假设当前页是 6 共有11页 那么 显示分页条会显示 1 2 3 4 5 [6] 7 8 9 10 11
 	 */
 	private int num = 5;
 
-	@XmlJavaTypeAdapter(ListMapAdapter.class)
-	private List<T> items;// 当前页记录内容集合
-	
-	public List<T> getItems() {
+	@XmlJavaTypeAdapter(ListAdapter.class)
+	private List<HashMap<String, String>> items;// 当前页记录内容集合
+
+	public List<HashMap<String, String>> getItems() {
 		return items;
 	}
 
-	public void setItems(List<T> items) {
+	public void setItems(List<HashMap<String, String>> items) {
 		this.items = items;
 	}
 
-	public Map<String, String>  getQueryBuilder() {
+	public HashMap<String, String> getQueryBuilder() {
 		if (queryBuilder == null)
 			queryBuilder = new HashMap<String, String>();
 		return queryBuilder;
 	}
 
-	public void setQueryBuilder(Map<String, String>  queryBuilder) {
+	public void setQueryBuilder(HashMap<String, String> queryBuilder) {
 		this.queryBuilder = queryBuilder;
 	}
 
