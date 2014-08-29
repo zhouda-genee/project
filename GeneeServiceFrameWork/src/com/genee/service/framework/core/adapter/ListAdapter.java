@@ -11,44 +11,37 @@ import com.genee.service.module.constants.ListEntity;
 import com.genee.service.module.constants.MapEntity;
 
 public class ListAdapter extends
-		XmlAdapter<ListEntity[], List<HashMap<String, Object>>> {
+		XmlAdapter<ListEntity, List<Map<String, Object>>> {
 
 	@Override
-	public List<HashMap<String, Object>> unmarshal(ListEntity[] list)
+	public List<Map<String, Object>> unmarshal(ListEntity listEntity)
 			throws Exception {
-		List<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();
+		List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
 
-		if (list != null) {
-			for (ListEntity e : list) {
-				HashMap<String, Object> hashMap = new HashMap<String, Object>();
-				for (MapEntity mapEntity : e.list) {
-					hashMap.put(mapEntity.key, mapEntity.value);
-				}
-
-				result.add(hashMap);
+		if (listEntity != null) {
+			Map<String, Object> hashMap = new HashMap<String, Object>();
+			for (MapEntity mapEntity : listEntity.list) {
+				hashMap.put(mapEntity.key, mapEntity.value);
 			}
+
+			result.add(hashMap);
 		}
 
 		return result;
 	}
 
 	@Override
-	public ListEntity[] marshal(List<HashMap<String, Object>> list)
-			throws Exception {
-		ListEntity[] convertor = null;
+	public ListEntity marshal(List<Map<String, Object>> list) throws Exception {
+		ListEntity convertor = null;
 		if (list != null) {
-			convertor = new ListEntity[list.size()];
-			int index = 0;
-			for (HashMap<String, Object> map : list) {
-				ListEntity listEntity = new ListEntity();
-
+			convertor = new ListEntity();
+			for (Map<String, Object> map : list) {
 				for (Map.Entry<String, Object> entry : map.entrySet()) {
 					MapEntity mapEntity = new MapEntity();
 					mapEntity.key = entry.getKey();
 					mapEntity.value = entry.getValue().toString();
-					listEntity.list.add(mapEntity);
+					convertor.list.add(mapEntity);
 				}
-				convertor[index++] = listEntity;
 			}
 		}
 		return convertor;
