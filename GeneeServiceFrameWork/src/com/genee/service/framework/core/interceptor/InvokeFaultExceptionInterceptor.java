@@ -17,7 +17,7 @@ public class InvokeFaultExceptionInterceptor implements
 		ex.setStackTrace(trace);
 		ResponseBuilder rb = Response
 				.status(Response.Status.INTERNAL_SERVER_ERROR);
-		//rb.type("application/json;charset=UTF-8");
+		rb.type("application/json;charset=UTF-8");
 		rb.entity(ex);
 		rb.language(Locale.SIMPLIFIED_CHINESE);
 		Response r = rb.build();

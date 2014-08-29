@@ -74,8 +74,8 @@ public abstract class BaseController implements ServletContextAware {
 		outString(response, xmlStr);
 	}
 
-	public PageSupport getPageSupport(HttpServletRequest request) {
-		PageSupport pageSupport = new PageSupport();
+	public <T> PageSupport<T> getPageSupport(HttpServletRequest request) {
+		PageSupport<T> pageSupport = new PageSupport<T>();
 		Map<String, String[]> param = request.getParameterMap();
 		for (Entry<String, String[]> entry : param.entrySet()) {
 			pageSupport.getQueryBuilder().put(entry.getKey(), entry.getValue()[0]);

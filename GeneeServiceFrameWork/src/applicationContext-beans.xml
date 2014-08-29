@@ -1,18 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="
 	http://www.springframework.org/schema/beans 
-	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	http://www.springframework.org/schema/util  
+    http://www.springframework.org/schema/util/spring-util.xsd ">
 
 	<!-- 数据库实现bean -->
 	<bean id="basedao" class="com.genee.service.framework.core.base.dao.MysqlBaseDao" autowire="default"/>
 	
+	<util:list id="jsonTypes">  
+        <value>application/json</value>  
+        <value>application/xml</value>  
+    </util:list> 
+    <!-- arrayKeys和serializeAsArray组合使用，serializeAsArray=true表示arrayKeys中提到的属性值都以数组形式返回，解决单条数据不以数组形式返回的问题 -->
+    <util:list id="jsonKeys">  
+        <value>items</value>  
+    </util:list> 
+	
 	<!-- 返回json自定义格式配置 -->
 	<bean id="jsonProvider" class="org.apache.cxf.jaxrs.provider.json.JSONProvider">
+		<property name="produceMediaTypes" ref="jsonTypes" /> 
+		<property name="arrayKeys" ref="jsonKeys" />   
 		<property name="dropRootElement" value="true" />
 		<property name="serializeAsArray" value="true" />
 		<property name="dropCollectionWrapperElement" value="true" />
+		<property name="writeXsiType" value="false" />
+		<property name="ignoreMixedContent" value="true"/>
+        <property name="attributesToElements" value="true"/>
 	</bean>
 	
 	<!-- 业务接口bean -->

@@ -13,14 +13,15 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import javax.xml.bind.annotation.XmlSeeAlso;
 
-import com.genee.service.framework.core.adapter.ListAdapter;
-import com.genee.service.framework.core.adapter.MapAdapter;
+import com.genee.service.module.pojo.EquipmentIndexEntity;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlSeeAlso({EquipmentIndexEntity.class})
 public class PageSupport<T> {
 
 	private int totalCount = 0;// 总记录数
@@ -28,7 +29,6 @@ public class PageSupport<T> {
 	private int pageSize = 5;// 每页显示记录数
 	private int page = 1;// 当前页
 
-	@XmlJavaTypeAdapter(MapAdapter.class)
 	private HashMap<String, String> queryBuilder; // 页面查询条件
 
 	/**
@@ -36,14 +36,14 @@ public class PageSupport<T> {
 	 */
 	private int num = 5;
 
-	@XmlJavaTypeAdapter(ListAdapter.class)
-	private List<HashMap<String, String>> items;// 当前页记录内容集合
+	@XmlElement(name="items")  
+	private List<T> items;// 当前页记录内容集合
 
-	public List<HashMap<String, String>> getItems() {
+	public List<T> getItems() {
 		return items;
 	}
 
-	public void setItems(List<HashMap<String, String>> items) {
+	public void setItems(List<T> items) {
 		this.items = items;
 	}
 

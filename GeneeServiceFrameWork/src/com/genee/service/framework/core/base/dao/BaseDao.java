@@ -23,6 +23,7 @@ import org.springframework.jdbc.core.RowMapper;
 import com.genee.service.framework.core.base.JdbcTemplateParam;
 import com.genee.service.framework.core.base.PageSupport;
 import com.genee.service.framework.utils.datautil.DateUtil;
+import com.genee.service.framework.utils.map.MapToBeanUtil;
 
 /**
  * ClassName:BaseService
@@ -137,6 +138,11 @@ public abstract class BaseDao {
 		return results;
 	}
 	
+	public <T> List<T> queryForList(JdbcTemplateParam param, Class<T> object){
+		List<Map<String, Object>> result = queryForList(param);
+		return MapToBeanUtil.MapToBean(object, result);
+	}
+	
 	/**
 	 * 查询单个结果
 	 * @param sql
@@ -145,6 +151,11 @@ public abstract class BaseDao {
 	public Map<String, Object> queryForMap(JdbcTemplateParam param) {
 		List<Map<String, Object>> result = queryForList(param);
 		return result.size() > 0 ? result.get(0) : new HashMap<String, Object>();
+	}
+	
+	public <T> T queryForMap(JdbcTemplateParam param, Class<T> object){
+		Map<String, Object> result = queryForMap(param);
+		return MapToBeanUtil.MapToBean(object, result);
 	}
 	
 	public int queryForInt(JdbcTemplateParam param) {
@@ -216,6 +227,6 @@ public abstract class BaseDao {
 	 * @return void
 	 * @throws
 	 */
-	public abstract void queryForList(JdbcTemplateParam param, PageSupport page);
+	public abstract <T> void queryForList(JdbcTemplateParam param, PageSupport<T> page, Class<T> object);
 
 }
