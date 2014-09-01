@@ -1,4 +1,4 @@
-package com.genee.timertask.module.statistics.dao;
+package com.genee.timertask.module.dao;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,7 @@ import com.genee.timertask.framework.core.base.JdbcTemplateParam;
 import com.genee.timertask.framework.core.base.dao.BaseDao;
 import com.genee.timertask.framework.utils.dateutil.DateUtil;
 import com.genee.timertask.framework.utils.timestamp.TimestampUtil;
-import com.genee.timertask.module.statistics.pojo.EquipmentIndexEntity;
+import com.genee.timertask.module.pojo.EquipmentIndexEntity;
 
 @Repository
 public class EquipmentIndexDao {

@@ -1,4 +1,4 @@
-package com.genee.timertask.module.statistics.pojo;
+package com.genee.timertask.module.pojo;
 
 /**
  * 

@@ -7,8 +7,8 @@ import java.util.Map.Entry;
 
 import org.springframework.stereotype.Component;
 
+import com.genee.timertask.module.pojo.EquipmentIndexEntity;
 import com.genee.timertask.module.statistics.index.IndexBase;
-import com.genee.timertask.module.statistics.pojo.EquipmentIndexEntity;
 
 /**
  * 

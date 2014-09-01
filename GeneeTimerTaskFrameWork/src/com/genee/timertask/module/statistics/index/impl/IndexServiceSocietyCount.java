@@ -6,8 +6,8 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 import com.genee.timertask.framework.core.base.JdbcTemplateParam;
+import com.genee.timertask.module.pojo.EquipmentIndexEntity;
 import com.genee.timertask.module.statistics.index.IndexBase;
-import com.genee.timertask.module.statistics.pojo.EquipmentIndexEntity;
 
 /**
  * 

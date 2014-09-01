@@ -1,4 +1,4 @@
-package com.genee.timertask.module.statistics.dao;
+package com.genee.timertask.module.dao;
 
 import java.util.List;
 import java.util.Map;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.genee.timertask.framework.core.base.JdbcTemplateParam;
 import com.genee.timertask.framework.core.base.dao.BaseDao;
 import com.genee.timertask.framework.utils.map.MapToBeanUtil;
-import com.genee.timertask.module.statistics.pojo.IndexEntity;
+import com.genee.timertask.module.pojo.IndexEntity;
 
 @Repository
 public class IndexDao {

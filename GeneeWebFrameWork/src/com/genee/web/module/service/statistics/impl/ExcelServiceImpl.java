@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.genee.web.module.dao.statistics.ExcelDao;
+import com.genee.web.module.dao.ExcelDao;
 import com.genee.web.module.service.statistics.ExcelService;
 
 /**

@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import com.genee.timertask.framework.core.base.dao.BaseDao;
 import com.genee.timertask.framework.utils.dateutil.DateUtil;
 import com.genee.timertask.framework.utils.timestamp.TimestampUtil;
-import com.genee.timertask.module.statistics.pojo.EquipmentIndexEntity;
+import com.genee.timertask.module.pojo.EquipmentIndexEntity;
 
 /**
  * 

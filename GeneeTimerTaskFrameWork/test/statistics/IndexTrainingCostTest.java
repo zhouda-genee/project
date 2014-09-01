@@ -13,8 +13,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.genee.timertask.framework.core.base.test.BaseTest;
+import com.genee.timertask.module.pojo.EquipmentIndexEntity;
 import com.genee.timertask.module.statistics.index.impl.fudangao.IndexTrainingCost;
-import com.genee.timertask.module.statistics.pojo.EquipmentIndexEntity;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class IndexTrainingCostTest extends BaseTest{
