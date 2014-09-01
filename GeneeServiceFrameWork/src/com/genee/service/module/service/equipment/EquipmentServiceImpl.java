@@ -1,4 +1,4 @@
-package com.genee.service.module.equipment;
+package com.genee.service.module.service.equipment;
 
 import java.util.List;
 

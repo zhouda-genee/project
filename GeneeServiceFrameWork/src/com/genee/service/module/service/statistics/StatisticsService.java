@@ -1,4 +1,4 @@
-package com.genee.service.module.statistics;
+package com.genee.service.module.service.statistics;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.genee.service.module.user;
+package com.genee.service.module.service.user;
 
 import java.util.List;
 
