@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.genee.web.framework.core.base.controller.BaseController;
-import com.genee.web.framework.core.error.LogInstance;
 import com.genee.web.module.pojo.IndexTypeEntity;
 import com.genee.web.module.pojo.RoleEntity;
 import com.genee.web.module.service.statistics.IndexService;
@@ -48,19 +47,11 @@ public class IndexController extends BaseController {
 	 * @param response
 	 */
 	@RequestMapping(value = "type", method = RequestMethod.GET)
-	public void showTypes(HttpServletRequest request,
-			HttpServletResponse response) {	
+	public void showTypes(HttpServletRequest request, HttpServletResponse response) {	
 		Map<String, Object> result = new HashMap<String, Object>();
-		try {
-			LogInstance.formatMessage("获取指标类型明细", request);
-			List<IndexTypeEntity> types = iIndexService.searchIndexDetailByType();	
-			result.put("result", types);
-			result.put("request-status", "success");
-		} catch (Exception ex) {
-			LogInstance.error(ex);
-			result.put("result", ex.getMessage());
-			result.put("request-status", "failure");
-		}
+		List<IndexTypeEntity> types = iIndexService.searchIndexDetailByType();	
+		result.put("result", types);
+		result.put("request-status", "success");
 		outJson(response, result, null);
 	}
 	
@@ -81,16 +72,9 @@ public class IndexController extends BaseController {
 	@RequestMapping(value = "getallroles", method = RequestMethod.POST)
 	public void getRoles(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		try {
-			LogInstance.formatMessage("获取角色指标明细", request);
-			List<RoleEntity> roles = iIndexService.searchIndexDetailByRole();
-			result.put("result", roles);
-			result.put("request-status", "success");
-		} catch (Exception ex) {
-			LogInstance.error(ex);
-			result.put("result", ex.getMessage());
-			result.put("request-status", "failure");
-		}
+		List<RoleEntity> roles = iIndexService.searchIndexDetailByRole();
+		result.put("result", roles);
+		result.put("request-status", "success");
 		outJson(response, result, null);
 	}
 	
@@ -104,8 +88,6 @@ public class IndexController extends BaseController {
 		int roleId = (int)request.getSession().getAttribute("roleId");
 		String[] arrCkb = request.getParameterValues("ckb");
 		iIndexService.updateIndexRoleRelation(arrCkb, roleId);
-		System.out.println(roleId);
-		System.out.println(arrCkb);
 	}
 	
 	/**
@@ -118,9 +100,6 @@ public class IndexController extends BaseController {
 	public String showroles(HttpServletRequest request, HttpServletResponse response){
 		List<RoleEntity> roleEntities = iIndexService.searchAllRoleDetail();
 		request.setAttribute("roles", roleEntities);
-		System.out.println(roleEntities);
-		String[] arrckb = request.getParameterValues("ckb");
- 		System.out.println(arrckb);
 		return "statistics/indexconfig/showroles";
 	}
 	
@@ -147,18 +126,11 @@ public class IndexController extends BaseController {
 	@RequestMapping(value = "/{roleId}", method = RequestMethod.POST)
 	public void getrole(HttpServletRequest request, HttpServletResponse response, @PathVariable int roleId){
 		Map<String, Object> result = new HashMap<String, Object>();
-		try {
-			LogInstance.formatMessage("为某一角色分配指标", request);
-			RoleEntity role = iIndexService.searchIndexDetailByRole(roleId);	
-			List<RoleEntity> roleList = new ArrayList<RoleEntity>();
-			roleList.add(role);			
-			result.put("result",roleList);
-			result.put("request-status", "success");
-		} catch (Exception ex) {
-			LogInstance.error(ex);
-			result.put("result", ex.getMessage());
-			result.put("request-status", "failure");
-		}
+		RoleEntity role = iIndexService.searchIndexDetailByRole(roleId);	
+		List<RoleEntity> roleList = new ArrayList<RoleEntity>();
+		roleList.add(role);			
+		result.put("result",roleList);
+		result.put("request-status", "success");
 		outJson(response, result, null);			
 	}
 	

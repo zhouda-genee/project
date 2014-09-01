@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.genee.web.module.dao.statistics;
+package com.genee.web.module.dao;
 
 import java.util.List;
 import java.util.Map;

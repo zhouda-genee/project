@@ -22,7 +22,7 @@
 		$(document).ready(function(){
 			$("#btn").click(function(){
 				$.ajax({
-					type:"post",
+					type:"get",
 					async:"false",
 					url:"<%=basePath%>" + "statistics/indexconfig/type",
 					success: function(msg){
