@@ -65,7 +65,7 @@ public class IndexController extends BaseController {
 	 * @param response
 	 * @param roleId
 	 */
-	@RequestMapping(value = "/{roleId}", method = RequestMethod.POST)
+	@RequestMapping(value = "/{roleId}", method = RequestMethod.GET)
 	public void getrole(HttpServletRequest request, HttpServletResponse response, @PathVariable int roleId){
 		Map<String, Object> result = new HashMap<String, Object>();
 		RoleEntity role = iIndexService.searchIndexDetailByRole(roleId);	

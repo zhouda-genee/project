@@ -121,7 +121,7 @@
 			// 这段代码重复性太强，需要优化
 			// 对中心管理员的数据请求
 			$.ajax({
-				type: "POST",
+				type: "GET",
 				url: "<%=basePath %>" + "statistics/indexconfig/1",
 				success: function(infoRole){
 					var arrRoleIndex = []; // 用来存放角色已拥有指标ID的数组
@@ -148,7 +148,7 @@
 			
 			// 对课题组PI的数据请求
 			$.ajax({
-				type: "POST",
+				type: "GET",
 				url: "<%=basePath %>" + "statistics/indexconfig/2",
 				success: function(infoRole){
 					var arrRoleIndex = []; // 用来存放角色已拥有指标ID的数组
@@ -175,7 +175,7 @@
 			
 			// 对仪器管理员的数据请求
 			$.ajax({
-				type: "POST",
+				type: "GET",
 				url: "<%=basePath %>" + "statistics/indexconfig/3",
 				success: function(infoRole){
 					var arrRoleIndex = []; // 用来存放角色已拥有指标ID的数组
