@@ -17,6 +17,7 @@
 			<ref bean="labService" />
 			<ref bean="organizationService"/>
 			<ref bean="userService"/>
+			<ref bean="statisticsService"/>
 		</jaxrs:serviceBeans>
 
 		<!--拦截器，请求和响应 -->

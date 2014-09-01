@@ -14,6 +14,7 @@ import org.springframework.jdbc.core.CallableStatementCallback;
 
 import com.genee.service.framework.core.base.JdbcTemplateParam;
 import com.genee.service.framework.core.base.PageSupport;
+import com.genee.service.framework.utils.map.MapToBeanUtil;
 
 public class OracleBaseDao extends BaseDao {
 	
@@ -90,7 +91,7 @@ public class OracleBaseDao extends BaseDao {
 	}
 
 	@Override
-	public void queryForList(JdbcTemplateParam param, PageSupport page) {
+	public <T> void queryForList(JdbcTemplateParam param, PageSupport<T> page, Class<T> object) {
 		String sql = param.getSql();
 		// 查询总记录数
 		param.setSql(getSQLCount(sql));
@@ -106,7 +107,9 @@ public class OracleBaseDao extends BaseDao {
 		paginationSQL.append(sql);
 		paginationSQL.append(") obj) WHERE rn BETWEEN " + startIndex + " AND " + endIndex);
 		param.setSql(paginationSQL.toString());
-		page.setItems(queryForList(param));
+		List<Map<String, Object>> result = queryForList(param);
+		List<T> obj = MapToBeanUtil.MapToBean(object, result);
+		page.setItems(obj);
 	}
 	
 	private String getSQLCount(String sql){

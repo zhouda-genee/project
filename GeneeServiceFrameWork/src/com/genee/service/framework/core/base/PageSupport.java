@@ -8,34 +8,52 @@ package com.genee.service.framework.core.base;
  * 
  * @version 0.1 
  */
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class PageSupport {
-	
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
+
+import com.genee.service.module.pojo.EquipmentIndexEntity;
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlSeeAlso({EquipmentIndexEntity.class})
+public class PageSupport<T> {
+
 	private int totalCount = 0;// 总记录数
 	private int pageCount;// 总页数
 	private int pageSize = 5;// 每页显示记录数
 	private int page = 1;// 当前页
-	private Map<String, String> queryBuilder; // 页面查询条件
-	
+
+	private HashMap<String, String> queryBuilder; // 页面查询条件
+
 	/**
 	 * 当前页之前和之后显示的页数个数 如：假设当前页是 6 共有11页 那么 显示分页条会显示 1 2 3 4 5 [6] 7 8 9 10 11
 	 */
 	private int num = 5;
-	
-	@SuppressWarnings("rawtypes")
-	private List<?> items = new ArrayList(pageSize);// 当前页记录内容集合
-	
-	public Map<String, String>  getQueryBuilder() {
+
+	@XmlElement(name="items")  
+	private List<T> items;// 当前页记录内容集合
+
+	public List<T> getItems() {
+		return items;
+	}
+
+	public void setItems(List<T> items) {
+		this.items = items;
+	}
+
+	public HashMap<String, String> getQueryBuilder() {
 		if (queryBuilder == null)
 			queryBuilder = new HashMap<String, String>();
 		return queryBuilder;
 	}
 
-	public void setQueryBuilder(Map<String, String>  queryBuilder) {
+	public void setQueryBuilder(HashMap<String, String> queryBuilder) {
 		this.queryBuilder = queryBuilder;
 	}
 
@@ -136,24 +154,6 @@ public class PageSupport {
 	 */
 	public void setNum(int num) {
 		this.num = num;
-	}
-
-	/**
-	 * 获取当前页记录内容集合
-	 * 
-	 * @return
-	 */
-	public List<?> getItems() {
-		return items;
-	}
-
-	/**
-	 * 设置当前页记录内容集合
-	 * 
-	 * @param items
-	 */
-	public void setItems(List<?> items) {
-		this.items = items;
 	}
 
 	/**

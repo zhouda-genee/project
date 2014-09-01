@@ -18,6 +18,7 @@ import org.springframework.jdbc.support.KeyHolder;
 
 import com.genee.service.framework.core.base.JdbcTemplateParam;
 import com.genee.service.framework.core.base.PageSupport;
+import com.genee.service.framework.utils.map.MapToBeanUtil;
 
 public class MysqlBaseDao extends BaseDao {
 	
@@ -36,29 +37,28 @@ public class MysqlBaseDao extends BaseDao {
 	}
 
 	@Override
-	public void queryForList(JdbcTemplateParam param, PageSupport page) {
+	public <T> void queryForList(JdbcTemplateParam param, PageSupport<T> page, Class<T> object) {
 		String sql = param.getSql();
 		// 查询总记录数
 		param.setSql(getSQLCount(sql));
 		page.setTotalCount(queryForInt(param));
 		// 设置起始值和结束值
-		int startIndex = 1;
+		int startIndex = 0;
 		if (page.getPage() != 1)
 			startIndex = (page.getPage() - 1) * page.getPageSize() + 1;
 		// 查询结果集
 		StringBuffer paginationSQL = new StringBuffer(" ");
 		paginationSQL.append(sql);
-		paginationSQL.append(" limit "+ startIndex+"," + page.getPageSize());
+		paginationSQL.append(" limit "+ startIndex+"," + (page.getPageSize() - 1));
 		param.setSql(paginationSQL.toString());
-		page.setItems(queryForList(param));
+		List<Map<String, Object>> result = queryForList(param);
+		List<T> obj = MapToBeanUtil.MapToBean(object, result);
+		page.setItems(obj);
 
 	}
 	
 	private String getSQLCount(String sql){
-		String sqlBak = sql.toLowerCase();
-		String searchValue = " from ";
-		String sqlCount = "select count(*) from "+ sql.substring(sqlBak.indexOf(searchValue)+searchValue.length(), sqlBak.length());
-		return sqlCount;
+		return "select count(*) from ("+ sql + ") table1";
 	}
 
 	@Override

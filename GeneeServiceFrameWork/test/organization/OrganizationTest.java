@@ -12,7 +12,7 @@ import org.junit.Test;
 import com.genee.service.framework.core.base.test.BaseTest;
 import com.genee.service.framework.utils.http.HttpClientUtil;
 import com.genee.service.framework.utils.json.JsonUtil;
-import com.genee.service.module.pojo.OrganizationEntity;
+import com.genee.service.module.pojo.TagEntity;
 
 public class OrganizationTest extends BaseTest {
 	private static final String ORGANIZATION_NAME = "组织机构";
@@ -20,27 +20,23 @@ public class OrganizationTest extends BaseTest {
 	/**
 	 * 查询组织结构根节点
 	 */
-	@SuppressWarnings("rawtypes")
 	@Test
 	public void getRootOrganization() {
 		String url = "http://localhost:8088/geneeservicefw/api/rest/organization/root";
 		Map<String, String> headers = new HashMap<String, String>();
 		headers.put("Accept", MediaType.APPLICATION_JSON);
 		String result = HttpClientUtil.get(url, headers);
-		Map map = JsonUtil.getMap4Json(result);
-		OrganizationEntity organizationEntity = (OrganizationEntity) JsonUtil
-				.getObject4JsonString(
-						(map.get("organizationEntity")).toString(),
-						OrganizationEntity.class);
+		TagEntity entity = (TagEntity) JsonUtil.getObject4JsonString(result,
+				TagEntity.class);
 
 		// 判断查询出的根节点名称是否为"组织结构"
-		Assert.assertEquals(ORGANIZATION_NAME, organizationEntity.getName());
+		Assert.assertEquals(ORGANIZATION_NAME, entity.getName());
 	}
 
 	/**
 	 * 查询组织结构根节点
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings("unchecked")
 	@Test
 	public void getChildOrganization() {
 		// 查询根节点
@@ -48,22 +44,16 @@ public class OrganizationTest extends BaseTest {
 		Map<String, String> headers = new HashMap<String, String>();
 		headers.put("Accept", MediaType.APPLICATION_JSON);
 		String result = HttpClientUtil.get(url, headers);
-		Map map = JsonUtil.getMap4Json(result);
-		OrganizationEntity organizationEntity = (OrganizationEntity) JsonUtil
-				.getObject4JsonString(
-						(map.get("organizationEntity")).toString(),
-						OrganizationEntity.class);
+		TagEntity entity = (TagEntity) JsonUtil.getObject4JsonString(result,
+				TagEntity.class);
 
 		// 查询根节点下的所有子节点
 		String curl = "http://localhost:8088/geneeservicefw/api/rest/organization/child?id="
-				+ organizationEntity.getId();
+				+ entity.getId();
 		String cresult = HttpClientUtil.get(curl, headers);
-		Map cmap = JsonUtil.getMap4Json(cresult);
-		List<OrganizationEntity> clist = JsonUtil.getList4Json(
-				cmap.get("organizationEntity").toString(),
-				OrganizationEntity.class);
+		List<TagEntity> clist = JsonUtil.getList4Json(cresult, TagEntity.class);
 
 		// 判断查询出的根节点的ccount和子节点个数是否一致
-		Assert.assertEquals(organizationEntity.getCcount(), clist.size());
+		Assert.assertEquals(entity.getCcount(), clist.size());
 	}
 }

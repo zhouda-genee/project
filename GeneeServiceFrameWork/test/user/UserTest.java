@@ -19,7 +19,7 @@ public class UserTest extends BaseTest {
 	/**
 	 * 模糊查询所有联系人
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings("unchecked")
 	@Test
 	public void getContact() {
 		String url = "http://localhost:8088/geneeservicefw/api/rest/user/contact";
@@ -28,9 +28,7 @@ public class UserTest extends BaseTest {
 		Map<String, String> headers = new HashMap<String, String>();
 		headers.put("Accept", MediaType.APPLICATION_JSON);
 		String result = HttpClientUtil.post(url, param, headers);
-		Map map = JsonUtil.getMap4Json(result);
-		List<BaseEntity> list = JsonUtil.getList4Json(map.get("baseEntity")
-				.toString(), BaseEntity.class);
+		List<BaseEntity> list = JsonUtil.getList4Json(result, BaseEntity.class);
 
 		// 判断查询出的所有联系人名称是否包含"胡"
 		for (BaseEntity entity : list) {
@@ -41,7 +39,7 @@ public class UserTest extends BaseTest {
 	/**
 	 * 模糊查询所有负责人
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings("unchecked")
 	@Test
 	public void getIncharge() {
 		String url = "http://localhost:8088/geneeservicefw/api/rest/user/incharge";
@@ -50,9 +48,7 @@ public class UserTest extends BaseTest {
 		Map<String, String> headers = new HashMap<String, String>();
 		headers.put("Accept", MediaType.APPLICATION_JSON);
 		String result = HttpClientUtil.post(url, param, headers);
-		Map map = JsonUtil.getMap4Json(result);
-		List<BaseEntity> list = JsonUtil.getList4Json(map.get("baseEntity")
-				.toString(), BaseEntity.class);
+		List<BaseEntity> list = JsonUtil.getList4Json(result, BaseEntity.class);
 
 		// 判断查询出的所有负责人名称是否包含"胡"
 		for (BaseEntity entity : list) {
@@ -63,7 +59,7 @@ public class UserTest extends BaseTest {
 	/**
 	 * 模糊查询所有使用者
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings("unchecked")
 	@Test
 	public void getUserInRecord() {
 		String url = "http://localhost:8088/geneeservicefw/api/rest/user/recuser";
@@ -72,9 +68,7 @@ public class UserTest extends BaseTest {
 		Map<String, String> headers = new HashMap<String, String>();
 		headers.put("Accept", MediaType.APPLICATION_JSON);
 		String result = HttpClientUtil.post(url, param, headers);
-		Map map = JsonUtil.getMap4Json(result);
-		List<BaseEntity> list = JsonUtil.getList4Json(map.get("baseEntity")
-				.toString(), BaseEntity.class);
+		List<BaseEntity> list = JsonUtil.getList4Json(result, BaseEntity.class);
 
 		// 判断查询出的所有负责人名称是否包含"胡"
 		for (BaseEntity entity : list) {

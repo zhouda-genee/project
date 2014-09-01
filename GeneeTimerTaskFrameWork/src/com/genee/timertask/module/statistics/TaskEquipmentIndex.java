@@ -15,11 +15,11 @@ import com.genee.timertask.framework.core.context.SpringContext;
 import com.genee.timertask.framework.utils.dateutil.DateUtil;
 import com.genee.timertask.framework.utils.dateutil.DateUtil.DateType;
 import com.genee.timertask.framework.utils.timestamp.TimestampUtil;
-import com.genee.timertask.module.statistics.dao.EquipmentIndexDao;
-import com.genee.timertask.module.statistics.dao.IndexDao;
+import com.genee.timertask.module.dao.EquipmentIndexDao;
+import com.genee.timertask.module.dao.IndexDao;
+import com.genee.timertask.module.pojo.EquipmentIndexEntity;
+import com.genee.timertask.module.pojo.IndexEntity;
 import com.genee.timertask.module.statistics.index.IndexBase;
-import com.genee.timertask.module.statistics.pojo.EquipmentIndexEntity;
-import com.genee.timertask.module.statistics.pojo.IndexEntity;
 
 @Component
 public class TaskEquipmentIndex {
