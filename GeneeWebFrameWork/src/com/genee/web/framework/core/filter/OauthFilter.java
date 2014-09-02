@@ -25,11 +25,13 @@ import org.apache.commons.lang.StringUtils;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
+import com.genee.web.framework.core.context.SpringContext;
 import com.genee.web.framework.utils.http.HttpClientUtil;
 import com.genee.web.framework.utils.prop.PropertiesUtil;
 import com.genee.web.framework.utils.stringutil.StringUtil;
+import com.genee.web.module.service.statistics.UserService;
 
-@WebFilter(description = "oauth过滤器", urlPatterns = { "/*" })
+@WebFilter(description = "oauth过滤器", urlPatterns = { "/abc" })
 public class OauthFilter extends HttpServlet implements Filter {
        
 	private static final long serialVersionUID = 1L;
@@ -100,7 +102,19 @@ public class OauthFilter extends HttpServlet implements Filter {
 					JSONObject userObject = JSONObject.fromObject(userResult);
 					if (userObject.get(PARAM_ERROR) != null){
 						// 获取用户信息成功，将结果存入session
-						session.setAttribute(PARAM_USER, userObject.optString("result"));
+						String userId = userObject.optString("result");
+						Map<String, String> param = new HashMap<String, String>(2);
+						param.put("userid", userId);
+						// 获取用户角色
+						UserService userService = (UserService) SpringContext.getBean("userservice");
+						String role = userService.queryRoleByUser(Integer.parseInt(userId));
+						if (StringUtils.isEmpty(role)){
+							// 没有角色跳回请求者页面
+							responseSendRedirect(httpServletResponse, backUrl);
+							return;
+						}
+						param.put("role", role);
+						session.setAttribute(PARAM_USER, param);
 					} else {
 						// 不成功跳回请求者页面
 						responseSendRedirect(httpServletResponse, backUrl);

@@ -1,4 +1,4 @@
-package com.genee.web.module.service.statistics.impl;
+package com.genee.web.module.service.statistics;
 
 import java.util.List;
 import java.util.Map;
@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.genee.web.module.dao.ExcelDao;
-import com.genee.web.module.service.statistics.ExcelService;
 
 /**
  * @author jinzhe.hu

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.genee.web.module.service.statistics.impl;
+package com.genee.web.module.service.statistics;
 
 import java.util.List;
 
@@ -12,7 +12,6 @@ import com.genee.web.module.dao.IndexDao;
 import com.genee.web.module.pojo.IndexEntity;
 import com.genee.web.module.pojo.IndexTypeEntity;
 import com.genee.web.module.pojo.RoleEntity;
-import com.genee.web.module.service.statistics.IndexService;
 
 /**
  * @author yanan.che 2014年8月13日
