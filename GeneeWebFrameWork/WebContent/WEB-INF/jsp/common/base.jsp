@@ -18,6 +18,4 @@ function JSONRPC2Object(id, method, params){
 	this.method = method;
 	this.params = params;
 }
-// jsonrpc2参数对象
-function JSONRPC2Param(){}
 </script>
