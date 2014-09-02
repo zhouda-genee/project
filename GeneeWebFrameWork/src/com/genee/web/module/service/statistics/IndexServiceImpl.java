@@ -23,21 +23,6 @@ public class IndexServiceImpl implements IndexService {
 	private IndexDao indexDao;
 	
 	@Override
-	public List<IndexEntity> searchAllIndexDetail() {
-		return indexDao.searchAllIndexDetail();
-	}
-	
-	@Override
-	public List<IndexTypeEntity> searchAllIndexTypeDetail() {
-		return indexDao.searchAllIndexTypeDetail();
-	}
-	
-	@Override
-	public List<RoleEntity> searchAllRoleDetail() {
-		return indexDao.searchAllRoleDetail();
-	}
-	
-	@Override
 	public List<IndexTypeEntity> searchIndexDetailByType() {
 		List<IndexTypeEntity> types = indexDao.searchAllIndexTypeDetail();
 		for (IndexTypeEntity type : types) {
@@ -45,24 +30,6 @@ public class IndexServiceImpl implements IndexService {
 			type.setIndexs(indexs);
 		}
 		return types;
-	}
-	
-	@Override
-	public List<RoleEntity> searchIndexDetailByRole() {
-		List<RoleEntity> roles = indexDao.searchAllRoleDetail();
-		for (RoleEntity role : roles) {
-			List<IndexEntity> indexs = indexDao.searchIndexDetailByRole(role.getrId());
-			role.setIndexs(indexs);
-		}
-		return roles;
-	}
-	
-	@Override
-	public IndexTypeEntity searchIndexDetailByType(int typeId) {
-		IndexTypeEntity indexTypeEntity = new IndexTypeEntity();
-		indexTypeEntity = indexDao.searchIndexType(typeId);
-		indexTypeEntity.setIndexs(indexDao.searchIndexDetailByType(typeId));
-		return indexTypeEntity;
 	}
 
 	@Override

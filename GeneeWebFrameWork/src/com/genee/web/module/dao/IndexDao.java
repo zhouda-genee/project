@@ -27,24 +27,6 @@ public class IndexDao {
 	@Autowired
 	@Qualifier("basedao")
 	private BaseDao baseDao;
-
-	/**
-	 * 查询指标基本信息表中的所有记录
-	 * @return
-	 */
-	public List<IndexEntity> searchAllIndexDetail() {
-		String sql = "select * from s_index";
-		JdbcTemplateParam param = new JdbcTemplateParam(sql);
-		List<Map<String, Object>> results = baseDao.queryForList(param);
-		List<IndexEntity> indexEntities = new ArrayList<IndexEntity>(
-				results.size());
-		for (Map<String, Object> result : results) {
-			IndexEntity indexEntity = new IndexEntity();
-			indexEntity.fromResultSet(result);
-			indexEntities.add(indexEntity);
-		}
-		return indexEntities;
-	}
 	
 	/**
 	 * 查询指标类型表中的所有记录
@@ -65,44 +47,12 @@ public class IndexDao {
 	}
 	
 	/**
-	 * 查询指标角色表中的所有记录
-	 * @return
-	 */
-	public List<RoleEntity> searchAllRoleDetail() {
-		String sql = "select r_id, r_name from s_role";
-		JdbcTemplateParam param = new JdbcTemplateParam(sql);
-		List<Map<String, Object>> results = baseDao.queryForList(param);
-		
-		List<RoleEntity> roleEntities = new ArrayList<RoleEntity>(results.size());
-		for (Map<String, Object> result : results) {
-			RoleEntity roleEntity = new RoleEntity();
-			roleEntity.fromResultSet(result);
-			roleEntities.add(roleEntity);
-		}
-		return roleEntities;
-	}
-	
-	/**
-	 * 查询某一类型的指标
-	 * @param typeId
-	 * @return
-	 */
-	public IndexTypeEntity searchIndexType(int typeId) {
-		String sql = "select * from s_index_type where t_id = ?";
-		JdbcTemplateParam param = new JdbcTemplateParam(sql, new Object[] { typeId }, new int[] { java.sql.Types.INTEGER});
-		Map<String,Object> result = baseDao.queryForMap(param);
-		IndexTypeEntity indexTypeEntity = new IndexTypeEntity();		
-		indexTypeEntity.fromResultSet(result);
-		return indexTypeEntity;
-	}
-	
-	/**
 	 * 查询某一角色
 	 * @param roleId
 	 * @return
 	 */
 	public RoleEntity searchRole(int roleId) {
-		String sql = "select * from s_role where r_id = ?";
+		String sql = "select r_id, r_name from s_role where r_id = ?";
 		JdbcTemplateParam param = new JdbcTemplateParam(sql, new Object[] { roleId }, new int[] { java.sql.Types.INTEGER });
 		Map<String, Object> result = baseDao.queryForMap(param);
 		RoleEntity roleEntity = new RoleEntity();
@@ -116,7 +66,10 @@ public class IndexDao {
 	 * @return
 	 */
 	public List<IndexEntity> searchIndexDetailByType(int typeId) {
-		String sql = "select * from s_index where t_id = ? order by s_sort";
+		String sql = "select s_id, t_id, s_sort, s_name"
+				+ " from s_index "
+				+ " where s_onoff = '0' and t_id = ?"
+				+ " order by s_sort";
 		JdbcTemplateParam param = new JdbcTemplateParam(sql, new Object[] { typeId }, new int[] { java.sql.Types.INTEGER });
 		List<Map<String, Object>> results = baseDao.queryForList(param);
 		List<IndexEntity> indexEntities = new ArrayList<IndexEntity>(results.size());
@@ -136,8 +89,9 @@ public class IndexDao {
 	 * @return
 	 */
 	public List<IndexEntity> searchIndexDetailByRole(int roleId) {
-		String sql = "select * from s_role SR, s_r_index_role SIR, s_index SI"
-				+ " where SR.r_id = SIR.r_id and  SI.s_id = SIR.s_id and SR.r_id = ?";
+		String sql = "select SI.s_id, SI.t_id, SI.s_sort"
+				+ " from s_role SR, s_r_index_role SIR, s_index SI"
+				+ " where SI.s_onoff = '0' and SR.r_id = SIR.r_id and  SI.s_id = SIR.s_id and SR.r_id = ?";
 		JdbcTemplateParam param = new JdbcTemplateParam(sql, new Object[]{ roleId }, new int[] { java.sql.Types.INTEGER });
 		List<Map<String, Object>> results = baseDao.queryForList(param);
 		List<IndexEntity> indexEntities = new ArrayList<IndexEntity>( results.size());
@@ -149,23 +103,6 @@ public class IndexDao {
 		return indexEntities;
 	}
 	
-	/**
-	 * 查询某一角色的指标关系
-	 * @param roleId
-	 * @return
-	 */
-	public List<IndexRoleEntity> searchIndexRoleRelation(int roleId) {
-		String sql = "select * from s_r_index_role where r_id = ?";
-		JdbcTemplateParam param = new JdbcTemplateParam(sql, new Object[] { roleId }, new int[] { java.sql.Types.INTEGER });
-		List<Map<String,Object>> results = baseDao.queryForList(param);
-		List<IndexRoleEntity> indexRoleEntities = new ArrayList<IndexRoleEntity>(results.size());
-		for (Map<String, Object> result : results) {
-			IndexRoleEntity indexRoleEntity = new IndexRoleEntity();
-			indexRoleEntity.fromResultSet(result);
-			indexRoleEntities.add(indexRoleEntity);
-		}
-		return indexRoleEntities;
-	}
 	/**
 	 * 删除某一角色的指标关系
 	 * @param roleId
