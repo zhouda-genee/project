@@ -32,4 +32,55 @@
 			<param name="name" type="string"/>
 		</params>
 	</service>
+	<!-- 分页查询指标 -->
+	<service name="statistics_eqindex_page" url="http://localhost:8088/geneeservicefw/api/rest/statistics/eqindex/page" methodType="post" content-type="application/x-www-form-urlencoded" returnType="object">
+		<params>
+			<param name="eq_name" type="string"/>
+			<param name="eq_type" type="string"/>
+			<param name="eq_org" type="string"/>
+			<param name="eq_contact" type="string"/>
+			<param name="eq_incharge" type="string"/>
+			<param name="lab_org" type="string"/>
+			<param name="lab" type="string"/>
+			<param name="user" type="string"/>
+			<param name="dstart" type="long"/>
+			<param name="dend" type="long"/>
+			<param name="size" type="int"/>
+			<param name="page" type="int"/>
+			<param name="sort_name" type="string"/>
+			<param name="sort" type="string"/>
+		</params>
+	</service>
+	<!-- 查询所有指标记录 -->
+	<service name="statistics_eqindex" url="http://localhost:8088/geneeservicefw/api/rest/statistics/eqindex" methodType="post" content-type="application/x-www-form-urlencoded" returnType="array">
+		<params>
+			<param name="eq_name" type="string"/>
+			<param name="eq_type" type="string"/>
+			<param name="eq_org" type="string"/>
+			<param name="eq_contact" type="string"/>
+			<param name="eq_incharge" type="string"/>
+			<param name="lab_org" type="string"/>
+			<param name="lab" type="string"/>
+			<param name="user" type="string"/>
+			<param name="dstart" type="long"/>
+			<param name="dend" type="long"/>
+			<param name="sort_name" type="string"/>
+			<param name="sort" type="string"/>
+		</params>
+	</service>
+	<!-- 查询指标统计记录 -->
+	<service name="statistics_eqindex_count" url="http://localhost:8088/geneeservicefw/api/rest/statistics/eqindex/count" methodType="post" content-type="application/x-www-form-urlencoded" returnType="object">
+		<params>
+			<param name="eq_name" type="string"/>
+			<param name="eq_type" type="string"/>
+			<param name="eq_org" type="string"/>
+			<param name="eq_contact" type="string"/>
+			<param name="eq_incharge" type="string"/>
+			<param name="lab_org" type="string"/>
+			<param name="lab" type="string"/>
+			<param name="user" type="string"/>
+			<param name="dstart" type="long"/>
+			<param name="dend" type="long"/>
+		</params>
+	</service>
 </services>
