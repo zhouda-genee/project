@@ -33,11 +33,11 @@
 	</bean>
 	
 	<!-- 业务接口bean -->
-	<bean id="labService" class="com.genee.service.module.lab.LabServiceImpl"/>
-	<bean id="organizationService" class="com.genee.service.module.organization.OrganizationServiceImpl"/>
-	<bean id="userService" class="com.genee.service.module.user.UserServiceImpl"/>
-	<bean id="equipmentService" class="com.genee.service.module.equipment.EquipmentServiceImpl"/>
-	<bean id="statisticsService" class="com.genee.service.module.statistics.StatisticsServiceImpl"/>
+	<bean id="labService" class="com.genee.service.module.service.lab.LabServiceImpl"/>
+	<bean id="organizationService" class="com.genee.service.module.service.organization.OrganizationServiceImpl"/>
+	<bean id="userService" class="com.genee.service.module.service.user.UserServiceImpl"/>
+	<bean id="equipmentService" class="com.genee.service.module.service.equipment.EquipmentServiceImpl"/>
+	<bean id="statisticsService" class="com.genee.service.module.service.statistics.StatisticsServiceImpl"/>
 
 	<!-- 拦截器bean -->
 	<bean id="logInInterceptor" class="com.genee.service.framework.core.interceptor.LogInInterceptor" />

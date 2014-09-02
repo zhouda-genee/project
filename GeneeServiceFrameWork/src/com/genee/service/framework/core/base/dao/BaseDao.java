@@ -36,7 +36,7 @@ import com.genee.service.framework.utils.map.MapToBeanUtil;
  */
 public abstract class BaseDao {
 	
-	protected final Logger logger = Logger.getLogger(getClass());
+	protected final Logger logger = Logger.getLogger("genee");
 
 	@Autowired
 	@Qualifier("defaultJdbcTemplate")
