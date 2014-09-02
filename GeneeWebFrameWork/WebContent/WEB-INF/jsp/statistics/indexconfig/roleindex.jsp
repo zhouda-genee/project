@@ -116,7 +116,6 @@
 		})();
 		// 将 json字符串转化为json对象
 		var dataType = JSON.parse(types);
-		
 		$(function(){
 			// 这段代码重复性太强，需要优化
 			// 对中心管理员的数据请求

@@ -24,12 +24,6 @@ public class IndexTypeEntity implements Serializable{
 	// 指标类型与指标的一对多关系
 	private List<IndexEntity> indexs = null;
 	
-	// 和Dao层结合使用
-	public void fromResultSet(Map<String, Object> result) {
-		this.tId = (Integer)result.get("t_id");
-		this.tName = (String)result.get("t_name");
-	}	
-	
 	public IndexTypeEntity() {}
 	
 	public IndexTypeEntity(int tId, String tName) {

@@ -44,22 +44,6 @@ public class IndexEntity implements Serializable {
 	
 	// 指标与角色的多对多关系  
 	private List<RoleEntity> roles = null;
-
-	/**
-	 * 返回结果集 和数据库的交互函数 在Dao层结合使用
-	 * @param result
-	 */
-	public void fromResultSet(Map<String, Object> result) {
-		this.sId = (Integer) result.get("s_id");
-		this.tId = (Integer) result.get("t_id");
-		this.sName = (String) result.get("s_name");
-		this.sCode = (String) result.get("s_code");
-		this.sClassName = (String) result.get("s_class_name");
-		this.sMethodName = (String) result.get("s_method_name");
-		this.sFlag = (String) result.get("s_flag");
-		this.sSort = (Integer) result.get("s_sort");
-		this.sOnOff = (String) result.get("s_onoff");
-	}
 	
 	public List<RoleEntity> getRoles() {
 		return roles;
