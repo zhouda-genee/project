@@ -64,6 +64,7 @@
 		<aop:advisor pointcut-ref="cfPointCut" advice-ref="cftxAdvice" />
 	</aop:config>
 	
+	<import resource="classpath:applicationContext-resource.xml" />
 	<import resource="classpath:applicationContext-source.xml" />
 	<import resource="classpath:applicationContext-beans.xml" />
 
