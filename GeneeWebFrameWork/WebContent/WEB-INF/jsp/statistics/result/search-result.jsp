@@ -1,27 +1,52 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE>
 <html>
 <head>
 <jsp:include page="../../common/base.jsp"></jsp:include>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>统计列表</title>
 <script>
 	$(document).ready(function() { 
-		$("#exportBtn").click(function() {
-			alert(123);
-		})
-		
-		$("#searchBtn").click(function() {
-			if ($("#searchProperties").is(":hidden")) {
-				$("#searchProperties").slideDown(1000);
-			} else {
-				$("#searchProperties").slideUp(1000);
+		$("#dosearch").click(function(){
+			var jsonRPCobject = new JSONRPC2Object();
+			jsonRPCobject.jsonrpc = "2.0";
+			jsonRPCobject.id = new Date().getTime();
+			jsonRPCobject.method = "statistics_eqindex_page";
+			/*jsonrpc2.push('"jsonrpc":"2.0"');
+			jsonrpc2.push("'id':'" + new Date().getTime() +"'");
+			jsonrpc2.push("'method':'statistics_eqindex_page'");*/
+			var param = new Array();
+			// 仪器名称
+			var eq_name = $("#eq_name").val();
+			if (eq_name != null){
+				param.push("'eq_name':'" + eq_name + "'");
 			}
-		})
+			var param_json = JSON.stringify(param);
+			alert("param_json:" + param_json);
+			jsonrpc2.push("'params':'"+param_json+"'");
+			/*$.ajax({
+				url: "http://localhost:8088/geneeservletfw/API2",
+				cache: false,
+				async: false,
+				dataType: "json",
+				type: "post",
+				success: function(data){
+					alert(data);
+				}
+			});*/
+			var jsonrpc2_json = JSON.stringify(jsonrpc2);
+			alert("jsonrpc2_json: " + jsonrpc2_json);
+		});
 	}); 
+	
+	function displaySearchProperties() {
+		if ($("#searchProperties").is(":hidden")) {
+			$("#searchProperties").slideDown(1000);
+		} else {
+			$("#searchProperties").slideUp(1000);
+		}
+	}
+	
 	function tableScroll() {
 		var a = document.getElementById("t_r_content").scrollTop;
 		var b = document.getElementById("t_r_content").scrollLeft;
@@ -29,6 +54,8 @@
 		document.getElementById("t_r_t").scrollLeft = b;
 		document.getElementById("t_r_f").scrollLeft = b;
 	}
+	
+	
 </script>
 </head>
 <body>
@@ -53,6 +80,7 @@
 
 	<div class="container-fluid">
 		<div class="row">
+			<!-- 左侧菜单 -->
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
 					<li>
@@ -74,13 +102,13 @@
 			</div>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<div class="link-group">
-					<a href="javascript:(0);" id="searchBtn" class="link link-primary">搜索</a> <a
+					<a href="javascript:displaySearchProperties();" id="searchBtn" class="link link-primary">搜索</a> <a
 						href="#" class="link link-primary right" data-toggle="modal"
 						data-target="#myModal">打印</a> <a href="#" id="exportBtn"
 						class="link link-primary right" data-toggle="modal"
 						data-target="#myModal">导出</a>
 				</div>
-
+				<!-- 搜索条件结果 -->
 				<div class="pannel">
 					<div class="container-self">
 						<form>
@@ -130,91 +158,14 @@
 						</div>
 						<div class="col-freeze" id="cl_freeze">
 							<table>
-								<tr>
-									<td>光谱仪</td>
-								</tr>
-								<tr>
-									<td>光谱仪</td>
-								</tr>
-								<tr>
-									<td>光谱仪</td>
-								</tr>
-								<tr>
-									<td>光谱仪</td>
-								</tr>
-								<tr>
-									<td>光谱仪</td>
-								</tr>
-								<tr>
-									<td>光谱仪</td>
-								</tr>
-								<tr>
-									<td>光谱仪</td>
-								</tr>
-								<tr>
-									<td>光谱仪</td>
-								</tr>
-								<tr>
-									<td>光谱仪</td>
-								</tr>
-								<tr>
-									<td>光谱仪</td>
-								</tr>
-								<tr>
-									<td>光谱仪</td>
-								</tr>
-								<tr>
-									<td>光谱仪</td>
-								</tr>
-								<tr>
-									<td>光谱仪</td>
-								</tr>
-								<tr>
-									<td>光谱仪</td>
-								</tr>
-								<tr>
-									<td>光谱仪</td>
-								</tr>
-								<tr>
-									<td>光谱仪</td>
-								</tr>
-								<tr>
-									<td>光谱仪</td>
-								</tr>
-								<tr>
-									<td>光谱仪</td>
-								</tr>
-								<tr>
-									<td>光谱仪</td>
-								</tr>
-								<tr>
-									<td>光谱仪</td>
-								</tr>
-								<tr>
-									<td>光谱仪</td>
-								</tr>
-								<tr>
-									<td>光谱仪</td>
-								</tr>
-								<tr>
-									<td>光谱仪</td>
-								</tr>
-								<tr>
-									<td>光谱仪</td>
-								</tr>
-								<tr>
-									<td>光谱仪</td>
-								</tr>
-								<tr>
-									<td>光谱仪</td>
-								</tr>
-								<tr>
-									<td>光谱仪</td>
-								</tr>
+								<tr><td>光谱仪</td></tr>
+								<tr><td class="count">
+									<span style="font-size: 14px; padding-left: 10px; color: #000;">
+									总计&nbsp;&nbsp;仪器台数：23
+									</span></td></tr>
 							</table>
 						</div>
 					</div>
-
 					<div class="table-row">
 						<div class="t-r-t" id="t_r_t">
 							<div class="table-row-title">
@@ -225,7 +176,6 @@
 										<th colspan="10" style="width: 1200px; font-size: 18px;">测样信息</th>
 										<th colspan="4" style="width: 480px; font-size: 18px;">计费信息</th>
 									</tr>
-
 									<tr>
 										<th>仪器价格（¥）</th>
 										<th>负责人</th>
@@ -255,8 +205,7 @@
 								</table>
 							</div>
 						</div>
-						<div class="table-row-content" id="t_r_content"
-							onscroll="tableScroll()">
+						<div class="table-row-content" id="t_r_content" onscroll="tableScroll()">
 							<table>
 								<tr>
 									<td>1</td>
@@ -264,275 +213,52 @@
 									<td>1</td>
 									<td>1</td>
 									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-								</tr>
-								<tr>
 									<td>6</td>
-									<td>6</td>
-									<td>6</td>
-									<td>6</td>
-									<td>6</td>
-									<td>6</td>
-								</tr>
-								<tr>
 									<td>7</td>
-									<td>7</td>
-									<td>7</td>
-									<td>7</td>
-									<td>7</td>
-									<td>7</td>
-								</tr>
-								<tr>
 									<td>8</td>
-									<td>8</td>
-									<td>8</td>
-									<td>8</td>
-									<td>8</td>
-									<td>8</td>
-								</tr>
-								<tr>
 									<td>9</td>
-									<td>9</td>
-									<td>9</td>
-									<td>9</td>
-									<td>9</td>
-									<td>9</td>
-								</tr>
-								<tr>
 									<td>10</td>
-									<td>10</td>
-									<td>10</td>
-									<td>10</td>
-									<td>10</td>
-									<td>10</td>
-								</tr>
-								<tr>
 									<td>11</td>
-									<td>11</td>
-									<td>11</td>
-									<td>11</td>
-									<td>11</td>
-									<td>11</td>
-								</tr>
-								<tr>
 									<td>12</td>
-									<td>12</td>
-									<td>12</td>
-									<td>12</td>
-									<td>12</td>
-									<td>12</td>
-								</tr>
-								<tr>
 									<td>13</td>
-									<td>13</td>
-									<td>13</td>
-									<td>13</td>
-									<td>13</td>
-									<td>13</td>
-								</tr>
-								<tr>
 									<td>14</td>
-									<td>14</td>
-									<td>14</td>
-									<td>14</td>
-									<td>14</td>
-									<td>14</td>
-								</tr>
-								<tr>
 									<td>15</td>
-									<td>15</td>
-									<td>15</td>
-									<td>15</td>
-									<td>15</td>
-									<td>15</td>
-								</tr>
-								<tr>
 									<td>16</td>
-									<td>16</td>
-									<td>16</td>
-									<td>16</td>
-									<td>16</td>
-									<td>16</td>
-								</tr>
-								<tr>
 									<td>17</td>
-									<td>17</td>
-									<td>17</td>
-									<td>17</td>
-									<td>17</td>
-									<td>17</td>
-								</tr>
-								<tr>
 									<td>18</td>
-									<td>18</td>
-									<td>18</td>
-									<td>18</td>
-									<td>18</td>
-									<td>18</td>
-								</tr>
-								<tr>
 									<td>19</td>
-									<td>19</td>
-									<td>19</td>
-									<td>19</td>
-									<td>19</td>
-									<td>19</td>
-								</tr>
-								<tr>
 									<td>20</td>
-									<td>20</td>
-									<td>20</td>
-									<td>20</td>
-									<td>20</td>
-									<td>20</td>
-								</tr>
-								<tr>
 									<td>21</td>
-								</tr>
-								<tr>
 									<td>22</td>
-								</tr>
-								<tr>
 									<td>23</td>
 								</tr>
-								<tr>
-									<td>24</td>
-								</tr>
-								<tr>
-									<td>25</td>
-								</tr>
-								<tr>
-									<td>26</td>
-								</tr>
-								<tr>
-									<td>27</td>
+								<tr id="count">
+									<td>1</td>
+									<td>1</td>
+									<td>1</td>
+									<td>1</td>
+									<td>1</td>
+									<td>6</td>
+									<td>7</td>
+									<td>8</td>
+									<td>9</td>
+									<td>10</td>
+									<td>11</td>
+									<td>12</td>
+									<td>13</td>
+									<td>14</td>
+									<td>15</td>
+									<td>16</td>
+									<td>17</td>
+									<td>18</td>
+									<td>19</td>
+									<td>20</td>
+									<td>21</td>
+									<td>22</td>
+									<td>23</td>
 								</tr>
 							</table>
 						</div>
-					</div>
-
-					<div class="table-foot" id="t_r_f">
-						<table>
-							<tr>
-								<td class="count">总计<span
-									style="font-size: 14px; padding-left: 10px; color: #000;">仪器台数：23</span></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-						</table>
 					</div>
 				</div>
 			</div>
@@ -542,38 +268,32 @@
 	<div id="searchProperties" style="display:none;position: absolute;left:185px;top:100px;" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-content">
             <div class="modal-header">
-              <h3 class="modal-title" id="myModalLabel">请输入搜索内容</h4>
+              <h3 class="modal-title" id="myModalLabel">请输入搜索内容</h3>
             </div>
             <div class="modal-body">
               <label>搜索条件</label>
                 <div style="position: relative;">
-                  <form>
                     <div class="left-list">
                       <ul>
                         <li>
                           <label>仪器名称</label>
-                          <input type="text" placeholder="请输入仪器名称">
+                          <input id="eq_name" type="text" placeholder="请输入仪器名称">
                         </li>
                         <li>
                           <label>仪器分类</label>
-                          <input type="text">
-                          <input type="hidden" id="eq_class">
+                          <input id="eq_type" type="text">
                         </li>
                         <li>
                           <label>仪器组织机构</label>
-                          <input type="text">
-                          <input type="hidden" id="eq_group">
+                          <input id="eq_org" type="text">
                         </li>
                         <li>
                           <label>仪器负责人</label>
-                          <input type="text" placeholder="可添加5个"> 
-                          <input type="hidden" id="principal">                   
+                          <input id="eq_contact" type="text" placeholder="可添加5个"/> 
                         </li>
                         <li>
                           <label>仪器联系人</label>
-                          <!-- input -->
-                          <label class="eq-people">James</label>
-                          <input type="hidden" id="linkman">
+                          <input id="eq_incharge" type="text"/>
                         </li>
                       </ul>
                     </div>
@@ -581,28 +301,24 @@
                       <ul>
                         <li>
                           <label>时间范围</label>
-                          <input type="text" placeholder="YYYY-MM-DD">
+                          <input id="dstart" type="text" placeholder="YYYY-MM-DD">
                           <span style="color: #d7d7d7;">到</span>
-                          <input type="text" placeholder="YYYY-MM-DD">
+                          <input id="dend" type="text" placeholder="YYYY-MM-DD">
                         </li>
                         <li>
                           <label>课题组组织机构</label>
-                          <input type="text">
-                          <input type="hidden" id="re_super_group">
+                          <input id="lab_org" type="text">
                         </li>
                         <li>
                           <label>课题组</label>
-                          <input type="text" placeholder="可添加5个">
-                          <input type="hidden" id="re_group">
+                          <input id="lab" type="text" placeholder="可添加5个">
                         </li>
                         <li>
                           <label>使用者</label>
-                          <input type="text" >
-                          <input type="hidden" id="use_person">
+                          <input id="user" type="text" >
                         </li>
                       </ul>               
                     </div>
-                  </form>
                 </div>
               <label style="margin-top: 3em ;">搜索结果</label>
               <div class="index-grid">
@@ -709,7 +425,7 @@
             </div>
 
             <div class="modal-footer">
-              <button type="button" class="link link-primary">提交</button>
+              <button type="button" class="link link-primary" id="dosearch">提交</button>
               <button type="button" class="link link-default" data-dismiss="modal">取消</button>
             </div>
           </div>

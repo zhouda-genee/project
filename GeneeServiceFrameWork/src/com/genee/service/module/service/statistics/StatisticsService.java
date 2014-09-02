@@ -14,6 +14,13 @@ import com.genee.service.module.pojo.EquipmentIndexEntity;
 @Path("/statistics")
 public interface StatisticsService {
 	
+	/**
+	 * 
+	 * @Title: queryEquipmentIndex 
+	 * @Description: 分页显示指标 
+	 * @return PageSupport<EquipmentIndexEntity>
+	 * @throws
+	 */
 	@Path("/eqindex/page")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@POST
@@ -33,6 +40,13 @@ public interface StatisticsService {
 			@FormParam("sort_name") String sort_name, 
 			@FormParam("sort") String sort) throws Exception;
 	
+	/**
+	 * 
+	 * @Title: queryEquipmentIndex 
+	 * @Description: 查询全部指标 
+	 * @return List<EquipmentIndexEntity>
+	 * @throws
+	 */
 	@Path("/eqindex")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@POST
@@ -50,6 +64,13 @@ public interface StatisticsService {
 			@FormParam("sort_name") String sort_name, 
 			@FormParam("sort") String sort);
 	
+	/**
+	 * 
+	 * @Title: queryEquipmentIndex 
+	 * @Description: 查询统计 
+	 * @return EquipmentIndexEntity
+	 * @throws
+	 */
 	@Path("/eqindex/count")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@POST
