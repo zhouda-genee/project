@@ -33,7 +33,7 @@ import com.genee.timertask.framework.core.base.PageSupport;
 
 public abstract class BaseController implements ServletContextAware {
 	
-	protected final Logger logger = Logger.getLogger(getClass());
+	protected final Logger logger = Logger.getLogger("genee");
 	protected ServletContext servletContext;
 	protected static ObjectMapper mapper = new ObjectMapper();
 

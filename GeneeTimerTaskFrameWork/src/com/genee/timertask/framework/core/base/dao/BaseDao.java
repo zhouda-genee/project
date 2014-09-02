@@ -35,7 +35,7 @@ import com.genee.timertask.framework.utils.dateutil.DateUtil;
  */
 public abstract class BaseDao {
 	
-	protected final Logger logger = Logger.getLogger(getClass());
+	protected final Logger logger = Logger.getLogger("genee");
 
 	@Autowired
 	@Qualifier("defaultJdbcTemplate")

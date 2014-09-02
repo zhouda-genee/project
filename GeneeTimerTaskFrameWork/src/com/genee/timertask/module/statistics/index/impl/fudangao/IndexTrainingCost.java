@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import com.genee.timertask.framework.core.base.JdbcTemplateParam;
+import com.genee.timertask.framework.utils.json.JsonUtil;
 import com.genee.timertask.module.pojo.EquipmentIndexEntity;
 import com.genee.timertask.module.statistics.index.IndexBase;
 
@@ -34,26 +35,39 @@ public class IndexTrainingCost extends IndexBase {
 		String key;
 		String extra; // 扩展项
 		
+		// {"training_users":{"1":"技术支持","5":"may"},"training_charge":"400"}
 		List<Map<String, Object>> results = queryResult(startDate, endDate);
 		for (Map<String, Object> result : results) {
 			iEquipmentId = (long)result.get("equipmentid");
-			key = String.valueOf(iEquipmentId);
 			extra = (String)result.get("extra");
 			
 			if (StringUtils.isNotEmpty(extra)){
 				try{
 					JSONObject jsonObj = JSONObject.fromObject(extra);
-					Double dCharge = jsonObj.optDouble("training_charge");
-					if (equipments.containsKey(key)){
-						EquipmentIndexEntity equipmentIndexEntity = equipments.get(key);
-						equipmentIndexEntity.setTrainCost(equipmentIndexEntity.getTrainCost() + dCharge);
-					} else {
-						EquipmentIndexEntity equipmentIndexEntity = new EquipmentIndexEntity(getId(), iEquipmentId, startDate);
-						equipmentIndexEntity.setTrainCost(dCharge);
-						equipments.put(key, equipmentIndexEntity);
+					
+					Object oCharge = jsonObj.get("training_charge");
+					Object oUserInfos = jsonObj.get("training_users");
+					if (oCharge == null || oUserInfos == null) {
+						continue;
+					}
+					// 培训费 元/人
+					Double dCharge = Double.parseDouble(String.valueOf(oCharge));
+					// 培训人
+					Map<String, String> userMap = JsonUtil.getMap4Json(JSONObject.fromObject(oUserInfos));
+					//String[] userInfos = String.valueOf(oUserInfos).replaceAll("{", "").replaceAll("}", "").split(",");
+					for (String userId : userMap.keySet()) {
+						key = String.valueOf(iEquipmentId) + "#" + userId;
+						if (equipments.containsKey(key)){
+							EquipmentIndexEntity equipmentIndexEntity = equipments.get(key);
+							equipmentIndexEntity.setTrainCost(equipmentIndexEntity.getTrainCost() + dCharge);
+						} else {
+							EquipmentIndexEntity equipmentIndexEntity = new EquipmentIndexEntity(getId(), iEquipmentId, userId, startDate);
+							equipmentIndexEntity.setTrainCost(dCharge);
+							equipments.put(key, equipmentIndexEntity);
+						}
 					}
 				} catch (Exception ex){
-					logger.error("仪器ID:" + iEquipmentId + " 计算日:" + startDate + " Exception:" + ex.getMessage());
+					logger.error("培训费指标\t仪器ID:" + iEquipmentId + " 计算日:" + startDate + " Exception:" + ex.getMessage());
 					continue;
 				}
 			}

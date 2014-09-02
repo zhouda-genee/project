@@ -18,5 +18,5 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class BaseTest {
-	protected transient final Logger logger = Logger.getLogger(getClass());
+	protected transient final Logger logger = Logger.getLogger("genee");
 }

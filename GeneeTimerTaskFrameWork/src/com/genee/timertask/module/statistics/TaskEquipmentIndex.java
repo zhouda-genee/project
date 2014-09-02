@@ -92,8 +92,9 @@ public class TaskEquipmentIndex {
 			
 			logger.info("开始计算[" + DateUtil.date2String(calcDate) + "]任务");
 			
+			IndexBase indexBase = null;
 			for (IndexEntity index : indexs) {
-				IndexBase indexBase = (IndexBase)SpringContext.getBean(index.getIndexCode());
+				indexBase = (IndexBase)SpringContext.getBean(index.getIndexCode());
 				if (indexBase == null){
 					logger.error("\t没有找到[" + index.getIndexCode() + "]对应的指标类");
 				} else {
@@ -101,6 +102,11 @@ public class TaskEquipmentIndex {
 					logger.info("\t\t参数:"
 							+"\n\t\tstartdate:" + lStartDate
 							+"\n\t\tenddate:" + lEndDate);
+					/*try {
+						indexBase.run(lStartDate, lEndDate, equipments);
+					} catch (Exception ex) {
+						logger.error(index.getIndexName() + "指标执行错误：" + ex.getMessage());
+					}*/
 					indexBase.run(lStartDate, lEndDate, equipments);
 					logger.info("\t执行[" + index.getIndexCode() + "]指标结束");
 				}
