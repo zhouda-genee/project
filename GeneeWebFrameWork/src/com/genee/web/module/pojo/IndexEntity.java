@@ -58,7 +58,7 @@ public class IndexEntity implements Serializable {
 		this.sMethodName = (String) result.get("s_method_name");
 		this.sFlag = (String) result.get("s_flag");
 		this.sSort = (Integer) result.get("s_sort");
-		this.sOnOff = (String) result.get("s_on_off");
+		this.sOnOff = (String) result.get("s_onoff");
 	}
 	
 	public List<RoleEntity> getRoles() {
