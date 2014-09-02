@@ -10,18 +10,17 @@
 <title>统计列表</title>
 <script>
 	$(document).ready(function() { 
-		$("#exportBtn").click(function() {
-			alert(123);
-		})
 		
-		$("#searchBtn").click(function() {
-			if ($("#searchProperties").is(":hidden")) {
-				$("#searchProperties").slideDown(1000);
-			} else {
-				$("#searchProperties").slideUp(1000);
-			}
-		})
 	}); 
+
+	function displaySearchProperties() {
+		if ($("#searchProperties").is(":hidden")) {
+			$("#searchProperties").slideDown(1000);
+		} else {
+			$("#searchProperties").slideUp(1000);
+		}
+	}
+
 	function tableScroll() {
 		var a = document.getElementById("t_r_content").scrollTop;
 		var b = document.getElementById("t_r_content").scrollLeft;
@@ -74,7 +73,7 @@
 			</div>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<div class="link-group">
-					<a href="javascript:(0);" id="searchBtn" class="link link-primary">搜索</a> <a
+					<a href="javascript:displaySearchProperties();" id="searchBtn" class="link link-primary">搜索</a> <a
 						href="#" class="link link-primary right" data-toggle="modal"
 						data-target="#myModal">打印</a> <a href="#" id="exportBtn"
 						class="link link-primary right" data-toggle="modal"
