@@ -56,6 +56,7 @@ public class IndexOwnerSampleCount extends IndexBase {
 				+ "from eq_record er "
 				+ "inner join _r_user_equipment rue on er.user_id = rue.id1 and er.equipment_id = rue.id2 "
 				+ "where er.dtend between ? and ? "
+				+ "and rue.type = 'incharge' "
 				+ "group by er.equipment_id, er.user_id "
 				+ "order by er.equipment_id";
 		JdbcTemplateParam jdbcTemplateParam = new JdbcTemplateParam(sql,
