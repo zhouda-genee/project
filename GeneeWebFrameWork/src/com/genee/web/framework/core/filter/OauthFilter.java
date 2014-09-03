@@ -51,7 +51,6 @@ public class OauthFilter extends HttpServlet implements Filter {
 	private static final String RESPONSE_TYPE = "code";
 	private static final String STATE = "state";
 	// 内部参数
-	private static final String PARAM_USER = "user";
 	private static final String PARAM_CODE = "code";
 	private static final String PARAM_ACCESS_TOKEN = "access_token";
 	private static final String PARAM_TOKEN_TYPE = "token_type";
@@ -72,7 +71,7 @@ public class OauthFilter extends HttpServlet implements Filter {
 		HttpServletResponse httpServletResponse = (HttpServletResponse)response;
 		HttpSession session = httpServletRequest.getSession();
 		
-		if (session.getAttribute(PARAM_USER) == null){
+		if (session.getAttribute(SessionAttributeType.PARAM_USER) == null){
 			
 			String code = httpServletRequest.getParameter(PARAM_CODE);
 			// code为空，则跳至登录页面，获取code
@@ -115,7 +114,7 @@ public class OauthFilter extends HttpServlet implements Filter {
 							return;
 						}
 						param.put(SessionAttributeType.ROLE, role);
-						session.setAttribute(PARAM_USER, param);
+						session.setAttribute(SessionAttributeType.PARAM_USER, param);
 					} else {
 						// 不成功跳回请求者页面
 						responseSendRedirect(httpServletResponse, backUrl);
