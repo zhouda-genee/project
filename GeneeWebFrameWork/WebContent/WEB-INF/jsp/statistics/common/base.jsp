@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	String webPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort() + this.getServletContext().getContextPath() + "/" ;
+	String servletPath = "http://localhost:8088/geneeservletfw/API2";
 %>
 <base href="<%=webPath %>" />
 <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
@@ -18,4 +19,6 @@ function JSONRPC2Object(id, method, params){
 	this.method = method;
 	this.params = params;
 }
+var webPath = "<%=webPath%>";
+var servletPath = "<%=servletPath%>";
 </script>

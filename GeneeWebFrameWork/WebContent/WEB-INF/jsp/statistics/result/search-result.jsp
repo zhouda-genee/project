@@ -7,8 +7,8 @@
 <title>统计列表</title>
 <script>
 	$(document).ready(function() {
-		var indexTypePath = "<%=webPath %>statistics/result/roleindextype";
-		var indexPath = "<%=webPath %>statistics/result/roleindex";
+		var indexTypePath = webPath + "statistics/result/roleindextype";
+		var indexPath = webPath + "statistics/result/roleindex";
 		
 		// 查询当前角色对应的所有指标	并填充页面
 		$.ajax({
@@ -158,7 +158,7 @@
 			
 			// 查询统计结果
 			$.ajax({
-				url: "http://localhost:8088/geneeservletfw/API2",
+				url: servletPath,
 				data: jsonRPCobject,
 				cache: false,
 				async: false,
