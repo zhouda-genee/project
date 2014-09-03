@@ -11,6 +11,8 @@ import com.genee.web.module.dao.EquipmentDao;
 import com.genee.web.module.dao.LabDao;
 import com.genee.web.module.dao.RoleDao;
 import com.genee.web.module.pojo.EquipmentEntity;
+import com.genee.web.module.pojo.IndexEntity;
+import com.genee.web.module.pojo.IndexTypeEntity;
 import com.genee.web.module.pojo.LabEntity;
 import com.genee.web.module.pojo.RoleInfoEntity;
 
@@ -43,14 +45,26 @@ public class UserServiceImpl implements UserService {
 		// 判断是否是课题组PI
 		LabEntity labEntity = labDao.queryLabByUser(userId);
 		if (labEntity.getLabOwner() == userId){
-			roleIds += "2";
+			roleIds += "2,";
 		}
 		// 判断是否是仪器管理员
-		List<EquipmentEntity> equipmentEntity = equipmentDao.queryEquipmentByUser(userId, "contact");
+		List<EquipmentEntity> equipmentEntity = equipmentDao.queryEquipmentByUser(userId, "incharge");
 		if (equipmentEntity.size() > 0){
-			roleIds += "3";
+			roleIds += "3,";
 		}
+		if (roleIds.lastIndexOf(",") > 0)
+			roleIds = roleIds.substring(0, roleIds.length() - 1);
 		return roleIds;
+	}
+
+	@Override
+	public List<IndexTypeEntity> queryIndexTypeEntityByRole(String roleId) {
+		return roleDao.queryIndexTypeEntityByRole(roleId);
+	}
+
+	@Override
+	public List<IndexEntity> queryIndexEntityByRole(String roleId) {
+		return roleDao.queryIndexEntityByRole(roleId);
 	}
 
 }
