@@ -5,9 +5,6 @@ package com.genee.web.module.service.statistics;
 
 import java.util.List;
 
-import org.springframework.transaction.annotation.Transactional;
-
-import com.genee.web.module.pojo.IndexEntity;
 import com.genee.web.module.pojo.IndexTypeEntity;
 import com.genee.web.module.pojo.RoleEntity;
 

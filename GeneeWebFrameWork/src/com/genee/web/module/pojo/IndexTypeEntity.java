@@ -5,7 +5,6 @@ package com.genee.web.module.pojo;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 指标类型表对应的entity类

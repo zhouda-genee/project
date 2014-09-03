@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.genee.web.framework.core.base.JdbcTemplateParam;
 import com.genee.web.framework.core.base.dao.BaseDao;
 import com.genee.web.framework.utils.map.MapToBeanUtil;
+import com.genee.web.module.pojo.IndexTypeEntity;
 import com.genee.web.module.pojo.RoleInfoEntity;
 
 @Repository
@@ -39,6 +40,28 @@ public class RoleDao {
 		
 		List<Map<String, Object>> result = baseDao.queryForList(param); 
 		return MapToBeanUtil.MapToBean(RoleInfoEntity.class, result);
+	}
+	
+	/**
+	 * 
+	 * @Title: queryRoleByUser 
+	 * @Description: 根据角色查找对应的所有指标类型
+	 * @param roleId	角色ID
+	 * @return List<IndexTypeEntity> 返回指标类型集合
+	 * 
+	 */
+	public List<IndexTypeEntity> queryIndexTypeEntityByRole(int roleId) {
+		String sql = "select _r.id as roleid, _r.name as rolename, _r._extra as roleextra "
+				+ "from user _u, _r_user_role _r_u, role _r "
+				+ "where _u.id = ? "
+				+ "and _u.id = _r_u.id1 "
+				+ "and _r.id = _r_u.id2";
+		JdbcTemplateParam param = new JdbcTemplateParam(sql, 
+				new Object[]{roleId}, 
+				new int[]{java.sql.Types.INTEGER});
+		
+		List<Map<String, Object>> result = baseDao.queryForList(param); 
+		return MapToBeanUtil.MapToBean(IndexTypeEntity.class, result);
 	}
 	
 }

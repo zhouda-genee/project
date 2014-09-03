@@ -1,7 +1,6 @@
 package com.genee.web.module.pojo;
 
 import java.io.Serializable;
-import java.util.Map;
 
 /**
  * 指标角色关系表对应的实体类
