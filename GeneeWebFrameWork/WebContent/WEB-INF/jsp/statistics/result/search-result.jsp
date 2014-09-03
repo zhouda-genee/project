@@ -427,6 +427,31 @@
                 </div>
               <label style="margin-top: 3em ;">搜索结果</label>
               <div class="index-grid" id="indexContent">
+                <div>
+                  <div class="type">
+                    <label>基本信息</label>
+                  </div>
+                  <div class="index">
+                    <input type="checkbox" value="2" code="eq_price" class="middle"><label class="middle">仪器价格</label>
+                    <input type="checkbox" value="3" code="principal" class="middle"><label class="middle">负责人</label>
+                    <input type="checkbox" value="4" code="linkman" class="middle"><label class="middle">联系人</label>
+                    <input type="checkbox" value="5" code="innet_dur" class="middle"><label class="middle">入网时长</label>
+                    <input type="checkbox" value="6" code="fault_dur" class="middle"><label class="middle">故障时长</label>
+                  </div>
+                </div>
+                <div>
+                  <div class="type">
+                    <label>计费信息</label>
+                  </div>
+                  <div class="index">
+                    <input type="checkbox" value="22" code="used_charge" class="middle"><label class="middle">使用收费</label>
+                    <input type="checkbox" value="23" code="on_cam_charge" class="middle"><label class="middle">校内收费</label>
+                    <input type="checkbox" value="24" code="off_cam_charge" class="middle"><label class="middle">校外收费</label>
+                    <input type="checkbox" value="25" code="delegation_charge" class="middle"><label class="middle">委托测试收费</label>
+                    <input type="checkbox" value="26" code="earnings_charge" class="middle"><label class="middle">创收金额</label>
+                    <input type="checkbox" value="27" code="repair_cost" class="middle"><label class="middle">维修费</label>
+                  </div>
+                </div>
               </div>
               </div>
             </div>
