@@ -18,7 +18,7 @@ public class JSONRPC2Response {
 
 	private ErrorMessage error;
 	
-	private int id;
+	private long id;
 	
 	public JSONRPC2Response (JSONRPC2Request rpc2request, Object result){
 		this.jsonrpc = rpc2request.getJsonrpc();
@@ -32,13 +32,13 @@ public class JSONRPC2Response {
 		this.error = error;
 	}
 	
-	public JSONRPC2Response (String jsonrpc, int id, Object result) {
+	public JSONRPC2Response (String jsonrpc, long id, Object result) {
 		this.jsonrpc = jsonrpc;
 		this.id = id;
 		this.result = result;
 	}
 	
-	public JSONRPC2Response (String jsonrpc, int id, ErrorMessage error){
+	public JSONRPC2Response (String jsonrpc, long id, ErrorMessage error){
 		this.jsonrpc = jsonrpc;
 		this.id = id;
 		this.error = error;
@@ -68,11 +68,11 @@ public class JSONRPC2Response {
 		this.error = error;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

@@ -97,7 +97,7 @@ public class JSONRPC2Servlet extends HttpServlet {
 		
 		JSONRPC2Request rpc2Request = new JSONRPC2Request();
 		try {
-			rpc2Request.setId(Integer.parseInt(id));
+			rpc2Request.setId(Long.parseLong(id));
 		} catch (NumberFormatException ex){
 			logger.error(ex.getMessage());
 			throw new NumberFormatException("参数ID转换异常");
