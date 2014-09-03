@@ -17,11 +17,6 @@ public class IndexRoleEntity implements Serializable {
 	// 关联角色外键
 	private int rId;
 	
-	// 用于从数据库的取值 和Dao层结合使用
-	public void fromResultSet(Map<String, Object> result) {
-		this.sId = (Integer)result.get("s_id");
-		this.rId = (Integer)result.get("r_id");
-	}
 	public int getsId() {
 		return sId;
 	}

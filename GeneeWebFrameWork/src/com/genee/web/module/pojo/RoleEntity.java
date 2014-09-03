@@ -24,12 +24,6 @@ public class RoleEntity implements Serializable {
 	// 角色与指标的多对多关系
 	private List<IndexEntity> indexs = null;
 	
-	// 用于从数据库的取值 和Dao层结合使用
-	public void fromResultSet(Map<String, Object> result) {
-		this.rId = (Integer)result.get("r_id");
-		this.rName = (String)result.get("r_name");
-	}
-	
 	public RoleEntity() {}
 
 	public RoleEntity(int rId, String rName) {

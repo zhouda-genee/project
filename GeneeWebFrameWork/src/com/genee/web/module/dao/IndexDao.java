@@ -3,7 +3,6 @@
  */
 package com.genee.web.module.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,8 +12,8 @@ import org.springframework.stereotype.Repository;
 
 import com.genee.web.framework.core.base.JdbcTemplateParam;
 import com.genee.web.framework.core.base.dao.BaseDao;
+import com.genee.web.framework.utils.map.MapToBeanUtil;
 import com.genee.web.module.pojo.IndexEntity;
-import com.genee.web.module.pojo.IndexRoleEntity;
 import com.genee.web.module.pojo.IndexTypeEntity;
 import com.genee.web.module.pojo.RoleEntity;
 
@@ -33,17 +32,11 @@ public class IndexDao {
 	 * @return
 	 */
 	public List<IndexTypeEntity> searchAllIndexTypeDetail() {
-		String sql = "select t_id, t_name from s_index_type";
+		String sql = "select t_id as tId, t_name as tName from s_index_type";
 		JdbcTemplateParam param = new JdbcTemplateParam(sql);
 		List<Map<String, Object>> results = baseDao.queryForList(param);
 		
-		List<IndexTypeEntity> indexTypeEntities = new ArrayList<IndexTypeEntity>( results.size());
-		for (Map<String, Object> result : results) {
-			IndexTypeEntity indexTypeEntity = new IndexTypeEntity();
-			indexTypeEntity.fromResultSet(result);
-			indexTypeEntities.add(indexTypeEntity);
-		}
-		return indexTypeEntities;
+		return MapToBeanUtil.MapToBean(IndexTypeEntity.class, results);
 	}
 	
 	/**
@@ -52,12 +45,11 @@ public class IndexDao {
 	 * @return
 	 */
 	public RoleEntity searchRole(int roleId) {
-		String sql = "select r_id, r_name from s_role where r_id = ?";
+		String sql = "select r_id as rId, r_name as rName from s_role where r_id = ?";
 		JdbcTemplateParam param = new JdbcTemplateParam(sql, new Object[] { roleId }, new int[] { java.sql.Types.INTEGER });
 		Map<String, Object> result = baseDao.queryForMap(param);
-		RoleEntity roleEntity = new RoleEntity();
-		roleEntity.fromResultSet(result);
-		return roleEntity;
+
+		return MapToBeanUtil.MapToBean(RoleEntity.class, result);
 	}
 	
 	/**
@@ -66,21 +58,14 @@ public class IndexDao {
 	 * @return
 	 */
 	public List<IndexEntity> searchIndexDetailByType(int typeId) {
-		String sql = "select s_id, t_id, s_sort, s_name"
+		String sql = "select s_id as sId, t_id as tId, s_sort as sSort, s_name as sName"
 				+ " from s_index "
 				+ " where s_onoff = '0' and t_id = ?"
 				+ " order by s_sort";
 		JdbcTemplateParam param = new JdbcTemplateParam(sql, new Object[] { typeId }, new int[] { java.sql.Types.INTEGER });
 		List<Map<String, Object>> results = baseDao.queryForList(param);
-		List<IndexEntity> indexEntities = new ArrayList<IndexEntity>(results.size());
-		
-		for (Map<String, Object> result : results) {
-			IndexEntity indexEntity = new IndexEntity();
-			indexEntity.fromResultSet(result);
-			indexEntities.add(indexEntity);
-		}
-		
-		return indexEntities;
+
+		return MapToBeanUtil.MapToBean(IndexEntity.class, results);
 	}
 		
 	/**
@@ -89,18 +74,13 @@ public class IndexDao {
 	 * @return
 	 */
 	public List<IndexEntity> searchIndexDetailByRole(int roleId) {
-		String sql = "select SI.s_id, SI.t_id, SI.s_sort"
+		String sql = "select SI.s_id as sId, SI.t_id as tId, SI.s_sort as sSort"
 				+ " from s_role SR, s_r_index_role SIR, s_index SI"
 				+ " where SI.s_onoff = '0' and SR.r_id = SIR.r_id and  SI.s_id = SIR.s_id and SR.r_id = ?";
 		JdbcTemplateParam param = new JdbcTemplateParam(sql, new Object[]{ roleId }, new int[] { java.sql.Types.INTEGER });
 		List<Map<String, Object>> results = baseDao.queryForList(param);
-		List<IndexEntity> indexEntities = new ArrayList<IndexEntity>( results.size());
-		for (Map<String, Object> result : results) {
-			IndexEntity indexEntity = new IndexEntity();
-			indexEntity.fromResultSet(result);
-			indexEntities.add(indexEntity);			
-		}
-		return indexEntities;
+
+		return MapToBeanUtil.MapToBean(IndexEntity.class, results);
 	}
 	
 	/**
