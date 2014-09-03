@@ -29,6 +29,6 @@ public interface IndexService {
 	 * 更新指标角色关系表（先删除后添加）
 	 * @param roleId indexRoleEntities
 	 */
-	public void updateIndexRoleRelation(String[] arrCkb, int roleId);
+	public void updateIndexRoleRelation(int[] arrCkb, int rId);
 	
 }

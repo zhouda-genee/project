@@ -36,14 +36,18 @@ public class IndexServiceImpl implements IndexService {
 	public RoleEntity searchIndexDetailByRole(int roleId) {
 		RoleEntity roleEntity = new RoleEntity();
 		roleEntity = indexDao.searchRole(roleId);
-		roleEntity.setIndexs(indexDao.searchIndexDetailByRole(roleId));
+		List<IndexEntity> indexsList = indexDao.searchIndexDetailByRole(roleId);
+		roleEntity.setIndexs(indexsList);
 		return roleEntity;
 	}
 
 	@Override
-	public void updateIndexRoleRelation(String[] arrCkb, int roleId) {
-		indexDao.deleteIndexRoleRelation(roleId);
-		indexDao.addIndexRoleRelation(arrCkb, roleId);		
+	public void updateIndexRoleRelation(int[] arrCkb, int rId) {
+		indexDao.deleteIndexRoleRelation(rId);
+		for (int i = 0; i < arrCkb.length; i++) {
+			indexDao.addIndexRoleRelation(arrCkb[i], rId);
+		}
+		
 	}
 
 }
