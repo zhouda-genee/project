@@ -58,25 +58,25 @@
 					<a style="font-size: 18px;" data-toggle="collapse" data-parent="#roleconfig" href="#collapseOne">中心管理员</a>
 					<div id="collapseOne" class="accordion-body collapse">
 						<div class="accordion-inner">
-							<form method="post" id="myFormOne" action="#">
-								<div id="templateOne" style="margin: 10px;" ></div>
-								<input id="roleOne" type="hidden" value="1" />
-								<input id="sbmOne" type="submit"  value="提交" class="btn btn-primary" />
-							</form>
+							<div id="templateOne" style="margin: 10px;" ></div>
+							<input id="roleOne" type="hidden" value="1" />
+							<input id="sbmOne" type="button"  value="提交" onclick="subOne();"/>
 						</div>
 					</div>
 				</div>
 			</div>
+			
+			<div id="result">
+			</div>
+			
 			<div class="accordion-group">
 				<div class="accordion-heading">
 					<a style="font-size: 18px;" data-toggle="collapse" data-parent="#roleconfig" href="#collapseTwo">课题组PI</a>
 					<div id="collapseTwo" class="accordion-body collapse">
 						<div class="accordion-inner">
-							<form id="myFormTwo" method="post" action="#">
-								<div id="templateTwo" style="margin: 10px;" ></div>
-								<input id="roleTwo" type="hidden" value="2" />
-								<input id="sbmTwo" type="submit"  value="提交" class="btn btn-primary" />
-							</form>
+							<div id="templateTwo" style="margin: 10px;" ></div>
+							<input id="roleTwo" type="hidden" value="2" />
+							<input id="sbmTwo" type="button"  value="提交" class="btn btn-primary" onclick="subTwo();"/>
 						</div>
 					</div>
 				</div>
@@ -86,11 +86,9 @@
 					<a style="font-size: 18px;" data-toggle="collapse" data-parent="#roleconfig" href="#collapseThree">仪器管理员</a>
 					<div id="collapseThree" class="accordion-body collapse">
 						<div class="accordion-inner">
-							<form method="post" id="myFormThree" action="#">
-								<div id="templateThree" style="margin: 10px;" ></div>
-								<input id="roleThree" type="hidden" value="3" />
-								<input id="sbmThree" type="submit"  value="提交" class="btn btn-primary" />
-							</form>
+							<div id="templateThree" style="margin: 10px;" ></div>
+							<input id="roleThree" type="hidden" value="3" />
+							<input id="sbmThree" type="button"  value="提交" class="btn btn-primary" onclick="subThree();"/>
 						</div>
 					</div>
 				</div>
@@ -204,69 +202,71 @@
 		 *	jquery 提交form表单中的数据，一共提交两组数据（一组是roleId， 一组是由被选中复选框构成的value数组)
 		 *	提交到controller中的editRole方法进行处理
 		 */
-		$(function(){
-			$("#sbmOne").click(function(){
-				var arrCkb = [];
+			function subOne() {
+		 		var ckbString = "";
 				var roleId = $("input#roleOne").val();
 				$("input[name='ckbOne']:checked").each(function(){
-				 arrCkb.push($(this).val());
+					ckbString += $(this).val() + ",";
 				});
-				console.log(arrCkb);
-				console.log(roleId);
+				
+				if(ckbString == "") {
+					alert("您还没有勾选指标！");
+				}
+					
 				$.ajax({
-				 type:"POST",
-				 url: "statistics/indexconfig/editrole",
-				 cache: false,
-				 data: arrCkb,
-				 success: function(msg) {
-					 alert(data);
-				 }
+					type:"POST",
+					url: "statistics/indexconfig/editrole",
+					cache: false,
+					data: { 
+					 "roleId" : roleId,
+					 "ckbString" : ckbString
+					}
 				});
-			});
-		});
+			};
 		 
-		$(function(){
-			$("#sbmTwo").click(function(){
-				var arrCkb = [];
+			function subTwo() {
+		 		var ckbString = "";
 				var roleId = $("input#roleTwo").val();
 				$("input[name='ckbTwo']:checked").each(function(){
-				 arrCkb.push($(this).val());
+					ckbString += $(this).val() + ",";
 				});
-				console.log(arrCkb);
-				console.log(roleId);
+				
+				if(ckbString == "") {
+					alert("您还没有勾选指标！");
+				}
+					
 				$.ajax({
-				 type:"POST",
-				 url: "statistics/indexconfig/editrole",
-				 cache: false,
-				 data: arrCkb,
-				 success: function(msg) {
-					 alert(data);
-				 }
+					type:"POST",
+					url: "statistics/indexconfig/editrole",
+					cache: false,
+					data: { 
+					 "roleId" : roleId,
+					 "ckbString" : ckbString
+					},
 				});
-			});
-		});
+			};
 		
-		$(function(){
-			$("#sbmThree").click(function(){
-				var arrCkb = [];
-				var roleId = $("input#roleThress").val();
+			function subThree() {
+		 		var ckbString = "";
+				var roleId = $("input#roleThree").val();
 				$("input[name='ckbThree']:checked").each(function(){
-				 arrCkb.push($(this).val());
+					ckbString += $(this).val() + ",";
 				});
-				console.log(arrCkb);
-				console.log(roleId);
+				
+				if(ckbString == "") {
+					alert("您还没有勾选指标！");
+				}
+					
 				$.ajax({
-				 type:"POST",
-				 url: "statistics/indexconfig/editrole",
-				 cache: false,
-				 data: arrCkb,
-				 success: function(msg) {
-					 alert(data);
-				 }
+					type:"POST",
+					url: "statistics/indexconfig/editrole",
+					cache: false,
+					data: { 
+					 "roleId" : roleId,
+					 "ckbString" : ckbString
+					}
 				});
-			});
-		});
-		 
+			};	 
 		 
 	</script>    
 </body>
