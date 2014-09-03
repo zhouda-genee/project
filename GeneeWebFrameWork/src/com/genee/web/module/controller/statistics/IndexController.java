@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.genee.web.framework.core.base.controller.BaseController;
-import com.genee.web.framework.utils.json.JsonUtil;
 import com.genee.web.module.pojo.IndexTypeEntity;
 import com.genee.web.module.pojo.RoleEntity;
 import com.genee.web.module.service.statistics.IndexService;
@@ -43,7 +42,7 @@ public class IndexController extends BaseController {
 		List<IndexTypeEntity> types = iIndexService.searchIndexDetailByType();	
 		result.put("result", types);
 		result.put("request-status", "success");
-		outJson(response, result, null);
+		outJson(response, result, null);		
 	}
 	
 	/**
@@ -58,7 +57,7 @@ public class IndexController extends BaseController {
 		String ckbString = request.getParameter("ckbString");
 		String[] arrCkbString = ckbString.split(",");
 		if (arrCkbString == null || arrCkbString.length == 0) {
-			
+			logger.error("\t用户没有勾选任何指标");
 		}
 		else 
 		{
