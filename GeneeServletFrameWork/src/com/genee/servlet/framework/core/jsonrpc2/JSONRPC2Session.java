@@ -38,7 +38,8 @@ public class JSONRPC2Session {
 			if (xmlParams != null && xmlParams.size() > 0) {
 				urlBuilder.append("?");
 				for (XMLParamEntity xmlparam : xmlParams) {
-					urlBuilder.append(xmlparam.getName()).append("=").append(String.valueOf(params.get(xmlparam.getName())));
+					if (params.get(xmlparam.getName()) != null)
+						urlBuilder.append(xmlparam.getName()).append("=").append(String.valueOf(params.get(xmlparam.getName())));
 				}
 			}
 			result = HttpClientUtil2.get(urlBuilder.toString(), header);
@@ -47,7 +48,8 @@ public class JSONRPC2Session {
 			Map<String, String> reqParam = new HashMap<String, String>(xmlParams.size());
 			if (xmlParams != null && xmlParams.size() > 0) {
 				for (XMLParamEntity xmlparam : xmlParams) {
-					reqParam.put(xmlparam.getName(), String.valueOf(params.get(xmlparam.getName())));
+					if (params.get(xmlparam.getName()) != null) 
+						reqParam.put(xmlparam.getName(), String.valueOf(params.get(xmlparam.getName())));
 				}
 			}
 			result = HttpClientUtil2.post(service.getUrl(), reqParam, header);
