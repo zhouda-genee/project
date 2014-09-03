@@ -27,8 +27,8 @@ public class StatisticsDao {
 	 * @param eq_name	仪器名称模糊查询
 	 * @param eq_type	仪器类型
 	 * @param eq_org	仪器组织机构
-	 * @param eq_contact	仪器负责人
-	 * @param eq_incharge	仪器联系人
+	 * @param eq_contact	仪器联系人
+	 * @param eq_incharge	仪器负责人
 	 * @param lab_org	课题组组织机构
 	 * @param lab	课题组
 	 * @param user	使用者
@@ -118,10 +118,10 @@ public class StatisticsDao {
 			paramValue.add(eq_org);
 			paramType.add(java.sql.Types.INTEGER);
 		} 
-		if (StringUtils.isNotEmpty(eq_contact)) { // 仪器负责人查询
+		if (StringUtils.isNotEmpty(eq_contact)) { // 仪器联系人查询
 			sql.append(" and _eq.eq_id in (select _r_u_eq.id2 from _r_user_equipment _r_u_eq where _r_u_eq.id1 in (" + eq_contact + ") and _r_u_eq.type = 'contact') ");
 		}
-		if (StringUtils.isNotEmpty(eq_incharge)) { // 仪器联系人查询
+		if (StringUtils.isNotEmpty(eq_incharge)) { // 仪器负责人查询
 			sql.append(" and _eq.eq_id in (select _r_u_eq.id2 from _r_user_equipment _r_u_eq where _r_u_eq.id1 in (" + eq_incharge + ") and _r_u_eq.type = 'incharge') ");
 		}
 		if (StringUtils.isNotEmpty(lab_org)) { // 课题组组织机构查询
@@ -163,8 +163,8 @@ public class StatisticsDao {
 	 * @param eq_name	仪器名称模糊查询
 	 * @param eq_type	仪器类型
 	 * @param eq_org	仪器组织机构
-	 * @param eq_contact	仪器负责人
-	 * @param eq_incharge	仪器联系人
+	 * @param eq_contact	仪器联系人
+	 * @param eq_incharge	仪器负责人
 	 * @param lab_org	课题组组织机构
 	 * @param lab	课题组
 	 * @param user	使用者
@@ -245,10 +245,10 @@ public class StatisticsDao {
 			paramValue.add(eq_org);
 			paramType.add(java.sql.Types.INTEGER);
 		} 
-		if (StringUtils.isNotEmpty(eq_contact)) { // 仪器负责人查询
+		if (StringUtils.isNotEmpty(eq_contact)) { // 仪器联系人查询
 			sql.append(" and _eq.eq_id in (select _r_u_eq.id2 from _r_user_equipment _r_u_eq where _r_u_eq.id1 in (" + eq_contact + ") and _r_u_eq.type = 'contact') ");
 		}
-		if (StringUtils.isNotEmpty(eq_incharge)) { // 仪器联系人查询
+		if (StringUtils.isNotEmpty(eq_incharge)) { // 仪器负责人查询
 			sql.append(" and _eq.eq_id in (select _r_u_eq.id2 from _r_user_equipment _r_u_eq where _r_u_eq.id1 in (" + eq_incharge + ") and _r_u_eq.type = 'incharge') ");
 		}
 		if (StringUtils.isNotEmpty(lab_org)) { // 课题组组织机构查询

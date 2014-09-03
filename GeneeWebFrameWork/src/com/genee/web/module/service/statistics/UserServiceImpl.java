@@ -43,13 +43,15 @@ public class UserServiceImpl implements UserService {
 		// 判断是否是课题组PI
 		LabEntity labEntity = labDao.queryLabByUser(userId);
 		if (labEntity.getLabOwner() == userId){
-			roleIds += "2";
+			roleIds += "2,";
 		}
 		// 判断是否是仪器管理员
-		List<EquipmentEntity> equipmentEntity = equipmentDao.queryEquipmentByUser(userId, "contact");
+		List<EquipmentEntity> equipmentEntity = equipmentDao.queryEquipmentByUser(userId, "incharge");
 		if (equipmentEntity.size() > 0){
-			roleIds += "3";
+			roleIds += "3,";
 		}
+		if (roleIds.lastIndexOf(",") > 0)
+			roleIds = roleIds.substring(0, roleIds.length() - 1);
 		return roleIds;
 	}
 
