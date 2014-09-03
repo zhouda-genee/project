@@ -32,7 +32,8 @@ public class IndexDao {
 	 * @return
 	 */
 	public List<IndexTypeEntity> searchAllIndexTypeDetail() {
-		String sql = "select t_id as tId, t_name as tName from s_index_type";
+		String sql = "select t_id as tId, t_name as tName"
+					+ " from s_index_type";
 		JdbcTemplateParam param = new JdbcTemplateParam(sql);
 		List<Map<String, Object>> results = baseDao.queryForList(param);
 		
@@ -45,7 +46,9 @@ public class IndexDao {
 	 * @return
 	 */
 	public RoleEntity searchRole(int roleId) {
-		String sql = "select r_id as rId, r_name as rName from s_role where r_id = ?";
+		String sql = "select r_id as rId, r_name as rName"
+				+ " from s_role"
+				+ " where r_id = ?";
 		JdbcTemplateParam param = new JdbcTemplateParam(sql, new Object[] { roleId }, new int[] { java.sql.Types.INTEGER });
 		Map<String, Object> result = baseDao.queryForMap(param);
 
@@ -88,7 +91,9 @@ public class IndexDao {
 	 * @param roleId
 	 */
 	public void deleteIndexRoleRelation(int roleId) {
-		String sql = "delete from s_r_index_role where r_id = ?";
+		String sql = "delete"
+				+ " from s_r_index_role"
+				+ " where r_id = ?";
 		JdbcTemplateParam param = new JdbcTemplateParam(sql, new Object[] { roleId }, new int[] { java.sql.Types.INTEGER });
 		baseDao.update(param);
 	}
@@ -97,14 +102,13 @@ public class IndexDao {
 	 * 添加某一角色的指标关系
 	 * @param roleId
 	 */
-	public void addIndexRoleRelation(String[] arrCkb, int roleId) {
-		for(int i = 0; i < arrCkb.length; i++) {
-			String sql = "insert into s_r_index_role(s_id, r_id) values(?, ?)";
+	public void addIndexRoleRelation(int ckbVal, int rId) {
+			String sql = "insert into s_r_index_role(s_id, r_id)"
+					+ " values(?, ?)";
 			JdbcTemplateParam param = new JdbcTemplateParam(sql, 
-					new Object[] { arrCkb[i], roleId }, 
+					new Object[] { ckbVal, rId }, 
 					new int[] { java.sql.Types.INTEGER, java.sql.Types.INTEGER });
 			baseDao.update(param);
-		}
 	}
-	
+
 }

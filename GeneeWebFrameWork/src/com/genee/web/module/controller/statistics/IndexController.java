@@ -53,9 +53,16 @@ public class IndexController extends BaseController {
 	 */	
 	@RequestMapping(value = "editrole", method=RequestMethod.POST) 
 	public void editRole(HttpServletRequest request, HttpServletResponse response) {
-		int roleId = (int)request.getSession().getAttribute("roleId");
-		String[] arrCkb = request.getParameterValues("ckb");
-		iIndexService.updateIndexRoleRelation(arrCkb, roleId);
+		String roleId = request.getParameter("roleId");
+		int rId = Integer.parseInt(roleId);
+		String ckbString = request.getParameter("ckbString");
+		String[] arrCkbString = ckbString.split(",");
+		
+		int[] arrCkb = new int[arrCkbString.length];
+		for (int i = 0; i < arrCkbString.length; i++) {
+			arrCkb[i] = Integer.parseInt(arrCkbString[i]);
+		}		
+		iIndexService.updateIndexRoleRelation(arrCkb, rId);
 	}
 		
 	
