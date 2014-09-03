@@ -66,9 +66,6 @@
 				</div>
 			</div>
 			
-			<div id="result">
-			</div>
-			
 			<div class="accordion-group">
 				<div class="accordion-heading">
 					<a style="font-size: 18px;" data-toggle="collapse" data-parent="#roleconfig" href="#collapseTwo">课题组PI</a>
@@ -81,6 +78,7 @@
 					</div>
 				</div>
 			</div>
+			
 			<div class="accordion-group">
 				<div class="accordion-heading">
 					<a style="font-size: 18px;" data-toggle="collapse" data-parent="#roleconfig" href="#collapseThree">仪器管理员</a>
@@ -120,13 +118,11 @@
 			$.ajax({
 				type: "GET",
 				url: "<%=basePath %>" + "statistics/indexconfig/1",
-				success: function(infoRole){
+				success: function(infoRole){	
 					var arrRoleIndex = []; // 用来存放角色已拥有指标ID的数组
 					var dataRole = JSON.parse(infoRole);
-					$.each(dataRole.result, function(i, roleKey){
-						$.each(roleKey.indexs, function(j, indexKey){
-							arrRoleIndex.push(indexKey.sId); // 此处会出现多余的循环，需要优化
-						});
+					$.each(dataRole.result.indexs, function(i, indexKey){
+						arrRoleIndex.push(indexKey.sId); // 此处会出现多余的循环，需要优化
 					});							
 
 					$.each(dataType.result, function(i, typeKey){
@@ -150,11 +146,9 @@
 				success: function(infoRole){
 					var arrRoleIndex = []; // 用来存放角色已拥有指标ID的数组
 					var dataRole = JSON.parse(infoRole);
-					$.each(dataRole.result, function(i, roleKey){
-						$.each(roleKey.indexs, function(j, indexKey){
-							arrRoleIndex.push(indexKey.sId); // 此处会出现多余的循环，需要优化
-						});
-					});							
+					$.each(dataRole.result.indexs, function(i, indexKey){
+						arrRoleIndex.push(indexKey.sId); // 此处会出现多余的循环，需要优化
+					});
 
 					$.each(dataType.result, function(i, typeKey){
 						$div = $("<div><lable>" + typeKey.tName + "</label></div>");		
@@ -177,11 +171,9 @@
 				success: function(infoRole){
 					var arrRoleIndex = []; // 用来存放角色已拥有指标ID的数组
 					var dataRole = JSON.parse(infoRole);
-					$.each(dataRole.result, function(i, roleKey){
-						$.each(roleKey.indexs, function(j, indexKey){
-							arrRoleIndex.push(indexKey.sId); // 此处会出现多余的循环，需要优化
-						});
-					});							
+					$.each(dataRole.result.indexs, function(i, indexKey){
+						arrRoleIndex.push(indexKey.sId); // 此处会出现多余的循环，需要优化
+					});
 
 					$.each(dataType.result, function(i, typeKey){
 						$div = $("<div><lable>" + typeKey.tName + "</label></div>");		
@@ -212,16 +204,18 @@
 				if(ckbString == "") {
 					alert("您还没有勾选指标！");
 				}
-					
-				$.ajax({
-					type:"POST",
-					url: "statistics/indexconfig/editrole",
-					cache: false,
-					data: { 
-					 "roleId" : roleId,
-					 "ckbString" : ckbString
-					}
-				});
+				else {	
+					$.ajax({
+						type:"POST",
+						url: "statistics/indexconfig/editrole",
+						cache: false,
+						data: { 
+						 "roleId" : roleId,
+						 "ckbString" : ckbString
+						}
+					});
+					alert("保存成功！")
+				}
 			};
 		 
 			function subTwo() {
@@ -234,16 +228,18 @@
 				if(ckbString == "") {
 					alert("您还没有勾选指标！");
 				}
-					
-				$.ajax({
-					type:"POST",
-					url: "statistics/indexconfig/editrole",
-					cache: false,
-					data: { 
-					 "roleId" : roleId,
-					 "ckbString" : ckbString
-					},
-				});
+				else {	
+					$.ajax({
+						type:"POST",
+						url: "statistics/indexconfig/editrole",
+						cache: false,
+						data: { 
+						 "roleId" : roleId,
+						 "ckbString" : ckbString
+						},
+					});
+					alert("保存成功！")
+				}
 			};
 		
 			function subThree() {
@@ -256,16 +252,18 @@
 				if(ckbString == "") {
 					alert("您还没有勾选指标！");
 				}
-					
-				$.ajax({
-					type:"POST",
-					url: "statistics/indexconfig/editrole",
-					cache: false,
-					data: { 
-					 "roleId" : roleId,
-					 "ckbString" : ckbString
-					}
-				});
+				else {	
+					$.ajax({
+						type:"POST",
+						url: "statistics/indexconfig/editrole",
+						cache: false,
+						data: { 
+						 "roleId" : roleId,
+						 "ckbString" : ckbString
+						}
+					});
+					alert("保存成功！");
+				}
 			};	 
 		 
 	</script>    

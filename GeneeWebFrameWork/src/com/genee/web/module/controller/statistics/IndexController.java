@@ -4,7 +4,6 @@
 package com.genee.web.module.controller.statistics;
 
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.genee.web.framework.core.base.controller.BaseController;
+import com.genee.web.framework.utils.json.JsonUtil;
 import com.genee.web.module.pojo.IndexTypeEntity;
 import com.genee.web.module.pojo.RoleEntity;
 import com.genee.web.module.service.statistics.IndexService;
@@ -57,12 +57,17 @@ public class IndexController extends BaseController {
 		int rId = Integer.parseInt(roleId);
 		String ckbString = request.getParameter("ckbString");
 		String[] arrCkbString = ckbString.split(",");
-		
-		int[] arrCkb = new int[arrCkbString.length];
-		for (int i = 0; i < arrCkbString.length; i++) {
-			arrCkb[i] = Integer.parseInt(arrCkbString[i]);
-		}		
-		iIndexService.updateIndexRoleRelation(arrCkb, rId);
+		if (arrCkbString == null || arrCkbString.length == 0) {
+			
+		}
+		else 
+		{
+			int[] arrCkb = new int[arrCkbString.length];
+			for (int i = 0; i < arrCkbString.length; i++) {
+				arrCkb[i] = Integer.parseInt(arrCkbString[i]);
+			}		
+			iIndexService.updateIndexRoleRelation(arrCkb, rId);
+		}
 	}
 		
 	
@@ -75,11 +80,10 @@ public class IndexController extends BaseController {
 	@RequestMapping(value = "/{roleId}", method = RequestMethod.GET)
 	public void getrole(HttpServletRequest request, HttpServletResponse response, @PathVariable int roleId){
 		Map<String, Object> result = new HashMap<String, Object>();
-		RoleEntity role = iIndexService.searchIndexDetailByRole(roleId);	
-		List<RoleEntity> roleList = new ArrayList<RoleEntity>();
-		roleList.add(role);			
-		result.put("result",roleList);
+		RoleEntity role = iIndexService.searchIndexDetailByRole(roleId);
+		result.put("result",role);
 		result.put("request-status", "success");
+
 		outJson(response, result, null);			
 	}
 	
