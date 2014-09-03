@@ -7,6 +7,75 @@
 <title>统计列表</title>
 <script>
 	$(document).ready(function() {
+		var indexTypePath = "<%=webPath %>statistics/result/roleindextype";
+		var indexPath = "<%=webPath %>statistics/result/roleindex";
+		
+		// 查询当前角色对应的所有指标	并填充页面
+		$.ajax({
+			url: indexTypePath,
+			cache: false,
+			async: false,
+			dataType: "json",
+			type: "get",
+			success: function(indexTypeData){
+				var indexTypeResult = indexTypeData.result;
+				$.ajax({
+					url: indexPath,
+					cache: false,
+					async: false,
+					dataType: "json",
+					type: "get",
+					success: function(indexData){
+						var indexResult = indexData.result;
+						$('#indexContent').empty();
+						
+						$.each(indexTypeResult, function(typeNum, typeValue) {
+
+							var rootDiv = $("<div/>");
+							var parentDiv = $("<div/>").attr({
+								"class" : "type"
+							});
+							var parentLabel = $("<label/>").html(typeValue.tName);
+							
+							parentDiv.append(parentLabel);
+							
+							var childDiv = $("<div/>").attr({
+								"class" : "index"
+							});
+
+							$.each(indexResult,function(indexNum,indexValue) {   
+								if (typeValue.tId == indexValue.tId) {
+									var checkBox = $("<input/>").attr({
+										"type" : "checkbox",
+										"value" : indexValue.sId,
+										"code" : indexValue.sCode,
+										"class" : "middle"
+									});
+									
+									var checkBox = $("<input/>").attr({
+										"type" : "checkbox",
+										"value" : indexValue.sId,
+										"code" : indexValue.sCode,
+										"class" : "middle"
+									});
+									
+									var childLabel = $("<label/>").attr({
+										"class" : "middle"
+									}).html(indexValue.sName);
+									
+									childDiv.append(checkBox).append(childLabel);
+								}
+							});
+							
+							rootDiv.append(parentDiv).append(childDiv);
+							
+							$("#indexContent").append(rootDiv);
+						});
+					}
+				});
+			}
+		});
+		
 		// 自定义统计列表参数对象
 		function statisticsParam(eq_name, eq_type, eq_org, eq_contact, eq_incharge, lab_org, lab, 
 				user, dstart, dend, sort_name, sort, page){
@@ -28,7 +97,12 @@
 		
 		$("#dosearch").click(function(){
 			
-			var jsonRPCobject = new JSONRPC2Object();
+			$("div .index-grid").children("div .type").each(function(){
+				alert(this);
+			});
+			
+			
+			/*var jsonRPCobject = new JSONRPC2Object();
 			jsonRPCobject.id = new Date().getTime();
 			jsonRPCobject.method = "statistics_eqindex_page";
 			
@@ -39,8 +113,41 @@
 			if (eq_name != null && eq_name != ""){
 				param.eq_name = eq_name;
 			}
-			// 这里添加其它查询条件
-			// ......
+			// 仪器类型
+			var eq_type = $("#eq_type").val();
+			if (eq_type != null && eq_type != ""){
+				param.eq_type = eq_type;
+			}
+			// 仪器组织机构
+			var eq_org = $("#eq_org").val();
+			if (eq_org != null && eq_org != ""){
+				param.eq_org = eq_org;
+			}
+			// 仪器负责人
+			var eq_incharge = $("#eq_incharge").val();
+			if (eq_incharge != null && eq_incharge != ""){
+				param.eq_incharge = eq_incharge;
+			}
+			// 仪器联系人
+			var eq_contact = $("#eq_contact").val();
+			if (eq_contact != null && eq_contact != ""){
+				param.eq_contact = eq_contact;
+			}
+			// 课题组组织机构
+			var lab_org = $("#lab_org").val();
+			if (lab_org != null && lab_org != ""){
+				param.lab_org = lab_org;
+			}
+			// 课题组
+			var lab = $("#lab").val();
+			if (lab != null && lab != ""){
+				param.lab = lab;
+			}
+			// 使用者
+			var user = $("#user").val();
+			if (user != null && user != ""){
+				param.user = user;
+			}
 			
 			var dstart = $("#dstart").val().replace(/-/g,'/') + " 00:00:00";
 			param.dstart = new Date(dstart).getTime();
@@ -73,7 +180,7 @@
 						alert(item.get("eq_id"));
 					}
 				}
-			});
+			});*/
 		});
 	}); 
 	
@@ -287,11 +394,11 @@
                         </li>
                         <li>
                           <label>仪器负责人</label>
-                          <input id="eq_contact" type="text" placeholder="可添加5个"/> 
+                          <input id="eq_incharge" type="text" placeholder="可添加5个"/> 
                         </li>
                         <li>
                           <label>仪器联系人</label>
-                          <input id="eq_incharge" type="text"/>
+                          <input id="eq_contact" type="text"/>
                         </li>
                       </ul>
                     </div>
@@ -319,107 +426,9 @@
                     </div>
                 </div>
               <label style="margin-top: 3em ;">搜索结果</label>
-              <div class="index-grid">
-                <div>
-                  <div class="type">
-                    <label>基本信息</label>
-                  </div>
-                  <div class="index">
-                    <input type="checkbox" value="1" name="ckb_index" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                  </div>
-                </div>
-                <div>
-                  <div class="type">
-                    <label>基本信息</label>
-                  </div>
-                  <div class="index">
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                  </div>
-                </div>
-                <div>
-                  <div class="type">
-                    <label>基本信息</label>
-                  </div>
-                  <div class="index">
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                  </div>
-                </div>
-                <div>
-                  <div class="type">
-                    <label>基本信息</label>
-                  </div>
-                  <div class="index">
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                  </div>
-                  <div class="type">
-                    <label>基本信息</label>
-                  </div>
-                  <div class="index">
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                    <input type="checkbox" value="1" class="middle"><label class="middle">仪器名称</label>
-                  </div>
-
-                </div>
-              </div><!-- index-grid -->
+              <div class="index-grid" id="indexContent">
+              </div>
+              </div>
             </div>
 
             <div class="modal-footer">
