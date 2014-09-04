@@ -31,21 +31,21 @@ public class ExcelDao {
 	 * 
 	 * @return
 	 */
-	public List<Map<String, Object>> queryTopHeaders(List<Integer> identities) {
-		String id = "";
-
-		for (int i = 0; i < identities.size(); i++) {
-			id += identities.get(i);
-			if (i != identities.size() - 1) {
-				id += ",";
-			}
-		}
+	public List<Map<String, Object>> queryTopHeaders(String identities) {
 		String sql = "select it.t_id as id, it.t_name as name, count(i.s_id) as ccount "
 				+ "from s_index i "
-				+ "inner join s_index_type it on i.t_id = it.t_id "
-				+ "where i.s_id in ("
-				+ id
-				+ ") group by it.t_id, it.t_name "
+				+ "inner join s_index_type it on i.t_id = it.t_id ";
+		
+		if (identities.indexOf(",") != -1) {
+			sql += "where i.s_id in ("
+					+ identities
+					+ ")";
+		} else {
+			sql += "where i.s_id = "
+					+ identities;
+		}
+				
+		sql += " group by it.t_id, it.t_name "
 				+ "order by it.t_id";
 		JdbcTemplateParam param = new JdbcTemplateParam(sql);
 		return baseDao.queryForList(param);
@@ -58,20 +58,20 @@ public class ExcelDao {
 	 * 
 	 * @return
 	 */
-	public List<Map<String, Object>> queryMidHeaders(List<Integer> identities) {
-		String id = "";
-
-		for (int i = 0; i < identities.size(); i++) {
-			id += identities.get(i);
-			if (i != identities.size() - 1) {
-				id += ",";
-			}
-		}
+	public List<Map<String, Object>> queryMidHeaders(String identities) {
 		String sql = "select i.s_id as id, i.s_name as name, i.s_code as code "
-				+ "from s_index i "
-				+ "where i.s_id in ("
-				+ id
-				+ ") order by i.s_id";
+				+ "from s_index i ";
+		
+		if (identities.indexOf(",") != -1) {
+			sql += "where i.s_id in ("
+					+ identities
+					+ ")";
+		} else {
+			sql += "where i.s_id = "
+					+ identities;
+		}
+		
+		sql += " order by i.s_id";
 		JdbcTemplateParam param = new JdbcTemplateParam(sql);
 		return baseDao.queryForList(param);
 	}

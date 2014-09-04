@@ -20,12 +20,12 @@ public class ExcelServiceImpl implements ExcelService {
 	private ExcelDao excelDao;
 
 	@Override
-	public List<Map<String, Object>> getTopHeaders(List<Integer> identities) {
+	public List<Map<String, Object>> getTopHeaders(String identities) {
 		return excelDao.queryTopHeaders(identities);
 	}
 
 	@Override
-	public List<Map<String, Object>> getMidHeaders(List<Integer> identities) {
+	public List<Map<String, Object>> getMidHeaders(String identities) {
 		return excelDao.queryMidHeaders(identities);
 	}
 }
