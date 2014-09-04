@@ -5,6 +5,16 @@
 <%@include file="../common/base.jsp" %>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>统计列表</title>
+<link href="css/autocomplete.css" rel="stylesheet"/>
+<link href="css/tag_sortable.css" rel="stylesheet"/>
+<link href="css/tag.css" rel="stylesheet"/>
+<link href="css/token_box.css" rel="stylesheet"/>
+<script type="text/javascript" src="js/tag_selector.js"></script>
+<script type="text/javascript" src="js/livequery.js"></script>
+<script type="text/javascript" src="js/autocomplete.js"></script>
+<script type="text/javascript" src="js/token_box.js"></script>
+
+
 <script>
 	$(document).ready(function() {
 		var indexTypePath = webPath + "statistics/result/roleindextype";
@@ -45,19 +55,27 @@
 
 							$.each(indexResult,function(indexNum,indexValue) {   
 								if (typeValue.tId == indexValue.tId) {
-									var checkBox = $("<input/>").attr({
-										"type" : "checkbox",
-										"value" : indexValue.sId,
-										"code" : indexValue.sCode,
-										"class" : "middle"
-									});
-									
-									var checkBox = $("<input/>").attr({
-										"type" : "checkbox",
-										"value" : indexValue.sId,
-										"code" : indexValue.sCode,
-										"class" : "middle"
-									});
+									var checkBox;
+
+									if (indexValue.sCode == "eq_name") {
+										checkBox = $("<input/>").attr({
+											"name" : "ckbIndex",
+											"type" : "checkbox",
+											"value" : indexValue.sId,
+											"code" : indexValue.sCode,
+											"class" : "middle",
+											"checked" : "checked",
+											"disabled" : "true"
+										});
+									} else {
+										checkBox = $("<input/>").attr({
+											"name" : "ckbIndex",
+											"type" : "checkbox",
+											"value" : indexValue.sId,
+											"code" : indexValue.sCode,
+											"class" : "middle"
+										});
+									}
 									
 									var childLabel = $("<label/>").attr({
 										"class" : "middle"
@@ -181,6 +199,30 @@
 					}
 				}
 			});*/
+		});
+		
+		$("#exportBtn").click(function(){
+			var url = webPath + "statistics/result/excel?";
+		/* 	url += "eq_name=" + $("eq_name").val();
+			url += "&eq_type=" + $("#hidEqType").val();
+			url += "&eq_org=" + $("#hidEqOrg").val();
+			url += "&eq_contact=" + $("#hidEqContact").val();
+			url += "&eq_incharge=" + $("#hidEqIncharge").val();
+			url += "&lab_org=" + $("#hidLabOrg").val();
+			url += "&lab=" + $("#hidLab").val();
+			url += "&user=" + $("#hidUser").val(); */
+			url += "dstart=1314806400";
+			url += "&dend=1314892799";
+			var indexId = "";
+			
+			$('input[name="ckbIndex"]:checked').each(function(){    
+				indexId += $(this).val() + ",";
+			});
+			
+			indexId = indexId.substr(0, indexId.length-1);//除去最后一个逗号
+			
+			url += "&index_id=" + indexId;
+			window.open(url,"导出");
 		});
 	}); 
 	
@@ -394,7 +436,11 @@
                         </li>
                         <li>
                           <label>仪器负责人</label>
-                          <input id="eq_incharge" type="text" placeholder="可添加5个"/> 
+                          <input style="width: 420px;" name="tags" class="text token middle token_verify token_autocomplete:http://192.168.0.150/test/!equipments/autocomplete/tags tooltip_position:right" size="60" q-tooltip="请输入关键字并选择" value="" type="text"/>
+						 <div style="width: 424px;" class="clearfix token_box   middle   tooltip_position:right">
+                          	<input style="width: 0px;" class="visible"/>
+                          	<input>
+                          </div>
                         </li>
                         <li>
                           <label>仪器联系人</label>
@@ -436,6 +482,5 @@
               <button type="button" class="link link-default" data-dismiss="modal">取消</button>
             </div>
           </div>
-      </div>
 </body>
 </html>
