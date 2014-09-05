@@ -5,18 +5,45 @@
 <%@include file="../common/base.jsp" %>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>统计列表</title>
-<link href="css/autocomplete.css" rel="stylesheet"/>
-<link href="css/tag_sortable.css" rel="stylesheet"/>
-<link href="css/tag.css" rel="stylesheet"/>
-<link href="css/token_box.css" rel="stylesheet"/>
-<script type="text/javascript" src="js/tag_selector.js"></script>
-<script type="text/javascript" src="js/livequery.js"></script>
-<script type="text/javascript" src="js/autocomplete.js"></script>
-<script type="text/javascript" src="js/token_box.js"></script>
+<link href="css/jquery/jquery-ui.css" rel="stylesheet"/>
+<link href="css/bootstrap/bootstrap-tokenfield.css" rel="stylesheet"/>
+<script type="text/javascript" src="js/jquery/jquery-ui.js"></script>
+<script type="text/javascript" src="js/bootstrap/bootstrap-tokenfield.js"></script>
+<script type="text/javascript" src="js/bootstrap/typeahead.bundle.js"></script>
 
 
 <script>
 	$(document).ready(function() {
+		
+		var engine = new Bloodhound({
+			remote: {
+				url: API_URL + '?action=message_friends&q=%QUERY',
+				filter: function (response) {
+					return $.map(response.users, function (user) {
+						return {
+							value: user.user_id,
+							label: user.name
+						};
+					});
+	    			}
+  			},
+  			datumTokenizer: function(d) {
+    			return Bloodhound.tokenizers.whitespace(d.value); 
+  		},
+  		queryTokenizer: Bloodhound.tokenizers.whitespace    
+		});
+
+engine.initialize();
+		
+		$('#tokenfield').tokenfield({
+			autocomplete: {
+				source: ['red','blue','green','yellow','violet','brown','purple','black','white'],
+				delay: 100
+			},
+			showAutocompleteOnFocus: true
+		});
+
+		
 		var indexTypePath = webPath + "statistics/result/roleindextype";
 		var indexPath = webPath + "statistics/result/roleindex";
 		
@@ -263,7 +290,9 @@
 							<div class="result-left">
 								<ul>
 									<li><label>仪器名称</label> <input type="text" readonly="true"
-										value="光谱仪"></li>
+										value="光谱仪">
+										<input type="text" class="form-control" id="tokenfield" value="red,green,blue" />
+										</li>
 									<li><label>仪器分类</label> <input type="text" readonly="true"
 										value="X射线仪器"></li>
 									<li><label>时间范围</label> <input type="text" readonly="true"
