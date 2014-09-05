@@ -17,7 +17,7 @@
 		
 		var engine = new Bloodhound({
 			remote: {
-				url: API_URL + '?action=message_friends&q=%QUERY',
+				url: webPath + 'statistics/result/contact?name=%QUERY',
 				filter: function (response) {
 					return $.map(response.users, function (user) {
 						return {
