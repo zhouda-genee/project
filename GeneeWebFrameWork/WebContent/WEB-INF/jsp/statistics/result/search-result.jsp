@@ -5,116 +5,156 @@
 <%@include file="../common/base.jsp" %>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>统计列表</title>
+<style type="text/css">
+.text_overflow{white-space:nowrap; text-overflow:ellipsis; -o-text-overflow:ellipsis; -moz-binding:url('ellipsis.xml#ellipsis'); overflow:hidden;}
+</style>
+<script src="js/statistics/eqindex-table.js"></script>
+<link href="css/jquery/jquery-ui.css" rel="stylesheet"/>
+<link href="css/bootstrap/bootstrap-tokenfield.css" rel="stylesheet"/>
+<script type="text/javascript" src="js/jquery/jquery-ui.js"></script>
+<script type="text/javascript" src="js/bootstrap/bootstrap-tokenfield.js"></script>
+<script type="text/javascript" src="js/bootstrap/typeahead.bundle.js"></script>
 <script>
 	$(document).ready(function() {
-		// 自定义统计列表参数对象
-		function statisticsParam(eq_name, eq_type, eq_org, eq_contact, eq_incharge, lab_org, lab, 
-				user, dstart, dend, sort_name, sort, page){
-			this.eq_name = eq_name;
-			this.eq_type = eq_type;
-			this.eq_org = eq_org;
-			this.eq_contact = eq_contact;
-			this.eq_incharge = eq_incharge;
-			this.lab_org = lab_org;
-			this.lab = lab;
-			this.user = user;
-			this.dstart = dstart;
-			this.dend = dend;
-			this.sort_name = sort_name;
-			this.sort = sort;
-			this.size = 15;
-			this.page = page;
-		}
-		
-		$("#dosearch").click(function(){
-			
-			$("div .index-grid").children("div .type").each(function(){
-				alert(this);
-			});
-			
-			
-			/*var jsonRPCobject = new JSONRPC2Object();
-			jsonRPCobject.id = new Date().getTime();
-			jsonRPCobject.method = "statistics_eqindex_page";
-			
-			var param = new statisticsParam();
-			param.page = 1;
-			// 仪器名称
-			var eq_name = $("#eq_name").val();
-			if (eq_name != null && eq_name != ""){
-				param.eq_name = eq_name;
-			}
-			// 仪器类型
-			var eq_type = $("#eq_type").val();
-			if (eq_type != null && eq_type != ""){
-				param.eq_type = eq_type;
-			}
-			// 仪器组织机构
-			var eq_org = $("#eq_org").val();
-			if (eq_org != null && eq_org != ""){
-				param.eq_org = eq_org;
-			}
-			// 仪器负责人
-			var eq_incharge = $("#eq_incharge").val();
-			if (eq_incharge != null && eq_incharge != ""){
-				param.eq_incharge = eq_incharge;
-			}
-			// 仪器联系人
-			var eq_contact = $("#eq_contact").val();
-			if (eq_contact != null && eq_contact != ""){
-				param.eq_contact = eq_contact;
-			}
-			// 课题组组织机构
-			var lab_org = $("#lab_org").val();
-			if (lab_org != null && lab_org != ""){
-				param.lab_org = lab_org;
-			}
-			// 课题组
-			var lab = $("#lab").val();
-			if (lab != null && lab != ""){
-				param.lab = lab;
-			}
-			// 使用者
-			var user = $("#user").val();
-			if (user != null && user != ""){
-				param.user = user;
-			}
-			
-			var dstart = $("#dstart").val().replace(/-/g,'/') + " 00:00:00";
-			param.dstart = new Date(dstart).getTime();
-			var dend = $("#dend").val().replace(/-/g,'/') + " 23:59:59";
-			param.dend = new Date(dend).getTime();
-			
-			jsonRPCobject.params = JSON.stringify(param);
-			
-			// 查询统计结果
-			$.ajax({
-				url: "http://localhost:8088/geneeservletfw/API2",
-				data: jsonRPCobject,
-				cache: false,
-				async: false,
-				dataType: "json",
-				type: "post",
-				success: function(data){
-					var id = data.id;
-					var jsonrpc = data.jsonrpc;
-					alert("id:" + id + " jsonrpc:" + jsonrpc);
-					var result = data.result;
-					alert(result);
-					var totalCount = result.totalCount;
-					var pageSize = result.pageSize;
-					var page = result.page;
-					alert("page:" + page + " totalCount:" + totalCount + " pageSize:" + pageSize);
-					var items = result.items;
-					for (var i=0; i<items.length; i++) {
-						var item = items[i];
-						alert(item.get("eq_id"));
-					}
-				}
-			});*/
-		});
-	}); 
 	
+	var engine = new Bloodhound({
+			remote: {
+				url: API_URL + '?action=message_friends&q=%QUERY',
+				filter: function (response) {
+					return $.map(response.users, function (user) {
+						return {
+							value: user.user_id,
+							label: user.name
+						};
+					});
+	    			}
+  			},
+  			datumTokenizer: function(d) {
+    			return Bloodhound.tokenizers.whitespace(d.value); 
+  		},
+  		queryTokenizer: Bloodhound.tokenizers.whitespace    
+		});
+
+engine.initialize();
+		
+		$('#tokenfield').tokenfield({
+			autocomplete: {
+				source: ['red','blue','green','yellow','violet','brown','purple','black','white'],
+				delay: 100
+			},
+			showAutocompleteOnFocus: true
+		});
+
+		
+		var indexTypePath = webPath + "statistics/result/roleindextype";
+		var indexPath = webPath + "statistics/result/roleindex";
+		
+		// 查询当前角色对应的所有指标	并填充页面
+		$.ajax({
+			url: indexTypePath,
+			cache: false,
+			async: false,
+			dataType: "json",
+			type: "get",
+			success: function(indexTypeData){
+				var indexTypeResult = indexTypeData.result;
+				$.ajax({
+					url: indexPath,
+					cache: false,
+					async: false,
+					dataType: "json",
+					type: "get",
+					success: function(indexData){
+						var indexResult = indexData.result;
+						$('#indexContent').empty();
+						
+						$.each(indexTypeResult, function(typeNum, typeValue) {
+
+							var rootDiv = $("<div/>");
+							var parentDiv = $("<div/>").attr({
+								"class" : "type"
+							});
+							var parentLabel = $("<label/>").html(typeValue.tName);
+							
+							parentDiv.append(parentLabel);
+							
+							var childDiv = $("<div/>").attr({
+								"class" : "index"
+							});
+
+							$.each(indexResult,function(indexNum,indexValue) {   
+								if (typeValue.tId == indexValue.tId) {
+									var checkBox;
+
+									if (indexValue.sCode == "eq_name") {
+										checkBox = $("<input/>").attr({
+											"name" : "ckbIndex",
+											"type" : "checkbox",
+											"value" : indexValue.sId,
+											"code" : indexValue.sCode,
+											"class" : "middle",
+											"checked" : "checked",
+											"disabled" : "true"
+										});
+									} else {
+										checkBox = $("<input/>").attr({
+											"name" : "ckbIndex",
+											"type" : "checkbox",
+											"value" : indexValue.sId,
+											"code" : indexValue.sCode,
+											"class" : "middle"
+										});
+									}
+									
+									var childLabel = $("<label/>").attr({
+										"class" : "middle"
+									}).html(indexValue.sName);
+									
+									childDiv.append(checkBox).append(childLabel);
+								}
+							});
+							
+							rootDiv.append(parentDiv).append(childDiv);
+							
+							$("#indexContent").append(rootDiv);
+						});
+					}
+				});
+			}
+		});
+	
+		$("#dosearch").click(function() {
+			// 获取查询条件
+			var searchParam = getSearchParam(1, 16);
+			// 创建表头左侧
+			buildTableHeaderLeft();
+			// 创建表头右侧
+			var indexEntityArray = buildTableHeaderRight();
+			// 获取统计列表记录
+			var equipmentIndexData = getEquipmentIndexData(searchParam);
+			// 创建统计列表右侧
+			buildTableBodyRight(equipmentIndexData, indexEntityArray, true);
+			// 创建统计列表左侧
+			buildTableBodyLeft(equipmentIndexData, true);
+			// 获取总计记录
+			var equipmentIndexCount = getEquipmentIndexCount(searchParam);
+			// 创建总计左侧
+			buildTableFootLeft(equipmentIndexCount);
+			// 创建总计右侧
+			buildTableFootRight(equipmentIndexCount, indexEntityArray);
+			// 点击搜索后，将滚动到顶部
+			$("#table-right-body").scrollTop(0);
+			$("#table-right-body").scrollLeft(0);
+		});
+		
+		$("#table-right-body").scroll(function () {
+			tableScroll();
+			var scrollTop = $("#table-right-body").scrollTop();
+			if (scrollTop == 1){
+				alert("加载数据去了");
+			}
+		});
+	});
 	function displaySearchProperties() {
 		if ($("#searchProperties").is(":hidden")) {
 			$("#searchProperties").slideDown(1000);
@@ -122,14 +162,30 @@
 			$("#searchProperties").slideUp(1000);
 		}
 	}
-
-	function tableScroll() {
-		var a = document.getElementById("t_r_content").scrollTop;
-		var b = document.getElementById("t_r_content").scrollLeft;
-		document.getElementById("cl_freeze").scrollTop = a;
-		document.getElementById("t_r_t").scrollLeft = b;
-	}
 	
+	$("#exportBtn").click(function(){
+			var url = webPath + "statistics/result/excel?";
+		/* 	url += "eq_name=" + $("eq_name").val();
+			url += "&eq_type=" + $("#hidEqType").val();
+			url += "&eq_org=" + $("#hidEqOrg").val();
+			url += "&eq_contact=" + $("#hidEqContact").val();
+			url += "&eq_incharge=" + $("#hidEqIncharge").val();
+			url += "&lab_org=" + $("#hidLabOrg").val();
+			url += "&lab=" + $("#hidLab").val();
+			url += "&user=" + $("#hidUser").val(); */
+			url += "dstart=1314806400";
+			url += "&dend=1314892799";
+			var indexId = "";
+			
+			$('input[name="ckbIndex"]:checked').each(function(){    
+				indexId += $(this).val() + ",";
+			});
+			
+			indexId = indexId.substr(0, indexId.length-1);//除去最后一个逗号
+			
+			url += "&index_id=" + indexId;
+			window.open(url,"导出");
+		});
 </script>
 </head>
 <body>
@@ -152,7 +208,9 @@
 							<div class="result-left">
 								<ul>
 									<li><label>仪器名称</label> <input type="text" readonly="true"
-										value="光谱仪"></li>
+										value="光谱仪">
+										<input type="text" class="form-control" id="tokenfield" value="red,green,blue" />
+										</li>
 									<li><label>仪器分类</label> <input type="text" readonly="true"
 										value="X射线仪器"></li>
 									<li><label>时间范围</label> <input type="text" readonly="true"
@@ -184,118 +242,26 @@
 							</div>
 						</form>
 					</div>
-
-					<div class="table-left">
-						<div>
-							<table>
-								<tr>
-									<th class="eq-name-cell">仪器名称</th>
-								</tr>
-							</table>
+					<!-- 创建统计列表开始 -->
+					<div>
+						<div class="table-left">
+							<div id="table-left-head">
+							</div>
+							<div class="table-left-body" id="table-left-body">
+							</div>
+							<div id="table-left-foot">
+							</div>
 						</div>
-						<div class="col-freeze" id="cl_freeze">
-							<table>
-								<tbody><tr><td>光谱仪</td></tr></tbody>
-								<tfoot><tr><td class="count">
-									<span style="font-size: 14px; padding-left: 10px; color: #000;">
-									总计&nbsp;&nbsp;仪器台数：23
-									</span></td></tr>
-								</tfoot>
-							</table>
-						</div>
-					</div>
-					<div class="table-row">
-						<div id="t_r_t" class="table-row-title t-r-t">
-							<table>
-								<tr>
-									<th colspan="4" style="width: 480px; font-size: 18px;">基本信息</th>
-									<th colspan="6" style="width: 720px; font-size: 18px;">使用信息</th>
-									<th colspan="10" style="width: 1200px; font-size: 18px;">测样信息</th>
-									<th colspan="4" style="width: 480px; font-size: 18px;">计费信息</th>
-								</tr>
-								<tr>
-									<th>仪器价格（¥）</th>
-									<th>负责人</th>
-									<th>联系人</th>
-									<th>故障时长</th>
-									<th>入网时长</th>
-									<th>预约机时</th>
-									<th>使用机时</th>
-									<th>机主使用机时</th>
-									<th>开放机时</th>
-									<th>有效机时</th>
-									<th>委托测试机时</th>
-									<th>科研机时</th>
-									<th>教学机时</th>
-									<th>社会项目机时</th>
-									<th>使用次数</th>
-									<th>测样数</th>
-									<th>使用测样数</th>
-									<th>送样测样数</th>
-									<th>机主测样数</th>
-									<th>学生测样数</th>
-									<th>使用收费</th>
-									<th>校内收费</th>
-									<th>校外收费</th>
-									<th>服务科研项目数</th>
-								</tr>
-							</table>
-						</div>
-						<div class="table-row-content" id="t_r_content" onscroll="tableScroll()">
-							<table>
-								<tr>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>6</td>
-									<td>7</td>
-									<td>8</td>
-									<td>9</td>
-									<td>10</td>
-									<td>11</td>
-									<td>12</td>
-									<td>13</td>
-									<td>14</td>
-									<td>15</td>
-									<td>16</td>
-									<td>17</td>
-									<td>18</td>
-									<td>19</td>
-									<td>20</td>
-									<td>21</td>
-									<td>22</td>
-									<td>23</td>
-								</tr>
-								<tr id="count">
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>6</td>
-									<td>7</td>
-									<td>8</td>
-									<td>9</td>
-									<td>10</td>
-									<td>11</td>
-									<td>12</td>
-									<td>13</td>
-									<td>14</td>
-									<td>15</td>
-									<td>16</td>
-									<td>17</td>
-									<td>18</td>
-									<td>19</td>
-									<td>20</td>
-									<td>21</td>
-									<td>22</td>
-									<td>23</td>
-								</tr>
-							</table>
+						<div class="table-right">
+							<div id="table-right-head" class="table-right-head">
+							</div>
+							<div id="table-right-body" class="table-right-body">
+							</div>
+							<div id="table-right-foot" class="table-right-foot">
+							</div>
 						</div>
 					</div>
+					<!-- 创建统计列表结束 -->
 				</div>
 			</div>
 		</div>
@@ -357,17 +323,17 @@
                     </div>
                 </div>
               <label style="margin-top: 3em ;">搜索结果</label>
-              <div class="index-grid">
+              <div class="index-grid" id="indexContent">
                 <div>
                   <div class="type">
                     <label>基本信息</label>
                   </div>
                   <div class="index">
-                    <input type="checkbox" value="2" code="eq_price" class="middle"><label class="middle">仪器价格</label>
-                    <input type="checkbox" value="3" code="principal" class="middle"><label class="middle">负责人</label>
-                    <input type="checkbox" value="4" code="linkman" class="middle"><label class="middle">联系人</label>
-                    <input type="checkbox" value="5" code="innet_dur" class="middle"><label class="middle">入网时长</label>
-                    <input type="checkbox" value="6" code="fault_dur" class="middle"><label class="middle">故障时长</label>
+                    <input type="checkbox" value="2" index-width="100" index-not-count="1" code="eq_price" class="middle"><label class="middle">仪器价格</label>
+                    <input type="checkbox" value="3" index-width="200" index-not-count="1" code="principal" class="middle"><label class="middle">负责人</label>
+                    <input type="checkbox" value="4" index-width="200" index-not-count="1" code="linkman" class="middle"><label class="middle">联系人</label>
+                    <input type="checkbox" value="5" index-width="80" index-not-count="1" code="innet_dur" class="middle"><label class="middle">入网时长</label>
+                    <input type="checkbox" value="6" index-width="80" index-not-count="0" code="fault_dur" class="middle"><label class="middle">故障时长</label>
                   </div>
                 </div>
                 <div>
@@ -375,12 +341,12 @@
                     <label>计费信息</label>
                   </div>
                   <div class="index">
-                    <input type="checkbox" value="22" code="used_charge" class="middle"><label class="middle">使用收费</label>
-                    <input type="checkbox" value="23" code="on_cam_charge" class="middle"><label class="middle">校内收费</label>
-                    <input type="checkbox" value="24" code="off_cam_charge" class="middle"><label class="middle">校外收费</label>
-                    <input type="checkbox" value="25" code="delegation_charge" class="middle"><label class="middle">委托测试收费</label>
-                    <input type="checkbox" value="26" code="earnings_charge" class="middle"><label class="middle">创收金额</label>
-                    <input type="checkbox" value="27" code="repair_cost" class="middle"><label class="middle">维修费</label>
+                    <input type="checkbox" value="22" index-width="80" index-not-count="0" code="used_charge" class="middle"><label class="middle">使用收费</label>
+                    <input type="checkbox" value="23" index-width="80" index-not-count="0" code="on_cam_charge" class="middle"><label class="middle">校内收费</label>
+                    <input type="checkbox" value="24" index-width="80" index-not-count="0" code="off_cam_charge" class="middle"><label class="middle">校外收费</label>
+                    <input type="checkbox" value="25" index-width="80" index-not-count="0" code="delegation_charge" class="middle"><label class="middle">委托测试收费</label>
+                    <input type="checkbox" value="26" index-width="80" index-not-count="0" code="earnings_charge" class="middle"><label class="middle">创收金额</label>
+                    <input type="checkbox" value="27" index-width="80" index-not-count="0" code="repair_cost" class="middle"><label class="middle">维修费</label>
                   </div>
                 </div>
               </div>
@@ -388,7 +354,7 @@
             </div>
 
             <div class="modal-footer">
-              <button type="button" class="link link-primary" id="dosearch">提交</button>
+              <button type="button" class="link link-primary" id="dosearch" onclick="displaySearchProperties()">提交</button>
               <button type="button" class="link link-default" data-dismiss="modal">取消</button>
             </div>
           </div>

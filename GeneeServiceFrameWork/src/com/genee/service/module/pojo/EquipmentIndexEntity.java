@@ -22,7 +22,7 @@ public class EquipmentIndexEntity implements Serializable {
 	private static final long serialVersionUID = 4995122871109032905L;
 
 	// 仪器ID
-	@XmlAttribute
+	@XmlAttribute(name = "eq_id")
 	private long eq_id;
 	
 	// 仪器名称
@@ -32,7 +32,7 @@ public class EquipmentIndexEntity implements Serializable {
 	private int eq_count;
 	
 	// 仪器价格
-	@XmlAttribute
+	@XmlAttribute(name = "eq_price")
 	private String eq_price;
 	
 	// 仪器负责人
