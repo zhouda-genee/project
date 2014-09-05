@@ -13,6 +13,8 @@ import com.genee.timertask.module.statistics.index.IndexBase;
  * 
  * @ClassName: IndexTrainingStudent
  * @Description: 培训教师指标<br>统计时段内，已通过培训+团体中通过培训教师人数的总和
+ * 				张枚说：一期只做南大定制的
+ * 				南大定制：统计时段内，已通过培训通过培训角色为教师人数的总和
  * @author da.zhou@geneegroup.com
  * @date 2014年8月22日 上午11:46:32
  *
@@ -44,7 +46,7 @@ public class IndexTrainingTeacher extends IndexBase {
 		}
 		
 		// 统计团体培训
-		List<Map<String, Object>> groupTrainings = queryResult2(startDate, endDate);
+		/*List<Map<String, Object>> groupTrainings = queryResult2(startDate, endDate);
 		for (Map<String, Object> groupTraining : groupTrainings) {
 			equipmentId = (long)groupTraining.get("equipmentid");
 			num = (int)groupTraining.get("num");
@@ -57,7 +59,7 @@ public class IndexTrainingTeacher extends IndexBase {
 				equipment.setTrainTea(num);
 				equipments.put(key, equipment);
 			}
-		}
+		}*/
 	}
 	
 	/**
@@ -89,7 +91,7 @@ public class IndexTrainingTeacher extends IndexBase {
 	 * @Description: 团队中通过培训的人数 
 	 * @return List<Map<String,Object>>
 	 * @throws
-	 */
+	 
 	private List<Map<String, Object>> queryResult2(long startDate, long endDate){
 		String sql = "select sum(napproved) as num, equipment_id as equipmentid "
 				+ "from ge_training "
@@ -99,6 +101,6 @@ public class IndexTrainingTeacher extends IndexBase {
 				new Object[] { startDate, endDate }, 
 				new int[] { java.sql.Types.INTEGER, java.sql.Types.INTEGER });
 		return baseDao.queryForList(jdbcTemplateParam);
-	}
+	}*/
 
 }
