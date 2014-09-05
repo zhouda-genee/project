@@ -4,7 +4,6 @@
 package com.genee.web.module.pojo;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * 指标基本信息表对应的entity类
@@ -40,17 +39,6 @@ public class IndexEntity implements Serializable {
 
 	// 指标开关
 	private String sOnOff;
-	
-	// 指标与角色的多对多关系  
-	private List<RoleEntity> roles = null;
-	
-	public List<RoleEntity> getRoles() {
-		return roles;
-	}
-	
-	public void setRoles(List<RoleEntity> roles) {
-		this.roles = roles;
-	}
 	
 	public int getsId() {
 		return sId;

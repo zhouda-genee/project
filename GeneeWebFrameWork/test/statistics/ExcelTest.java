@@ -27,19 +27,11 @@ public class ExcelTest extends BaseTest {
 	@Autowired
 	private ExcelService excelService;
 
-	List<Integer> identities;
+	String identities;
 
 	@Before
 	public void init() {
-		identities = new ArrayList<Integer>();
-		identities.add(1);
-		identities.add(2);
-		identities.add(4);
-		identities.add(5);
-		identities.add(6);
-		identities.add(8);
-		identities.add(11);
-		identities.add(13);
+		identities = "1,2,4,5,6,8,11,13";
 	}
 
 	/**
@@ -107,8 +99,18 @@ public class ExcelTest extends BaseTest {
 
 		contents.add(content1);
 		contents.add(content2);
+		
+		Map<String, Object> total = new HashMap<String, Object>();
+		total.put("eq_price", "33.33");
+		total.put("linkman", "联系人1,2");
+		total.put("innet_dur", "33");
+		total.put("fault_dur", "55");
+		total.put("used_dur", "77");
+		total.put("valid_dur", "99");
+		total.put("scientific_dur", "121");
+		
 		Workbook workbook = ExcelUtil.buildExcel(ExcelType.XLSX, topHeaders,
-				midHeaders, contents);
+				midHeaders, contents, total);
 		workbook.write(new FileOutputStream(new File(
 				"/Users/hujinzhe/Downloads/test.xlsx")));
 	}

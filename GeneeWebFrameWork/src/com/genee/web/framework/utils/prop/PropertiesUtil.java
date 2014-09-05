@@ -5,18 +5,22 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class PropertiesUtil {
-	
+
 	private static final String CONFIG_PATH = "app_config/";
 
-	private PropertiesUtil(){}
+	private PropertiesUtil() {
+	}
+
 	/**
 	 * 读取src目录下的配置文件
+	 * 
 	 * @param file
 	 * @return
 	 * @throws IOException
 	 */
-	public static Properties getPropertiesBySrc(String fileName){
-		InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(CONFIG_PATH + fileName);
+	public static Properties getPropertiesBySrc(String fileName) {
+		InputStream in = Thread.currentThread().getContextClassLoader()
+				.getResourceAsStream(CONFIG_PATH + fileName);
 		Properties prop = new Properties();
 		try {
 			prop.load(in);
@@ -32,5 +36,18 @@ public class PropertiesUtil {
 		}
 		return prop;
 	}
-	
+
+	/**
+	 * 读取src目录下的配置文件中的属性
+	 * 
+	 * @param file
+	 * @param key
+	 *            属性名
+	 * @return 属性值
+	 * @throws IOException
+	 */
+	public static String getPropertiesValue(String fileName, String key) {
+		Properties prop = getPropertiesBySrc(fileName);
+		return prop.getProperty(key);
+	}
 }

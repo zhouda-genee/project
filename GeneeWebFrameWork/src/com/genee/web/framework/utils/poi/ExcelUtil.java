@@ -31,7 +31,8 @@ public class ExcelUtil {
 	public static Workbook buildExcel(ExcelType type,
 			List<Map<String, Object>> topHeaders,
 			List<Map<String, Object>> midHeaders,
-			List<Map<String, Object>> contents) {
+			List<Map<String, Object>> contents,
+			Map<String, Object> total) {
 
 		Workbook workbook = null; // 创建新的Excel工作薄
 		Sheet sheet = null;
@@ -120,17 +121,46 @@ public class ExcelUtil {
 			// 循环判断字段名称是否对应
 			for (Map<String, Object> headerMap : midHeaders) {
 				for (Map.Entry<String, Object> contentEntry : contentMap.entrySet()) {
+					Cell cell = contentRow.createCell(cellIndex);
+					cell.setCellValue("-");
+					
 					if (contentEntry.getKey().equals(
 							headerMap.get("code").toString())) {
 
-						Cell cell = contentRow.createCell(cellIndex);
 						cell.setCellValue(contentEntry.getValue().toString());
-						cellIndex++;
 						break;
 					}
 				}
+				
+				cellIndex++;
 			}
 			rowIndex++;
+		}
+		
+		
+		// 插入总计
+		Row totalRow = sheet.createRow(rowIndex);
+		Cell cellNum = totalRow.createCell(0);
+		cellNum.setCellValue("总计：仪器台数：" + total.get("eq_count").toString());
+		
+		int cellIndex = 1;
+		// 循环判断字段名称是否对应
+		for (Map<String, Object> headerMap : midHeaders) {
+			if (!headerMap.get("code").toString().equals("eq_name")) {
+				for (Map.Entry<String, Object> totalEntry : total.entrySet()) {
+					Cell cell = totalRow.createCell(cellIndex);
+					cell.setCellValue("-");
+					
+					if (totalEntry.getKey().equals(
+							headerMap.get("code").toString())) {
+	
+						cell.setCellValue(totalEntry.getValue().toString());
+						break;
+					}
+				}
+				
+				cellIndex++;
+			}
 		}
 
 		return workbook;

@@ -103,40 +103,40 @@ public class StatisticsDao {
 		paramValue.add(endDate);
 		paramType.add(java.sql.Types.INTEGER);
 		
-		if (StringUtils.isNotEmpty(eq_name)) { // 仪器名称查询
+		if (StringUtils.isNotEmpty(eq_name) && !"null".equals(eq_name)) { // 仪器名称查询
 			sql.append(" and _eq.eq_name like ? ");
 			paramValue.add("%" + eq_name + "%");
 			paramType.add(java.sql.Types.VARCHAR);
 		} 
-		if (StringUtils.isNotEmpty(eq_type)) { // 仪器分类查询
+		if (StringUtils.isNotEmpty(eq_type) && !"null".equals(eq_type)) { // 仪器分类查询
 			sql.append(" and _eq.eq_id in (select _r_t_eq.id2 from _r_tag_equipment _r_t_eq where _r_t_eq.id1 = ?) ");
 			paramValue.add(eq_type);
 			paramType.add(java.sql.Types.INTEGER);
 		}
-		if (StringUtils.isNotEmpty(eq_org)) { // 仪器组织机构
+		if (StringUtils.isNotEmpty(eq_org) && !"null".equals(eq_org)) { // 仪器组织机构
 			sql.append(" and _eq.eq_id in (select _r_t_eq.id2 from _r_tag_equipment _r_t_eq where _r_t_eq.id1 = ?) ");
 			paramValue.add(eq_org);
 			paramType.add(java.sql.Types.INTEGER);
 		} 
-		if (StringUtils.isNotEmpty(eq_contact)) { // 仪器联系人查询
+		if (StringUtils.isNotEmpty(eq_contact) && !"null".equals(eq_contact)) { // 仪器联系人查询
 			sql.append(" and _eq.eq_id in (select _r_u_eq.id2 from _r_user_equipment _r_u_eq where _r_u_eq.id1 in (" + eq_contact + ") and _r_u_eq.type = 'contact') ");
 		}
-		if (StringUtils.isNotEmpty(eq_incharge)) { // 仪器负责人查询
+		if (StringUtils.isNotEmpty(eq_incharge) && !"null".equals(eq_incharge)) { // 仪器负责人查询
 			sql.append(" and _eq.eq_id in (select _r_u_eq.id2 from _r_user_equipment _r_u_eq where _r_u_eq.id1 in (" + eq_incharge + ") and _r_u_eq.type = 'incharge') ");
 		}
-		if (StringUtils.isNotEmpty(lab_org)) { // 课题组组织机构查询
+		if (StringUtils.isNotEmpty(lab_org) && !"null".equals(lab_org)) { // 课题组组织机构查询
 			sql.append(" and _stat.user_id in (select _r_u_t.id1 from _r_user_tag _r_u_t where _r_u_t.id2 = ?) ");
 			paramValue.add(lab_org);
 			paramType.add(java.sql.Types.INTEGER);
 		}
-		if (StringUtils.isNotEmpty(lab)) { // 课题组查询
+		if (StringUtils.isNotEmpty(lab) && !"null".equals(lab)) { // 课题组查询
 			sql.append(" and _stat.user_id in (select _u.id from user where user _u where _u.lab_id in (" + lab + ")) ");
 		}
-		if (StringUtils.isNotEmpty(user)) { // 使用者查询
+		if (StringUtils.isNotEmpty(user) && !"null".equals(user)) { // 使用者查询
 			sql.append(" and _stat.user_id in (" + user + ")");
 		}
 		sql.append("group  by _eq.eq_id, _eq.eq_name, _eq.eq_price, _eq.principal, _eq.linkman, _eq.innet_dur ");
-		if (StringUtils.isNotEmpty(sortName)){
+		if (StringUtils.isNotEmpty(sortName) && !"null".equals(sortName)){
 			sql.append("order by " + sortName + " " + sort);
 		} else {
 			sql.append("order by _eq.eq_name");
@@ -230,36 +230,36 @@ public class StatisticsDao {
 		paramValue.add(endDate);
 		paramType.add(java.sql.Types.INTEGER);
 		
-		if (StringUtils.isNotEmpty(eq_name)) { // 仪器名称查询
+		if (StringUtils.isNotEmpty(eq_name) && !"null".equals(eq_name)) { // 仪器名称查询
 			sql.append(" and _eq.eq_name like ? ");
 			paramValue.add("%" + eq_name + "%");
 			paramType.add(java.sql.Types.VARCHAR);
 		} 
-		if (StringUtils.isNotEmpty(eq_type)) { // 仪器分类查询
+		if (StringUtils.isNotEmpty(eq_type) && !"null".equals(eq_type)) { // 仪器分类查询
 			sql.append(" and _eq.eq_id in (select _r_t_eq.id2 from _r_tag_equipment _r_t_eq where _r_t_eq.id1 = ?) ");
 			paramValue.add(eq_type);
 			paramType.add(java.sql.Types.INTEGER);
 		}
-		if (StringUtils.isNotEmpty(eq_org)) { // 仪器组织机构
+		if (StringUtils.isNotEmpty(eq_org) && !"null".equals(eq_org)) { // 仪器组织机构
 			sql.append(" and _eq.eq_id in (select _r_t_eq.id2 from _r_tag_equipment _r_t_eq where _r_t_eq.id1 = ?) ");
 			paramValue.add(eq_org);
 			paramType.add(java.sql.Types.INTEGER);
 		} 
-		if (StringUtils.isNotEmpty(eq_contact)) { // 仪器联系人查询
+		if (StringUtils.isNotEmpty(eq_contact) && !"null".equals(eq_contact)) { // 仪器联系人查询
 			sql.append(" and _eq.eq_id in (select _r_u_eq.id2 from _r_user_equipment _r_u_eq where _r_u_eq.id1 in (" + eq_contact + ") and _r_u_eq.type = 'contact') ");
 		}
-		if (StringUtils.isNotEmpty(eq_incharge)) { // 仪器负责人查询
+		if (StringUtils.isNotEmpty(eq_incharge) && !"null".equals(eq_incharge)) { // 仪器负责人查询
 			sql.append(" and _eq.eq_id in (select _r_u_eq.id2 from _r_user_equipment _r_u_eq where _r_u_eq.id1 in (" + eq_incharge + ") and _r_u_eq.type = 'incharge') ");
 		}
-		if (StringUtils.isNotEmpty(lab_org)) { // 课题组组织机构查询
+		if (StringUtils.isNotEmpty(lab_org) && !"null".equals(lab_org)) { // 课题组组织机构查询
 			sql.append(" and _stat.user_id in (select _r_u_t.id1 from _r_user_tag _r_u_t where _r_u_t.id2 = ?) ");
 			paramValue.add(lab_org);
 			paramType.add(java.sql.Types.INTEGER);
 		}
-		if (StringUtils.isNotEmpty(lab)) { // 课题组查询
+		if (StringUtils.isNotEmpty(lab) && !"null".equals(lab)) { // 课题组查询
 			sql.append(" and _stat.user_id in (select _u.id from user where user _u where _u.lab_id in (" + lab + ")) ");
 		}
-		if (StringUtils.isNotEmpty(user)) { // 使用者查询
+		if (StringUtils.isNotEmpty(user) && !"null".equals(user)) { // 使用者查询
 			sql.append(" and _stat.user_id in (" + user + ")");
 		}
 		

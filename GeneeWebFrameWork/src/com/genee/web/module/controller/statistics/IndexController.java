@@ -4,7 +4,6 @@
 package com.genee.web.module.controller.statistics;
 
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +42,7 @@ public class IndexController extends BaseController {
 		List<IndexTypeEntity> types = iIndexService.searchIndexDetailByType();	
 		result.put("result", types);
 		result.put("request-status", "success");
-		outJson(response, result, null);
+		outJson(response, result, null);		
 	}
 	
 	/**
@@ -57,12 +56,17 @@ public class IndexController extends BaseController {
 		int rId = Integer.parseInt(roleId);
 		String ckbString = request.getParameter("ckbString");
 		String[] arrCkbString = ckbString.split(",");
-		
-		int[] arrCkb = new int[arrCkbString.length];
-		for (int i = 0; i < arrCkbString.length; i++) {
-			arrCkb[i] = Integer.parseInt(arrCkbString[i]);
-		}		
-		iIndexService.updateIndexRoleRelation(arrCkb, rId);
+		if (arrCkbString == null || arrCkbString.length == 0) {
+			logger.error("\t用户没有勾选任何指标");
+		}
+		else 
+		{
+			int[] arrCkb = new int[arrCkbString.length];
+			for (int i = 0; i < arrCkbString.length; i++) {
+				arrCkb[i] = Integer.parseInt(arrCkbString[i]);
+			}		
+			iIndexService.updateIndexRoleRelation(arrCkb, rId);
+		}
 	}
 		
 	
@@ -75,11 +79,10 @@ public class IndexController extends BaseController {
 	@RequestMapping(value = "/{roleId}", method = RequestMethod.GET)
 	public void getrole(HttpServletRequest request, HttpServletResponse response, @PathVariable int roleId){
 		Map<String, Object> result = new HashMap<String, Object>();
-		RoleEntity role = iIndexService.searchIndexDetailByRole(roleId);	
-		List<RoleEntity> roleList = new ArrayList<RoleEntity>();
-		roleList.add(role);			
-		result.put("result",roleList);
+		RoleEntity role = iIndexService.searchIndexDetailByRole(roleId);
+		result.put("result",role);
 		result.put("request-status", "success");
+
 		outJson(response, result, null);			
 	}
 	
