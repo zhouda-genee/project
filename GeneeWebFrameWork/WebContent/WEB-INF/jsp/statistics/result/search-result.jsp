@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>统计列表</title>
 <style type="text/css">
-.text_overflow{white-space:nowrap; text-overflow:ellipsis; -o-text-overflow:ellipsis; -moz-binding:url('ellipsis.xml#ellipsis'); overflow:hidden;}
+	.text_overflow{white-space:nowrap; text-overflow:ellipsis; -o-text-overflow:ellipsis; -moz-binding:url('ellipsis.xml#ellipsis'); overflow:hidden;}
 </style>
 <script src="js/statistics/eqindex-table.js"></script>
 <link href="css/jquery/jquery-ui.css" rel="stylesheet"/>
@@ -17,7 +17,7 @@
 <script>
 	$(document).ready(function() {
 		
-		var engine = new Bloodhound({
+		/*var engine = new Bloodhound({
 			remote: {
 				url: API_URL + '?action=message_friends&q=%QUERY',
 				filter: function (response) {
@@ -35,7 +35,7 @@
   		queryTokenizer: Bloodhound.tokenizers.whitespace    
 		});
 
-		engine.initialize();
+		engine.initialize();*/
 		
 		$('#tokenfield').tokenfield({
 			autocomplete: {
@@ -147,16 +147,25 @@
 			url += "&index_id=" + indexId;
 			window.open(url,"导出");
 		});
+		
+		// 查询条件
+		var searchParam;
+		// 总页数，当前页数
+		var pageCount, page;
+		// 右侧表头
+		var indexEntityArray;
 	
 		$("#dosearch").click(function() {
 			// 获取查询条件
-			var searchParam = getSearchParam(1, 16);
+			searchParam = getSearchParam(1, 16);
 			// 创建表头左侧
 			buildTableHeaderLeft();
 			// 创建表头右侧
-			var indexEntityArray = buildTableHeaderRight();
+			indexEntityArray = buildTableHeaderRight();
 			// 获取统计列表记录
 			var equipmentIndexData = getEquipmentIndexData(searchParam);
+			pageCount = equipmentIndexData.pageCount;
+			page = equipmentIndexData.page;
 			// 创建统计列表右侧
 			buildTableBodyRight(equipmentIndexData, indexEntityArray, true);
 			// 创建统计列表左侧
@@ -170,13 +179,24 @@
 			// 点击搜索后，将滚动到顶部
 			$("#table-right-body").scrollTop(0);
 			$("#table-right-body").scrollLeft(0);
+			// 收回窗口
+			displaySearchProperties();
 		});
 		
 		$("#table-right-body").scroll(function () {
+			// 滚动
 			tableScroll();
 			var scrollTop = $("#table-right-body").scrollTop();
-			if (scrollTop == 1){
+			if (scrollTop == 1 && page < pageCount){
 				alert("加载数据去了");
+				page += 1;
+				searchParam.page = page;
+				// 获取统计列表记录
+				var equipmentIndexData = getEquipmentIndexData(searchParam);
+				// 创建统计列表右侧
+				buildTableBodyRight(equipmentIndexData, indexEntityArray, false);
+				// 创建统计列表左侧
+				buildTableBodyLeft(equipmentIndexData, false);
 			}
 		});
 	});
@@ -355,7 +375,7 @@
             </div>
 
             <div class="modal-footer">
-              <button type="button" class="link link-primary" id="dosearch" onclick="displaySearchProperties()">提交</button>
+              <button type="button" class="link link-primary" id="dosearch">提交</button>
               <button type="button" class="link link-default" data-dismiss="modal">取消</button>
             </div>
           </div>

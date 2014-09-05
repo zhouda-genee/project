@@ -1,4 +1,3 @@
-var url = "http://localhost:8088/geneeservletfw/API2";
 
 // 指标对象
 function indexEntity(name, code, id, width, notCount) {
@@ -10,9 +9,9 @@ function indexEntity(name, code, id, width, notCount) {
 }
 
 // 分页结果集
-function EquipmentIndexPageSupport(indexData, totalCount, pageSize, page) {
+function EquipmentIndexPageSupport(indexData, pageCount, pageSize, page) {
 	this.indexData = indexData;
-	this.totalCount = totalCount;
+	this.pageCount = pageCount;
 	this.pageSize = pageSize;
 	this.page = page;
 }
@@ -100,7 +99,7 @@ function getEquipmentIndexData(param) {
 	var equipmentIndexDataPageSupport = new EquipmentIndexPageSupport();
 	// 查询统计结果
 	$.ajax({
-		url : url,
+		url : servletPath,
 		data : jsonRPCobject,
 		cache : false,
 		async : false,
@@ -108,7 +107,7 @@ function getEquipmentIndexData(param) {
 		type : "post",
 		success : function(data) {
 			var result = data.result;
-			equipmentIndexDataPageSupport.totalCount = result.totalCount;
+			equipmentIndexDataPageSupport.pageCount = result.pageCount;
 			equipmentIndexDataPageSupport.pageSize = result.pageSize;
 			equipmentIndexDataPageSupport.page = result.page;
 			equipmentIndexDataPageSupport.indexData = result.items;
@@ -129,7 +128,7 @@ function getEquipmentIndexCount(param) {
 
 	// 查询统计结果
 	$.ajax({
-		url : url,
+		url : servletPath,
 		data : jsonRPCobject,
 		cache : false,
 		async : false,
@@ -199,7 +198,7 @@ function buildTableHeaderRight() {
 function buildTableBodyRight(equipmentIndexPageSupport, indexEntityArray,
 		isEmpty) {
 	var equipmentIndexDataArray = equipmentIndexPageSupport.indexData;
-	var html = "<table>";
+	var html = "";
 	for (var i = 0; i < equipmentIndexDataArray.length; i++) {
 		html += "<tr>";
 		var equipmentIndexData = equipmentIndexDataArray[i];
@@ -215,28 +214,30 @@ function buildTableBodyRight(equipmentIndexPageSupport, indexEntityArray,
 		}
 		html += "</tr>";
 	}
-	html += "</table>";
 	if (isEmpty) {
-		$("#table-right-body").empty().append(html);
+		$("#table-right-body").empty().append("<table>" + html + "</table>");
 	} else {
-		$("#table-right-body").append(html);
+		$("#table-right-body > table").append(html);
 	}
+	interleaveChangeColor($("#table-right-body > table"));
 }
 // 创建统计列表左侧体
 function buildTableBodyLeft(equipmentIndexPageSupport, isEmpty) {
 	var equipmentIndexDataArray = equipmentIndexPageSupport.indexData;
-	var html = "<table>";
+	var html = "";
 	for (var i = 0; i < equipmentIndexDataArray.length; i++) {
 		var equipmentIndexData = equipmentIndexDataArray[i];
 		html += "<tr><td class=\"text_overflow\">"
 				+ equipmentIndexData["eq_name"] + "</td></tr>";
 	}
-	html += "</table>";
+	html += "";
 	if (isEmpty) {
-		$("#table-left-body").empty().append(html);
+		$("#table-left-body").empty().append("<table>" + html + "</table>");
 	} else {
-		$("#table-left-body").append(html);
+		$("#table-left-body > table").append(html);
 	}
+	
+	interleaveChangeColor($("#table-left-body > table"));
 
 }
 
@@ -277,4 +278,9 @@ function tableScroll() {
 	document.getElementById("table-left-body").scrollTop = a;
 	document.getElementById("table-right-head").scrollLeft = b;
 	document.getElementById("table-right-foot").scrollLeft = b;
+}
+
+function interleaveChangeColor(object){
+	object.find("tr:even").css("background","#C00");
+	object.find("tr:odd").css("background","#09F");
 }

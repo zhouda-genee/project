@@ -102,12 +102,12 @@ public class OauthFilter extends HttpServlet implements Filter {
 					JSONObject userObject = JSONObject.fromObject(userResult);
 					if (userObject.get(PARAM_ERROR) != null){
 						// 获取用户信息成功，将结果存入session
-						String userId = userObject.optString("result");
+						String token = userObject.optString("result");
 						Map<String, String> param = new HashMap<String, String>(2);
-						param.put(SessionAttributeType.USER_ID, userId);
+						param.put(SessionAttributeType.TOKEN, token);
 						// 获取用户角色
 						UserService userService = (UserService) SpringContext.getBean("userservice");
-						String role = userService.queryRoleByUser(Integer.parseInt(userId));
+						String role = userService.queryRoleByUser(token);
 						if (StringUtils.isEmpty(role)){
 							// 没有角色跳回请求者页面
 							responseSendRedirect(httpServletResponse, backUrl);

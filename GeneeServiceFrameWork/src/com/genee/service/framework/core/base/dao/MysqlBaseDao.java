@@ -45,11 +45,11 @@ public class MysqlBaseDao extends BaseDao {
 		// 设置起始值和结束值
 		int startIndex = 0;
 		if (page.getPage() != 1)
-			startIndex = (page.getPage() - 1) * page.getPageSize() + 1;
+			startIndex = (page.getPage() - 1) * page.getPageSize();
 		// 查询结果集
 		StringBuffer paginationSQL = new StringBuffer(" ");
 		paginationSQL.append(sql);
-		paginationSQL.append(" limit "+ startIndex+"," + (page.getPageSize() - 1));
+		paginationSQL.append(" limit "+ startIndex+"," + page.getPageSize());
 		param.setSql(paginationSQL.toString());
 		List<Map<String, Object>> result = queryForList(param);
 		List<T> obj = MapToBeanUtil.MapToBean(object, result);
