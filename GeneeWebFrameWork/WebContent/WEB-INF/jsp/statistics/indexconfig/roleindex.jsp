@@ -26,22 +26,19 @@
 			<div id="roleconfig" class="accordion">
 				<div class="">
 					<div class="container-self">
-						<a style="font-size: 18px;" data-toggle="collapse" data-parent="#roleconfig" href="#collapseOne">中心管理员</a>						
+						<a class="role-name" data-toggle="collapse" data-parent="#roleconfig" href="#collapseOne">中心管理员</a>						
 						<div id="collapseOne" class="accordion-body collapse">
 							<div class="accordion-inner">
-								<div class="index-grid radio-choice">
-									<div class="right" style="margin-right: 3em;">
-										<input type="radio" name="sysAdmin"><label>部分(19项)</label>
+								<div class="index-grid">
+									<div class="checkall">
+										<div class="right">
+											<input type="checkbox" name="sysAdmin" onclick="selectAllCheckBox('templateOne',this.checked)"><label>全选</label>
+										</div>
 									</div>
-									<div class="right">
-										<input type="radio" name="sysAdmin"><label >默认(17项)</label>
-									</div>
-									<div class="right">
-										<input type="radio" name="sysAdmin"><label>全部(43项)</label>
-									</div>
-									
 									<div id="templateOne"></div>
-									<input id="sbmOne" type="button"  value="提交" class="link link-primary" onclick="subOne();"/>
+									<div class="link-group">
+										<input id="sbmOne" type="button"  value="提交" class="link link-primary" onclick="subOne();"/>
+									</div>
 								</div>
 							<input id="roleOne" type="hidden" value="1" />
 							</div>
@@ -51,22 +48,19 @@
 				
 				<div class="accordion-group">
 					<div class="accordion-heading container-self">
-						<a style="font-size: 18px;" data-toggle="collapse" data-parent="#roleconfig" href="#collapseTwo">课题组PI</a>
+						<a class="role-name" data-toggle="collapse" data-parent="#roleconfig" href="#collapseTwo">课题组PI</a>
 						<div id="collapseTwo" class="accordion-body collapse">
 							<div class="accordion-inner">
-								<div class="index-grid radio-choice">
-									<div class="right" style="margin-right: 3em;">
-										<input type="radio" name="sysAdmin"><label>部分(19项)</label>
+								<div class="index-grid">
+									<div class="checkall">
+										<div class="right">
+											<input type="checkbox" name="sysAdmin" onclick="selectAllCheckBox('templateTwo',this.checked)"><label>全选</label>
+										</div>
 									</div>
-									<div class="right">
-										<input type="radio" name="sysAdmin"><label >默认(17项)</label>
-									</div>
-									<div class="right">
-										<input type="radio" name="sysAdmin"><label>全部(43项)</label>
-									</div>
-
 									<div id="templateTwo"></div>
-									<input id="sbmTwo" type="button"  value="提交" class="link link-primary" onclick="subTwo();"/>
+									<div class="link-group">
+										<input id="sbmTwo" type="button"  value="提交" class="link link-primary" onclick="subTwo();"/>
+									</div>
 								</div>
 								<input id="roleTwo" type="hidden" value="2" />
 							</div>
@@ -76,22 +70,19 @@
 				
 				<div class="accordion-group">
 					<div class="accordion-heading container-self">
-						<a style="font-size: 18px;" data-toggle="collapse" data-parent="#roleconfig" href="#collapseThree">仪器管理员</a>
+						<a class="role-name" data-toggle="collapse" data-parent="#roleconfig" href="#collapseThree">仪器管理员</a>
 						<div id="collapseThree" class="accordion-body collapse">
 							<div class="accordion-inner">
-								<div class="index-grid radio-choice">
-									<div class="right" style="margin-right: 3em;">
-										<input type="radio" name="sysAdmin"><label>部分(19项)</label>
+								<div class="index-grid">
+									<div class="checkall">
+										<div class="right">
+											<input type="checkbox" name="sysAdmin" onclick="selectAllCheckBox('templateThree',this.checked)"><label>全选</label>
+										</div>
 									</div>
-									<div class="right">
-										<input type="radio" name="sysAdmin"><label >默认(17项)</label>
-									</div>
-									<div class="right">
-										<input type="radio" name="sysAdmin"><label>全部(43项)</label>
-									</div>
-									
 									<div id="templateThree"></div>
-									<input id="sbmThree" type="button"  value="提交" class="link link-primary" onclick="subThree();"/>									
+									<div class="link-group">
+										<input id="sbmThree" type="button"  value="提交" class="link link-primary" onclick="subThree();"/>
+									</div>
 								</div>
 								<input id="roleThree" type="hidden" value="3" />
 							</div>
@@ -132,11 +123,18 @@
 					});							
 
 					$.each(dataType.result, function(i, typeKey){
-						$div = $("<div class='index-config-type'><lable>" + typeKey.tName + "</label></div>");		
+						// 指标类型最外层的div
+						$div = $("<div class='indextype' id='" + 1 + "_" + typeKey.tId + "'>" + "</div>");
 						$div.appendTo("#templateOne");
+						// 指标类型名称的div
+						$divType = $("<div class='indextype-name'><lable>" + typeKey.tName + "</label></div>");		
+						$divType.appendTo("#1_" + typeKey.tId);
+						// 对应类型所有指标名称的div
+						$divIndex = $("<div class='index-list' id='" + 1 + "-" + typeKey.tId + "'>" + "</div>");
+						$divIndex.appendTo("#1_" + typeKey.tId);
 						$.each(typeKey.indexs, function(j, indexKey){
-							$checkbox = $("<input type='checkbox' name='ckbOne' value='" + indexKey.sId + "'><label>" + indexKey.sName + "</label>" );
-							$checkbox.appendTo("#templateOne");
+							$index = $("<li><input type='checkbox' name='ckbOne' value='" + indexKey.sId + "'><label>" + indexKey.sName + "</label></li>" );
+							$index.appendTo("#1-" + typeKey.tId);
 							if($.inArray(indexKey.sId, arrRoleIndex) != -1){
 								$("input[name='ckbOne'][value=" + indexKey.sId + "]").attr("checked", true);
 							}
@@ -157,11 +155,18 @@
 					});
 
 					$.each(dataType.result, function(i, typeKey){
-						$div = $("<div><lable>" + typeKey.tName + "</label></div>");		
+						// 指标类型最外层的div
+						$div = $("<div class='indextype' id='" + 2 + "_" + typeKey.tId + "'>" + "</div>");
 						$div.appendTo("#templateTwo");
+						// 指标类型名称的div
+						$divType = $("<div class='indextype-name'><lable>" + typeKey.tName + "</label></div>");		
+						$divType.appendTo("#2_" + typeKey.tId);
+						// 对应类型所有指标名称的div
+						$divIndex = $("<div class='index-list' id='" + 2 + "-" + typeKey.tId + "'>" + "</div>");
+						$divIndex.appendTo("#2_" + typeKey.tId);
 						$.each(typeKey.indexs, function(j, indexKey){
-							$checkbox = $("<input type='checkbox' name='ckbTwo' value='" + indexKey.sId + "'><label>" + indexKey.sName + "</label>" );
-							$checkbox.appendTo("#templateTwo");
+							$index = $("<li><input type='checkbox' name='ckbTwo' value='" + indexKey.sId + "'><label>" + indexKey.sName + "</label></li>" );
+							$index.appendTo("#2-" + typeKey.tId);
 							if($.inArray(indexKey.sId, arrRoleIndex) != -1){
 								$("input[name='ckbTwo'][value=" + indexKey.sId + "]").attr("checked", true);
 							}
@@ -182,11 +187,18 @@
 					});
 
 					$.each(dataType.result, function(i, typeKey){
-						$div = $("<div><lable>" + typeKey.tName + "</label></div>");		
+						// 指标类型最外层的div
+						$div = $("<div class='indextype' id='" + 3 + "_" + typeKey.tId + "'>" + "</div>");
 						$div.appendTo("#templateThree");
+						// 指标类型名称的div
+						$divType = $("<div class='indextype-name'><lable>" + typeKey.tName + "</label></div>");		
+						$divType.appendTo("#3_" + typeKey.tId);
+						// 对应类型所有指标名称的div
+						$divIndex = $("<div class='index-list' id='" + 3 + "-" + typeKey.tId + "'>" + "</div>");
+						$divIndex.appendTo("#3_" + typeKey.tId);
 						$.each(typeKey.indexs, function(j, indexKey){
-							$checkbox = $("<input type='checkbox' name='ckbThree' value='" + indexKey.sId + "'><label>" + indexKey.sName + "</label>" );
-							$checkbox.appendTo("#templateThree");
+							$index = $("<li><input type='checkbox' name='ckbThree' value='" + indexKey.sId + "'><label>" + indexKey.sName + "</label></li>" );
+							$index.appendTo("#3-" + typeKey.tId);
 							if($.inArray(indexKey.sId, arrRoleIndex) != -1){
 								$("input[name='ckbThree'][value=" + indexKey.sId + "]").attr("checked", true);
 							}
@@ -270,8 +282,20 @@
 					});
 					alert("保存成功！");
 				}
-			};	 
-		 
+			};
+			
+			/** 
+			 *	点击“全选”复选框的js实现
+			 */
+				function selectAllCheckBox (ParentID, bool) {
+					// body...
+					var pID = document.getElementById(ParentID);
+					var cb = pID.getElementsByTagName('input');
+					for (var i=0; i<cb.length; i++) {
+						if (cb[i].type == "checkbox")
+						cb[i].checked = bool;
+					};
+				};
 	</script>    
 </body>
 </html>
