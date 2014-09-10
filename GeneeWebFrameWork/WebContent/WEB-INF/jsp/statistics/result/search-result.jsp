@@ -9,42 +9,63 @@
 .text_overflow{white-space:nowrap; text-overflow:ellipsis; -o-text-overflow:ellipsis; -moz-binding:url('ellipsis.xml#ellipsis'); overflow:hidden;}
 </style>
 <script src="js/statistics/eqindex-table.js"></script>
-<link href="css/jquery/jquery-ui.css" rel="stylesheet"/>
+
 <link href="css/bootstrap/bootstrap-tokenfield.css" rel="stylesheet"/>
+<link href="css/bootstrap/tokenfield-typeahead.css" rel="stylesheet"/>
+<link href="css/tag.css" rel="stylesheet"/>
 <script type="text/javascript" src="js/jquery/jquery-ui.js"></script>
 <script type="text/javascript" src="js/bootstrap/bootstrap-tokenfield.js"></script>
 <script type="text/javascript" src="js/bootstrap/typeahead.bundle.js"></script>
+<script type="text/javascript" src="js/tag_selector.js"></script>
 <script>
 	$(document).ready(function() {
-		
-		var engine = new Bloodhound({
-			remote: {
-				url: webPath + 'statistics/result/contact?name=%QUERY',
-				filter: function (response) {
-					return $.map(response.users, function (user) {
-						return {
-							value: user.user_id,
-							label: user.name
-						};
-					});
-	    			}
-  			},
-  			datumTokenizer: function(d) {
-    			return Bloodhound.tokenizers.whitespace(d.value); 
-  		},
-  		queryTokenizer: Bloodhound.tokenizers.whitespace    
-		});
-
-		engine.initialize();
+		var contactPath = webPath + 'statistics/result/contact';
 		
 		$('#tokenfield').tokenfield({
-			autocomplete: {
-				source: ['red','blue','green','yellow','violet','brown','purple','black','white'],
-				delay: 100
-			},
-			showAutocompleteOnFocus: true
+			typeahead: [
+			{
+      			hint: true
+    			}, 
+			{
+				displayKey: "name",
+				source: function (query, process) {
+			        map = [];
+			        var parameter = {name: query};
+
+					$.post(contactPath, parameter, function (data) {
+						$.each(data.result, function(i, object) {
+							map[object.name] = object;
+			            });
+			            process(data.result);
+			        }, "json");
+			    }
+			}]
+		}).on('tokenfield:createtoken', function (e) {
+			if (map[e.attrs.value] != undefined) {
+				var existingTokens = $(this).tokenfield('getTokens');
+				if (existingTokens.length) {
+					$.each(existingTokens, function(index, token) {
+						if (token.value == e.attrs.value) {
+		                    e.preventDefault();
+		                }
+		            });
+		        }
+			} else {
+				e.preventDefault();
+			}
 		});
 
+		var orgRootPath = webPath + 'statistics/result/rootOrganization';
+		$.get(orgRootPath, null, function (data) {
+			var orgChildPath = webPath + 'statistics/result/childOrganization';
+			var opt = {
+				root_id:data.result.id,
+				url:orgChildPath,
+				ajax:true,
+				receiver: $("#groupId")
+			};
+			$("#tagSel").tagSelector(opt);
+        }, "json");
 		
 		var indexTypePath = webPath + "statistics/result/roleindextype";
 		var indexPath = webPath + "statistics/result/roleindex";
@@ -149,14 +170,18 @@
 		});
 	
 		$("#dosearch").click(function() {
+			// 加载等待效果
+			overlayShow();
 			// 获取查询条件
-			var searchParam = getSearchParam(1, 16);
+			searchParam = getSearchParam(1, 16);
 			// 创建表头左侧
 			buildTableHeaderLeft();
 			// 创建表头右侧
-			var indexEntityArray = buildTableHeaderRight();
+			indexEntityArray = buildTableHeaderRight();
 			// 获取统计列表记录
 			var equipmentIndexData = getEquipmentIndexData(searchParam);
+			pageCount = equipmentIndexData.pageCount;
+			page = equipmentIndexData.page;
 			// 创建统计列表右侧
 			buildTableBodyRight(equipmentIndexData, indexEntityArray, true);
 			// 创建统计列表左侧
@@ -170,13 +195,31 @@
 			// 点击搜索后，将滚动到顶部
 			$("#table-right-body").scrollTop(0);
 			$("#table-right-body").scrollLeft(0);
+			// 收回窗口
+			displaySearchProperties();
+			// 去掉等待效果
+			overlayHide();
 		});
 		
 		$("#table-right-body").scroll(function () {
+			// 滚动
 			tableScroll();
-			var scrollTop = $("#table-right-body").scrollTop();
-			if (scrollTop == 1){
-				alert("加载数据去了");
+			var scrollTop = $("#table-right-body")[0].scrollTop;
+			var scrollHeight = $("#table-right-body")[0].scrollHeight;
+			var divHeight = $("#table-right-body").height();
+			if (scrollTop + divHeight >= scrollHeight && page < pageCount){
+				// 加载等待效果
+				overlayShow();
+				page += 1;
+				searchParam.page = page;
+				// 获取统计列表记录
+				var equipmentIndexData = getEquipmentIndexData(searchParam);
+				// 创建统计列表右侧
+				buildTableBodyRight(equipmentIndexData, indexEntityArray, false);
+				// 创建统计列表左侧
+				buildTableBodyLeft(equipmentIndexData, false);
+				// 去掉等待效果
+				overlayHide();
 			}
 		});
 	});
@@ -210,9 +253,7 @@
 							<div class="result-left">
 								<ul>
 									<li><label>仪器名称</label> <input type="text" readonly="true"
-										value="光谱仪">
-										<input type="text" class="form-control" id="tokenfield" value="red,green,blue" />
-										</li>
+										value="光谱仪"></li>
 									<li><label>仪器分类</label> <input type="text" readonly="true"
 										value="X射线仪器"></li>
 									<li><label>时间范围</label> <input type="text" readonly="true"
@@ -224,7 +265,8 @@
 							</div>
 							<div class="result-middle">
 								<ul>
-									<li><label>仪器组织机构</label> <input type="text"
+									<li><label>仪器组织机构</label>
+									<input type="text"
 										readonly="true" value="南开大学"></li>
 									<li><label>仪器负责人</label> <input type="text"
 										readonly="true" value="张三"></li>
@@ -245,7 +287,7 @@
 						</form>
 					</div>
 					<!-- 创建统计列表开始 -->
-					<div>
+					<div id="table-all">
 						<div class="table-left">
 							<div id="table-left-head">
 							</div>
@@ -289,7 +331,9 @@
                         </li>
                         <li>
                           <label>仪器组织机构</label>
-                          <input id="eq_org" type="text">
+                          <input type="hidden" id="eq_org"/>
+									<div id="tagSel">
+									</div>
                         </li>
                         <li>
                           <label>仪器负责人</label>
@@ -315,7 +359,7 @@
                         </li>
                         <li>
                           <label>课题组</label>
-                          <input id="lab" type="text" placeholder="可添加5个">
+                          <input type="text" class="form-control" id="tokenfield" value=""  placeholder="可添加5个"/>
                         </li>
                         <li>
                           <label>使用者</label>
@@ -355,7 +399,7 @@
             </div>
 
             <div class="modal-footer">
-              <button type="button" class="link link-primary" id="dosearch" onclick="displaySearchProperties()">提交</button>
+              <button type="button" class="link link-primary" id="dosearch">提交</button>
               <button type="button" class="link link-default" data-dismiss="modal">取消</button>
             </div>
           </div>

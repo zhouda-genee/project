@@ -160,9 +160,6 @@ public class ResultController extends BaseController {
 		Workbook workbook = ExcelUtil.buildExcel(ExcelType.XLS, topHeaders,
 				midHeaders, contents, total);
 
-		// 解决中文乱码问题
-		String filename = new String("统计.xls".getBytes("ISO-8859-1"), "UTF-8");
-
 		// 设置response的编码方式
 		response.setContentType(ContentType.EXCEL_2003);
 
@@ -174,5 +171,84 @@ public class ResultController extends BaseController {
 		out.flush();
 		workbook.write(out);
 		out.close();
+	}
+	
+	/**
+	 * 通过Ajax请求该方法，获取某一角色的所有指标类型
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping(value = "contact", method = RequestMethod.POST)
+	public void getContact(HttpServletRequest request,
+			HttpServletResponse response) {
+		String servletUrl = PropertiesUtil.getPropertiesValue("application-config.properties", "servlet_url");
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("jsonrpc", "2.0");
+		params.put("id", String.valueOf(System.currentTimeMillis()));
+		params.put("method", "user_contact");
+		
+		Map<String,Object> param = new HashMap<String, Object>();
+		param.put("name", request.getParameter("name"));
+
+
+		params.put("params", JsonUtil.getJsonString4JavaPOJO(param));
+		Map<String, String> headers = new HashMap<String, String>();
+		headers.put("Accept", "application/json");
+		
+		String result = HttpClientUtil.post(servletUrl, params, headers);
+		outJson(response, result, null);
+	}
+	
+	/**
+	 * 通过Ajax请求该方法，获取组织结构的根节点
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping(value = "rootOrganization", method = RequestMethod.GET)
+	public void getRootOrganization(HttpServletRequest request,
+			HttpServletResponse response) {
+		String servletUrl = PropertiesUtil.getPropertiesValue("application-config.properties", "servlet_url");
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("jsonrpc", "2.0");
+		params.put("id", String.valueOf(System.currentTimeMillis()));
+		params.put("method", "org_root");
+		
+		Map<String,Object> param = new HashMap<String, Object>();
+
+		params.put("params", JsonUtil.getJsonString4JavaPOJO(param));
+
+		Map<String, String> headers = new HashMap<String, String>();
+		headers.put("Accept", "application/json");
+		
+		String result = HttpClientUtil.post(servletUrl, params, headers);
+		outJson(response, result, null);
+	}
+	
+	/**
+	 * 通过Ajax请求该方法，获取组织结构的子节点
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping(value = "childOrganization", method = RequestMethod.GET)
+	public void getChildOrganization(HttpServletRequest request,
+			HttpServletResponse response) {
+		String servletUrl = PropertiesUtil.getPropertiesValue("application-config.properties", "servlet_url");
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("jsonrpc", "2.0");
+		params.put("id", String.valueOf(System.currentTimeMillis()));
+		params.put("method", "org_child");
+		
+		Map<String,Object> param = new HashMap<String, Object>();
+		param.put("id", request.getParameter("group_id"));
+
+		params.put("params", JsonUtil.getJsonString4JavaPOJO(param));
+		Map<String, String> headers = new HashMap<String, String>();
+		headers.put("Accept", "application/json");
+		
+		String result = HttpClientUtil.post(servletUrl, params, headers);
+		outJson(response, result, null);
 	}
 }
