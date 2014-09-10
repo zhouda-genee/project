@@ -156,6 +156,8 @@
 		var indexEntityArray;
 	
 		$("#dosearch").click(function() {
+			// 加载等待效果
+			overlayShow();
 			// 获取查询条件
 			searchParam = getSearchParam(1, 16);
 			// 创建表头左侧
@@ -181,14 +183,19 @@
 			$("#table-right-body").scrollLeft(0);
 			// 收回窗口
 			displaySearchProperties();
+			// 去掉等待效果
+			overlayHide();
 		});
 		
 		$("#table-right-body").scroll(function () {
 			// 滚动
 			tableScroll();
-			var scrollTop = $("#table-right-body").scrollTop();
-			if (scrollTop == 1 && page < pageCount){
-				alert("加载数据去了");
+			var scrollTop = $("#table-right-body")[0].scrollTop;
+			var scrollHeight = $("#table-right-body")[0].scrollHeight;
+			var divHeight = $("#table-right-body").height();
+			if (scrollTop + divHeight >= scrollHeight && page < pageCount){
+				// 加载等待效果
+				overlayShow();
 				page += 1;
 				searchParam.page = page;
 				// 获取统计列表记录
@@ -197,6 +204,8 @@
 				buildTableBodyRight(equipmentIndexData, indexEntityArray, false);
 				// 创建统计列表左侧
 				buildTableBodyLeft(equipmentIndexData, false);
+				// 去掉等待效果
+				overlayHide();
 			}
 		});
 	});
@@ -265,7 +274,7 @@
 						</form>
 					</div>
 					<!-- 创建统计列表开始 -->
-					<div>
+					<div id="table-all">
 						<div class="table-left">
 							<div id="table-left-head">
 							</div>
