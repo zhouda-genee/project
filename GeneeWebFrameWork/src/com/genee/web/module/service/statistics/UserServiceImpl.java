@@ -29,9 +29,10 @@ public class UserServiceImpl implements UserService {
 	private EquipmentDao equipmentDao;
 
 	@Override
-	public String queryRoleByUser(int userId) {
+	public String queryRoleByUser(String token) {
 		
 		String roleIds = "";
+		int userId = roleDao.queryUserIdByToken(token);
 		// 判断是否是校级管理员
 		// {"perms":{"管理所有内容":"on","管理组织机构":"on"}}
 		List<RoleInfoEntity> roles = roleDao.queryRoleByUser(userId);

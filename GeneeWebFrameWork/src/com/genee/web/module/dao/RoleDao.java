@@ -24,6 +24,20 @@ public class RoleDao {
 	
 	/**
 	 * 
+	 * @Title: queryUserIdByToken 
+	 * @Description: 根据token查找用户ID 
+	 * @param @param token
+	 * @return int
+	 * @throws
+	 */
+	public int queryUserIdByToken(String token){
+		String sql = "select id from user where token = ?";
+		JdbcTemplateParam param = new JdbcTemplateParam(sql, new Object[]{token}, new int[]{java.sql.Types.VARCHAR});
+		return baseDao.queryForInt(param);
+	}
+	
+	/**
+	 * 
 	 * @Title: queryRoleByUser 
 	 * @Description: 查找用户角色基本信息 
 	 * @param userId	用户ID
