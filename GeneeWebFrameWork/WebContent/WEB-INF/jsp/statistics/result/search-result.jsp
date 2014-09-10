@@ -6,66 +6,45 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>统计列表</title>
 <style type="text/css">
-.text_overflow{white-space:nowrap; text-overflow:ellipsis; -o-text-overflow:ellipsis; -moz-binding:url('ellipsis.xml#ellipsis'); overflow:hidden;}
+	.text_overflow{white-space:nowrap; text-overflow:ellipsis; -o-text-overflow:ellipsis; -moz-binding:url('ellipsis.xml#ellipsis'); overflow:hidden;}
 </style>
 <script src="js/statistics/eqindex-table.js"></script>
-
+<link href="css/jquery/jquery-ui.css" rel="stylesheet"/>
 <link href="css/bootstrap/bootstrap-tokenfield.css" rel="stylesheet"/>
-<link href="css/bootstrap/tokenfield-typeahead.css" rel="stylesheet"/>
-<link href="css/tag.css" rel="stylesheet"/>
 <script type="text/javascript" src="js/jquery/jquery-ui.js"></script>
 <script type="text/javascript" src="js/bootstrap/bootstrap-tokenfield.js"></script>
 <script type="text/javascript" src="js/bootstrap/typeahead.bundle.js"></script>
-<script type="text/javascript" src="js/tag_selector.js"></script>
 <script>
 	$(document).ready(function() {
-		var contactPath = webPath + 'statistics/result/contact';
 		
-		$('#tokenfield').tokenfield({
-			typeahead: [
-			{
-      			hint: true
-    			}, 
-			{
-				displayKey: "name",
-				source: function (query, process) {
-			        map = [];
-			        var parameter = {name: query};
-
-					$.post(contactPath, parameter, function (data) {
-						$.each(data.result, function(i, object) {
-							map[object.name] = object;
-			            });
-			            process(data.result);
-			        }, "json");
-			    }
-			}]
-		}).on('tokenfield:createtoken', function (e) {
-			if (map[e.attrs.value] != undefined) {
-				var existingTokens = $(this).tokenfield('getTokens');
-				if (existingTokens.length) {
-					$.each(existingTokens, function(index, token) {
-						if (token.value == e.attrs.value) {
-		                    e.preventDefault();
-		                }
-		            });
-		        }
-			} else {
-				e.preventDefault();
-			}
+		/*var engine = new Bloodhound({
+			remote: {
+				url: API_URL + '?action=message_friends&q=%QUERY',
+				filter: function (response) {
+					return $.map(response.users, function (user) {
+						return {
+							value: user.user_id,
+							label: user.name
+						};
+					});
+	    			}
+  			},
+  			datumTokenizer: function(d) {
+    			return Bloodhound.tokenizers.whitespace(d.value); 
+  		},
+  		queryTokenizer: Bloodhound.tokenizers.whitespace    
 		});
 
-		var orgRootPath = webPath + 'statistics/result/rootOrganization';
-		$.get(orgRootPath, null, function (data) {
-			var orgChildPath = webPath + 'statistics/result/childOrganization';
-			var opt = {
-				root_id:data.result.id,
-				url:orgChildPath,
-				ajax:true,
-				receiver: $("#groupId")
-			};
-			$("#tagSel").tagSelector(opt);
-        }, "json");
+		engine.initialize();*/
+		
+		$('#tokenfield').tokenfield({
+			autocomplete: {
+				source: ['red','blue','green','yellow','violet','brown','purple','black','white'],
+				delay: 100
+			},
+			showAutocompleteOnFocus: true
+		});
+
 		
 		var indexTypePath = webPath + "statistics/result/roleindextype";
 		var indexPath = webPath + "statistics/result/roleindex";
@@ -168,6 +147,13 @@
 			url += "&index_id=" + indexId;
 			window.open(url,"导出");
 		});
+		
+		// 查询条件
+		var searchParam;
+		// 总页数，当前页数
+		var pageCount, page;
+		// 右侧表头
+		var indexEntityArray;
 	
 		$("#dosearch").click(function() {
 			// 加载等待效果
@@ -253,7 +239,9 @@
 							<div class="result-left">
 								<ul>
 									<li><label>仪器名称</label> <input type="text" readonly="true"
-										value="光谱仪"></li>
+										value="光谱仪">
+										<input type="text" class="form-control" id="tokenfield" value="red,green,blue" />
+										</li>
 									<li><label>仪器分类</label> <input type="text" readonly="true"
 										value="X射线仪器"></li>
 									<li><label>时间范围</label> <input type="text" readonly="true"
@@ -265,8 +253,7 @@
 							</div>
 							<div class="result-middle">
 								<ul>
-									<li><label>仪器组织机构</label>
-									<input type="text"
+									<li><label>仪器组织机构</label> <input type="text"
 										readonly="true" value="南开大学"></li>
 									<li><label>仪器负责人</label> <input type="text"
 										readonly="true" value="张三"></li>
@@ -331,9 +318,7 @@
                         </li>
                         <li>
                           <label>仪器组织机构</label>
-                          <input type="hidden" id="eq_org"/>
-									<div id="tagSel">
-									</div>
+                          <input id="eq_org" type="text">
                         </li>
                         <li>
                           <label>仪器负责人</label>
@@ -359,7 +344,7 @@
                         </li>
                         <li>
                           <label>课题组</label>
-                          <input type="text" class="form-control" id="tokenfield" value=""  placeholder="可添加5个"/>
+                          <input id="lab" type="text" placeholder="可添加5个">
                         </li>
                         <li>
                           <label>使用者</label>
