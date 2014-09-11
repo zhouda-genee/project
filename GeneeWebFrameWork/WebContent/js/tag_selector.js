@@ -5,7 +5,6 @@
 	var removeTimeout = null;
 	var ajaxTimeout = null;
 	var $tag_map = {};
-	var $
 
 
 	$.fn.tagSelector = function(opt) {
@@ -32,9 +31,10 @@
 			$root.append(nowrap);
 		};
 		
-		var _change_value = function (value) {
-			groupId = value;
-			opt.receiver.val(value);
+		var _change_value = function (id, name) {
+			groupId = id;
+			opt.receiver.id.val(id);
+			opt.receiver.name.val(name);
 		}
 
 		var _zIndex = function($el) {
@@ -76,7 +76,13 @@
 			});
 
 			$root.find('.tag_selector_link:not(.tag_selector_more) a').click(function(e){
-				_change_value($(this).attr('q-tag-id') || opt.root_id);
+				if ($(this).attr('q-tag-id') != undefined) {
+					_change_value($(this).attr('q-tag-id'), $(this).html());
+				} else {
+					groupId = opt.root_id
+					opt.receiver.id.val("");
+					opt.receiver.name.val("");
+				}
 				
 				if($(this).parent().nextAll().length > 0) {
 					$(this).parent().nextAll().remove();
@@ -270,7 +276,7 @@
 			}
 			
 			var parameter = {
-				group_id: groupId
+				id: groupId
 			};
 			$.get(opt.url, parameter, function (data) {
 				if (data.hasOwnProperty('result')) {
@@ -327,7 +333,7 @@
 
 							_fill_content($t);
 
-							_change_value(item.id);
+							_change_value(item.id, item.name);
 							_select_tag($t.data('tag_id'));
 							_bind_event();
 						});

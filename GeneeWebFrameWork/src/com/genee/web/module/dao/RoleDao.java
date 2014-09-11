@@ -102,7 +102,8 @@ public class RoleDao {
 	 * 
 	 */
 	public List<IndexEntity> queryIndexEntityByRole(String roleId) {
-		String sql = "select distinct i.s_id as sId, i.s_name as sName, i.s_code as sCode, i.t_id as tId "
+		String sql = "select distinct i.s_id as sId, i.s_name as sName, i.s_code as sCode, i.t_id as tId, "
+				+ "i.s_description as sDescription, i.s_width as sWidth, i.s_location as sLocation, i.s_not_count as sNotCount "
 				+ "from s_index i " 
 				+ "inner join s_r_index_role ir " 
 				+ "on i.s_id = ir.s_id ";

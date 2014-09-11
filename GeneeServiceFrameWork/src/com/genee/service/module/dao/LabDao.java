@@ -30,7 +30,7 @@ public class LabDao {
 	 * @see BaseEntity
 	 */
 	public List<BaseEntity> queryLab(String name) {
-		String sql = "select l.id, l.name from lab l where l.name like ?";
+		String sql = "select l.id, l.name from lab l where l.name like ? limit 0, 10";
 		JdbcTemplateParam param = new JdbcTemplateParam(sql, new Object[] { "%"
 				+ name + "%" }, new int[] { java.sql.Types.VARCHAR });
 		return MapToBeanUtil.MapToBean(BaseEntity.class,

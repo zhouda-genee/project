@@ -12,16 +12,37 @@
 
 <link href="css/bootstrap/bootstrap-tokenfield.css" rel="stylesheet"/>
 <link href="css/bootstrap/tokenfield-typeahead.css" rel="stylesheet"/>
+<link href="css/bootstrap/bootstrap-datepicker.css" rel="stylesheet"/>
 <link href="css/tag.css" rel="stylesheet"/>
 <script type="text/javascript" src="js/jquery/jquery-ui.js"></script>
 <script type="text/javascript" src="js/bootstrap/bootstrap-tokenfield.js"></script>
 <script type="text/javascript" src="js/bootstrap/typeahead.bundle.js"></script>
+<script type="text/javascript" src="js/bootstrap/bootstrap-datepicker.js"></script>
 <script type="text/javascript" src="js/tag_selector.js"></script>
 <script>
 	$(document).ready(function() {
 		var contactPath = webPath + 'statistics/result/contact';
+		var inchargePath = webPath + 'statistics/result/incharge';
+		var labPath = webPath + 'statistics/result/lab';
+		var userPath = webPath + 'statistics/result/user';
+		var lab_map = [];
+		var eq_incharge_map = [];
+		var eq_contact_map = [];
+		var user_map = [];	
 		
-		$('#tokenfield').tokenfield({
+		$('#dstart').val("");
+		$('#dend').val("");
+		$('#dstart').datepicker({
+			format: 'yyyy-mm-dd'
+		});
+		
+		$('#dend').datepicker({
+			format: 'yyyy-mm-dd'
+		});
+		
+		$('#lab_tokenfield').tokenfield({
+			tokens : [],
+			limit : 5,
 			typeahead: [
 			{
       			hint: true
@@ -29,21 +50,20 @@
 			{
 				displayKey: "name",
 				source: function (query, process) {
-			        map = [];
 			        var parameter = {name: query};
 
-					$.post(contactPath, parameter, function (data) {
+					$.post(labPath, parameter, function (data) {
 						$.each(data.result, function(i, object) {
-							map[object.name] = object;
+							lab_map[object.name] = object;
 			            });
 			            process(data.result);
 			        }, "json");
 			    }
 			}]
 		}).on('tokenfield:createtoken', function (e) {
-			if (map[e.attrs.value] != undefined) {
+			if (lab_map[e.attrs.value] != undefined) {
 				var existingTokens = $(this).tokenfield('getTokens');
-				if (existingTokens.length) {
+				if (existingTokens.length > 0) {
 					$.each(existingTokens, function(index, token) {
 						if (token.value == e.attrs.value) {
 		                    e.preventDefault();
@@ -53,25 +73,250 @@
 			} else {
 				e.preventDefault();
 			}
+		}).on('tokenfield:createdtoken', function (e) {
+			var existingTokens = $(this).tokenfield('getTokens');
+			var ids = "";
+			$.each(existingTokens, function(index, token) {
+				ids += lab_map[token.value].id + ",";
+            });
+
+			ids = ids.substring(0,ids.length-1);
+			$("#lab").val(ids);
+		}).on('tokenfield:removedtoken', function (e) {
+			var existingTokens = $(this).tokenfield('getTokens');
+			var ids = "";
+			$.each(existingTokens, function(index, token) {
+				ids += lab_map[token.value].id + ",";	
+            });
+			
+			if (existingTokens.length > 0) {
+				ids = ids.substring(0,ids.length-1);
+			}
+
+			$("#lab").val(ids);
+		});
+		
+		$('#eq_incharge_tokenfield').tokenfield({
+			tokens : [],
+			limit : 5,
+			typeahead: [
+			{
+      			hint: true
+    			}, 
+			{
+				displayKey: "name",
+				source: function (query, process) {
+			        var parameter = {name: query};
+
+					$.post(inchargePath, parameter, function (data) {
+						$.each(data.result, function(i, object) {
+							eq_incharge_map[object.name] = object;
+			            });
+			            process(data.result);
+			        }, "json");
+			    }
+			}]
+		}).on('tokenfield:createtoken', function (e) {
+			if (eq_incharge_map[e.attrs.value] != undefined) {
+				var existingTokens = $(this).tokenfield('getTokens');
+				if (existingTokens.length > 0) {
+					$.each(existingTokens, function(index, token) {
+						if (token.value == e.attrs.value) {
+		                    e.preventDefault();
+		                }
+		            });
+		        }
+			} else {
+				e.preventDefault();
+			}
+		}).on('tokenfield:createdtoken', function (e) {
+			var existingTokens = $(this).tokenfield('getTokens');
+			var ids = "";
+			$.each(existingTokens, function(index, token) {
+				ids += eq_incharge_map[token.value].id + ",";
+            });
+
+			ids = ids.substring(0,ids.length-1);
+			$("#eq_incharge").val(ids);
+		}).on('tokenfield:removedtoken', function (e) {
+			var existingTokens = $(this).tokenfield('getTokens');
+			var ids = "";
+			$.each(existingTokens, function(index, token) {
+				ids += eq_incharge_map[token.value].id + ",";	
+            });
+			
+			if (existingTokens.length > 0) {
+				ids = ids.substring(0,ids.length-1);
+			}
+
+			$("#eq_incharge").val(ids);
+		});
+		
+		$('#eq_contact_tokenfield').tokenfield({
+			tokens : [],
+			limit : 5,
+			typeahead: [
+			{
+      			hint: true
+    			}, 
+			{
+				displayKey: "name",
+				source: function (query, process) {
+			        var parameter = {name: query};
+
+					$.post(contactPath, parameter, function (data) {
+						$.each(data.result, function(i, object) {
+							eq_contact_map[object.name] = object;
+			            });
+			            process(data.result);
+			        }, "json");
+			    }
+			}]
+		}).on('tokenfield:createtoken', function (e) {
+			if (eq_contact_map[e.attrs.value] != undefined) {
+				var existingTokens = $(this).tokenfield('getTokens');
+				if (existingTokens.length > 0) {
+					$.each(existingTokens, function(index, token) {
+						if (token.value == e.attrs.value) {
+		                    e.preventDefault();
+		                }
+		            });
+		        }
+			} else {
+				e.preventDefault();
+			}
+		}).on('tokenfield:createdtoken', function (e) {
+			var existingTokens = $(this).tokenfield('getTokens');
+			var ids = "";
+			$.each(existingTokens, function(index, token) {
+				ids += eq_contact_map[token.value].id + ",";
+            });
+
+			ids = ids.substring(0,ids.length-1);
+			$("#eq_contact").val(ids);
+		}).on('tokenfield:removedtoken', function (e) {
+			var existingTokens = $(this).tokenfield('getTokens');
+			var ids = "";
+			$.each(existingTokens, function(index, token) {
+				ids += eq_contact_map[token.value].id + ",";	
+            });
+			
+			if (existingTokens.length > 0) {
+				ids = ids.substring(0,ids.length-1);
+			}
+
+			$("#eq_contact").val(ids);
+		});
+		
+		
+		$('#user_tokenfield').tokenfield({
+			tokens : [],
+			limit : 5,
+			typeahead: [
+			{
+      			hint: true
+    			}, 
+			{
+				displayKey: "name",
+				source: function (query, process) {
+			        var parameter = {name: query};
+
+					$.post(userPath, parameter, function (data) {
+						$.each(data.result, function(i, object) {
+							user_map[object.name] = object;
+			            });
+			            process(data.result);
+			        }, "json");
+			    }
+			}]
+		}).on('tokenfield:createtoken', function (e) {
+			if (user_map[e.attrs.value] != undefined) {
+				var existingTokens = $(this).tokenfield('getTokens');
+				if (existingTokens.length > 0) {
+					$.each(existingTokens, function(index, token) {
+						if (token.value == e.attrs.value) {
+		                    e.preventDefault();
+		                }
+		            });
+		        }
+			} else {
+				e.preventDefault();
+			}
+		}).on('tokenfield:createdtoken', function (e) {
+			var existingTokens = $(this).tokenfield('getTokens');
+			var ids = "";
+			$.each(existingTokens, function(index, token) {
+				ids += user_map[token.value].id + ",";
+            });
+
+			ids = ids.substring(0,ids.length-1);
+			$("#user").val(ids);
+		}).on('tokenfield:removedtoken', function (e) {
+			var existingTokens = $(this).tokenfield('getTokens');
+			var ids = "";
+			$.each(existingTokens, function(index, token) {
+				ids += user_map[token.value].id + ",";	
+            });
+			
+			if (existingTokens.length > 0) {
+				ids = ids.substring(0,ids.length-1);
+			}
+
+			$("#user").val(ids);
 		});
 
 		var orgRootPath = webPath + 'statistics/result/rootOrganization';
 		$.get(orgRootPath, null, function (data) {
 			var orgChildPath = webPath + 'statistics/result/childOrganization';
+			var receiver = {
+				id : $("#eq_org"),
+				name : $("#eq_org_name")
+			};
 			var opt = {
 				root_id:data.result.id,
 				url:orgChildPath,
 				ajax:true,
-				receiver: $("#groupId")
+				receiver: receiver
 			};
-			$("#tagSel").tagSelector(opt);
+			$("#eq_org_tagselector").tagSelector(opt);
+        }, "json");
+		
+		$.get(orgRootPath, null, function (data) {
+			var orgChildPath = webPath + 'statistics/result/childOrganization';
+			var receiver = {
+				id : $("#lab_org"),
+				name : $("#lab_org_name")
+			};
+			var opt = {
+				root_id:data.result.id,
+				url:orgChildPath,
+				ajax:true,
+				receiver: receiver
+			};
+			$("#lab_org_tagselector").tagSelector(opt);
+        }, "json");
+		
+		var eqRootPath = webPath + 'statistics/result/rootEquipment';
+		$.get(eqRootPath, null, function (data) {
+			var eqChildPath = webPath + 'statistics/result/childEquipment';
+			var receiver = {
+				id : $("#eq_type"),
+				name : $("#eq_type_name")
+			};
+			var opt = {
+				root_id:data.result.id,
+				url:eqChildPath,
+				ajax:true,
+				receiver: receiver
+			};
+			$("#eq_type_tagselector").tagSelector(opt);
         }, "json");
 		
 		var indexTypePath = webPath + "statistics/result/roleindextype";
 		var indexPath = webPath + "statistics/result/roleindex";
 		
 		// 查询当前角色对应的所有指标	并填充页面
-		/*$.ajax({
+		$.ajax({
 			url: indexTypePath,
 			cache: false,
 			async: false,
@@ -113,6 +358,10 @@
 											"type" : "checkbox",
 											"value" : indexValue.sId,
 											"code" : indexValue.sCode,
+											"index-location" : indexValue.sLocation,
+											"index-description" : indexValue.sDescription,
+											"index-width" : indexValue.sWidth,
+											"index-not-count" : indexValue.sNotCount,
 											"class" : "middle",
 											"checked" : "checked",
 											"disabled" : "true"
@@ -123,6 +372,10 @@
 											"type" : "checkbox",
 											"value" : indexValue.sId,
 											"code" : indexValue.sCode,
+											"index-location" : indexValue.sLocation,
+											"index-description" : indexValue.sDescription,
+											"index-width" : indexValue.sWidth,
+											"index-not-count" : indexValue.sNotCount,
 											"class" : "middle"
 										});
 									}
@@ -142,10 +395,11 @@
 					}
 				});
 			}
-		});*/
+		});
 		
 		
 		$("#exportBtn").click(function(){
+			
 			var url = webPath + "statistics/result/excel?";
 		/* 	url += "eq_name=" + $("eq_name").val();
 			url += "&eq_type=" + $("#hidEqType").val();
@@ -172,7 +426,11 @@
 		$("#dosearch").click(function() {
 			// 加载等待效果
 			overlayShow();
-			// 获取查询条件
+			
+			//填充搜索项
+			fillSearchItem();
+			
+			/* // 获取查询条件
 			searchParam = getSearchParam(1, 16);
 			// 创建表头左侧
 			buildTableHeaderLeft();
@@ -194,7 +452,7 @@
 			buildTableFootRight(equipmentIndexCount, indexEntityArray);
 			// 点击搜索后，将滚动到顶部
 			$("#table-right-body").scrollTop(0);
-			$("#table-right-body").scrollLeft(0);
+			$("#table-right-body").scrollLeft(0); */
 			// 收回窗口
 			displaySearchProperties();
 			// 去掉等待效果
@@ -252,14 +510,14 @@
 						<form>
 							<div class="result-left">
 								<ul>
-									<li><label>仪器名称</label> <input type="text" readonly="true"
-										value="光谱仪"></li>
-									<li><label>仪器分类</label> <input type="text" readonly="true"
-										value="X射线仪器"></li>
-									<li><label>时间范围</label> <input type="text" readonly="true"
-										style="width: 90px;" value="2012-08-30"> <span
+									<li><label>仪器名称</label> <input type="text" id="s_eq_name" readonly="true"
+										value=""></li>
+									<li><label>仪器分类</label> <input type="text" id="s_eq_type" readonly="true"
+										value=""></li>
+									<li><label>时间范围</label> <input type="text" id="s_dstart" readonly="true"
+										style="width: 90px;" value=""> <span
 										style="color: #d7d7d7;">到</span> <input type="text"
-										readonly="true" style="width: 90px;" value="2013-03-18">
+										readonly="true"  id="s_dend" style="width: 90px;" value="">
 									</li>
 								</ul>
 							</div>
@@ -267,21 +525,21 @@
 								<ul>
 									<li><label>仪器组织机构</label>
 									<input type="text"
-										readonly="true" value="南开大学"></li>
+										readonly="true" id="s_eq_org" value=""></li>
 									<li><label>仪器负责人</label> <input type="text"
-										readonly="true" value="张三"></li>
-									<li><label>仪器联系人</label> <!-- input --> <label
-										class="eq-people">James</label></li>
+										readonly="true" id="s_eq_incharge" value=""></li>
+									<li><label>仪器联系人</label> <input type="text"
+										readonly="true" id="s_eq_contact" value=""></li>
 								</ul>
 							</div>
 							<div class="result-right">
 								<ul>
 									<li><label>课题组组织机构</label> <input type="text"
-										readonly="true" value="全部"></li>
-									<li><label>课题组</label> <input type="text" readonly="true"
-										value="课题组1， 课题组2"></li>
-									<li><label>使用者</label> <input type="text" readonly="true"
-										value="张三"></li>
+										readonly="true" id="s_lab_org" value=""></li>
+									<li><label>课题组</label> <input type="text" id="s_lab" readonly="true"
+										value=""></li>
+									<li><label>使用者</label> <input type="text" id="s_user" readonly="true"
+										value=""></li>
 								</ul>
 							</div>
 						</form>
@@ -327,21 +585,25 @@
                         </li>
                         <li>
                           <label>仪器分类</label>
-                          <input id="eq_type" type="text">
+                          <input id="eq_type" type="hidden"/>
+                          <input id="eq_type_name" type="hidden"/>
+                          <div id="eq_type_tagselector"></div>
                         </li>
                         <li>
                           <label>仪器组织机构</label>
                           <input type="hidden" id="eq_org"/>
-									<div id="tagSel">
-									</div>
+                          <input type="hidden" id="eq_org_name"/>
+						 <div id="eq_org_tagselector"></div>
                         </li>
                         <li>
                           <label>仪器负责人</label>
-                          <input id="eq_incharge" type="text"/>
+                          <input type="text" class="form-control" id="eq_incharge_tokenfield" value=""  placeholder="可添加5个"/>
+                          <input id="eq_incharge" type="hidden"/>
                         </li>
                         <li>
                           <label>仪器联系人</label>
-                          <input id="eq_contact" type="text"/>
+                          <input type="text" class="form-control" id="eq_contact_tokenfield" value=""  placeholder="可添加5个"/>
+                          <input id="eq_contact" type="hidden"/>
                         </li>
                       </ul>
                     </div>
@@ -349,21 +611,25 @@
                       <ul>
                         <li>
                           <label>时间范围</label>
-                          <input id="dstart" type="text" placeholder="YYYY-MM-DD">
+                          <input id="dstart" value="" type="text" placeholder="YYYY-MM-DD">
                           <span style="color: #d7d7d7;">到</span>
-                          <input id="dend" type="text" placeholder="YYYY-MM-DD">
+                          <input id="dend" value="" type="text" placeholder="YYYY-MM-DD">
                         </li>
                         <li>
                           <label>课题组组织机构</label>
-                          <input id="lab_org" type="text">
+                          <input id="lab_org" type="hidden"/>
+                          <input id="lab_org_name" type="hidden"/>
+                          <div id="lab_org_tagselector"></div>
                         </li>
                         <li>
                           <label>课题组</label>
-                          <input type="text" class="form-control" id="tokenfield" value=""  placeholder="可添加5个"/>
+                          <input type="text" class="form-control" id="lab_tokenfield" value=""  placeholder="可添加5个"/>
+                        	 <input id="lab" type="hidden" />
                         </li>
                         <li>
                           <label>使用者</label>
-                          <input id="user" type="text" >
+                          <input type="text" class="form-control" id="user_tokenfield" value=""  placeholder="可添加5个"/>
+                          <input id="user" type="hidden" />
                         </li>
                       </ul>               
                     </div>

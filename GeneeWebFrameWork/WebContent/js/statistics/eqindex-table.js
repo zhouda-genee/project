@@ -1,4 +1,3 @@
-
 // 指标对象
 function indexEntity(name, code, id, width, notCount) {
 	this.name = name;
@@ -86,6 +85,68 @@ function getSearchParam(page, size) {
 	var dend = $("#dend").val().replace(/-/g, '/') + " 23:59:59";
 	searchParam.dend = new Date(dend).getTime();
 	return searchParam;
+}
+
+// 填充搜索结果中的搜索项
+function fillSearchItem() {
+	// 仪器名称
+	$("#s_eq_name").val($("#eq_name").val());
+	
+	// 仪器类型
+	$("#s_eq_type").val($("#eq_type_name").val());
+	
+	// 仪器组织机构
+	$("#s_eq_org").val($("#eq_org_name").val());
+	
+	// 仪器负责人
+	var incharge_tokens = $("#eq_incharge_tokenfield").tokenfield('getTokens');
+	var incharge_label = "";
+	$.each(incharge_tokens, function(index, token) {
+		incharge_label += token.value + ",";
+	});
+	if (incharge_tokens.length > 0) {
+		incharge_label = incharge_label.substring(0, incharge_label.length - 1);
+	}
+	$("#s_eq_incharge").val(incharge_label);
+	
+	// 仪器联系人
+	var contact_tokens = $("#eq_contact_tokenfield").tokenfield('getTokens');
+	var contact_label = "";
+	$.each(contact_tokens, function(index, token) {
+		contact_label += token.value + ",";
+	});
+	if (contact_tokens.length > 0) {
+		contact_label = contact_label.substring(0, contact_label.length - 1);
+	}
+	$("#s_eq_contact").val(contact_label);
+	
+	// 课题组组织机构
+	$("#s_lab_org").val($("#lab_org_name").val());
+	
+	// 课题组
+	var lab_tokens = $("#lab_tokenfield").tokenfield('getTokens');
+	var lab_label = "";
+	$.each(lab_tokens, function(index, token) {
+		lab_label += token.value + ",";
+	});
+	if (lab_tokens.length > 0) {
+		lab_label = lab_label.substring(0, lab_label.length - 1);
+	}
+	$("#s_lab").val(lab_label);
+	
+	// 使用者
+	var user_tokens = $("#user_tokenfield").tokenfield('getTokens');
+	var user_label = "";
+	$.each(user_tokens, function(index, token) {
+		user_label += token.value + ",";
+	});
+	if (user_tokens.length > 0) {
+		user_label = user_label.substring(0, user_label.length - 1);
+	}
+	$("#s_user").val(user_label);
+
+	$("#s_dstart").val($("#dstart").val());
+	$("#s_dend").val($("#dend").val());
 }
 
 // 获取仪器统计列表数据
@@ -236,7 +297,7 @@ function buildTableBodyLeft(equipmentIndexPageSupport, isEmpty) {
 	} else {
 		$("#table-left-body > table").append(html);
 	}
-	
+
 	interleaveChangeColor($("#table-left-body > table"));
 
 }
@@ -280,7 +341,7 @@ function tableScroll() {
 	document.getElementById("table-right-foot").scrollLeft = b;
 }
 
-function interleaveChangeColor(object){
-	object.find("tr:even").css("background","#C00");
-	object.find("tr:odd").css("background","#09F");
+function interleaveChangeColor(object) {
+	object.find("tr:even").css("background", "#C00");
+	object.find("tr:odd").css("background", "#09F");
 }

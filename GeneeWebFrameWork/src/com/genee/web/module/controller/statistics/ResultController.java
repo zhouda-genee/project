@@ -174,7 +174,34 @@ public class ResultController extends BaseController {
 	}
 	
 	/**
-	 * 通过Ajax请求该方法，获取某一角色的所有指标类型
+	 * 通过Ajax请求该方法，根据输入的name自动补全负责人
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping(value = "incharge", method = RequestMethod.POST)
+	public void getIncharge(HttpServletRequest request,
+			HttpServletResponse response) {
+		String servletUrl = PropertiesUtil.getPropertiesValue("application-config.properties", "servlet_url");
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("jsonrpc", "2.0");
+		params.put("id", String.valueOf(System.currentTimeMillis()));
+		params.put("method", "user_incharge");
+		
+		Map<String,Object> param = new HashMap<String, Object>();
+		param.put("name", request.getParameter("name"));
+
+
+		params.put("params", JsonUtil.getJsonString4JavaPOJO(param));
+		Map<String, String> headers = new HashMap<String, String>();
+		headers.put("Accept", "application/json");
+		
+		String result = HttpClientUtil.post(servletUrl, params, headers);
+		outJson(response, result, null);
+	}
+	
+	/**
+	 * 通过Ajax请求该方法，根据输入的name自动补全联系人
 	 * 
 	 * @param request
 	 * @param response
@@ -187,6 +214,60 @@ public class ResultController extends BaseController {
 		params.put("jsonrpc", "2.0");
 		params.put("id", String.valueOf(System.currentTimeMillis()));
 		params.put("method", "user_contact");
+		
+		Map<String,Object> param = new HashMap<String, Object>();
+		param.put("name", request.getParameter("name"));
+
+
+		params.put("params", JsonUtil.getJsonString4JavaPOJO(param));
+		Map<String, String> headers = new HashMap<String, String>();
+		headers.put("Accept", "application/json");
+		
+		String result = HttpClientUtil.post(servletUrl, params, headers);
+		outJson(response, result, null);
+	}
+	
+	/**
+	 * 通过Ajax请求该方法，根据输入的name自动补全课题组
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping(value = "lab", method = RequestMethod.POST)
+	public void getLab(HttpServletRequest request,
+			HttpServletResponse response) {
+		String servletUrl = PropertiesUtil.getPropertiesValue("application-config.properties", "servlet_url");
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("jsonrpc", "2.0");
+		params.put("id", String.valueOf(System.currentTimeMillis()));
+		params.put("method", "lab_name");
+		
+		Map<String,Object> param = new HashMap<String, Object>();
+		param.put("name", request.getParameter("name"));
+
+
+		params.put("params", JsonUtil.getJsonString4JavaPOJO(param));
+		Map<String, String> headers = new HashMap<String, String>();
+		headers.put("Accept", "application/json");
+		
+		String result = HttpClientUtil.post(servletUrl, params, headers);
+		outJson(response, result, null);
+	}
+	
+	/**
+	 * 通过Ajax请求该方法，根据输入的name自动补全课题组
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping(value = "user", method = RequestMethod.POST)
+	public void getUser(HttpServletRequest request,
+			HttpServletResponse response) {
+		String servletUrl = PropertiesUtil.getPropertiesValue("application-config.properties", "servlet_url");
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("jsonrpc", "2.0");
+		params.put("id", String.valueOf(System.currentTimeMillis()));
+		params.put("method", "user_recuser");
 		
 		Map<String,Object> param = new HashMap<String, Object>();
 		param.put("name", request.getParameter("name"));
@@ -239,10 +320,62 @@ public class ResultController extends BaseController {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("jsonrpc", "2.0");
 		params.put("id", String.valueOf(System.currentTimeMillis()));
-		params.put("method", "org_child");
+		params.put("method", "equipment_child");
 		
 		Map<String,Object> param = new HashMap<String, Object>();
-		param.put("id", request.getParameter("group_id"));
+		param.put("id", request.getParameter("id"));
+
+		params.put("params", JsonUtil.getJsonString4JavaPOJO(param));
+		Map<String, String> headers = new HashMap<String, String>();
+		headers.put("Accept", "application/json");
+		
+		String result = HttpClientUtil.post(servletUrl, params, headers);
+		outJson(response, result, null);
+	}
+	
+	/**
+	 * 通过Ajax请求该方法，获取仪器分类的根节点
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping(value = "rootEquipment", method = RequestMethod.GET)
+	public void getRootEquipment(HttpServletRequest request,
+			HttpServletResponse response) {
+		String servletUrl = PropertiesUtil.getPropertiesValue("application-config.properties", "servlet_url");
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("jsonrpc", "2.0");
+		params.put("id", String.valueOf(System.currentTimeMillis()));
+		params.put("method", "equipment_root");
+		
+		Map<String,Object> param = new HashMap<String, Object>();
+
+		params.put("params", JsonUtil.getJsonString4JavaPOJO(param));
+
+		Map<String, String> headers = new HashMap<String, String>();
+		headers.put("Accept", "application/json");
+		
+		String result = HttpClientUtil.post(servletUrl, params, headers);
+		outJson(response, result, null);
+	}
+	
+	/**
+	 * 通过Ajax请求该方法，获取仪器分类的子节点
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping(value = "childEquipment", method = RequestMethod.GET)
+	public void getChildEquipment(HttpServletRequest request,
+			HttpServletResponse response) {
+		String servletUrl = PropertiesUtil.getPropertiesValue("application-config.properties", "servlet_url");
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("jsonrpc", "2.0");
+		params.put("id", String.valueOf(System.currentTimeMillis()));
+		params.put("method", "equipment_child");
+		
+		Map<String,Object> param = new HashMap<String, Object>();
+		param.put("id", request.getParameter("id"));
 
 		params.put("params", JsonUtil.getJsonString4JavaPOJO(param));
 		Map<String, String> headers = new HashMap<String, String>();
