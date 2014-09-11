@@ -430,7 +430,7 @@
 			//填充搜索项
 			fillSearchItem();
 			
-			/* // 获取查询条件
+			// 获取查询条件
 			searchParam = getSearchParam(1, 16);
 			// 创建表头左侧
 			buildTableHeaderLeft();
@@ -452,7 +452,7 @@
 			buildTableFootRight(equipmentIndexCount, indexEntityArray);
 			// 点击搜索后，将滚动到顶部
 			$("#table-right-body").scrollTop(0);
-			$("#table-right-body").scrollLeft(0); */
+			$("#table-right-body").scrollLeft(0);
 			// 收回窗口
 			displaySearchProperties();
 			// 去掉等待效果
