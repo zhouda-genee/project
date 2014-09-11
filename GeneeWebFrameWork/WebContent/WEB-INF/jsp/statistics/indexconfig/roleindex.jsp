@@ -16,83 +16,67 @@
     <title>角色指标列表</title>
 </head>
 <body>
-<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-	<div>
-	  <a href="#" class="link link-tab-primary">统计项设置</a>
-	  <a href="#" class="link link-tab-default">绩效评估设置</a>
-	</div>
-	<div class="pannel">
-		<div class="container-fluid">
-			<div id="roleconfig" class="accordion">
-				<div class="">
-					<div class="container-self">
-						<a class="role-name" data-toggle="collapse" data-parent="#roleconfig" href="#collapseOne">中心管理员</a>						
-						<div id="collapseOne" class="accordion-body collapse">
-							<div class="accordion-inner">
-								<div class="index-grid">
-									<div class="checkall">
-										<div class="right">
-											<input type="checkbox" name="sysAdmin" onclick="selectAllCheckBox('templateOne',this.checked)"><label>全选</label>
-										</div>
-									</div>
-									<div id="templateOne"></div>
-									<div class="link-group">
-										<input id="sbmOne" type="button"  value="提交" class="link link-primary" onclick="subOne();"/>
+    <div class="col-md-10 main">
+		<div class="link-group">
+		  <a href="#" class="link link-tab-primary">统计项设置</a>
+		  <a href="#" class="link link-tab-default">绩效评估设置</a>
+		</div>
+		<div class="panel-self">
+			<div id="roleconfig">
+		        	<div class="panel panel-default panel-fixed">
+		            	<a class="role-name" data-toggle="collapse" data-parent="#roleconfig" href="#collapseOne">中心管理员</a>           
+		            	<div id="collapseOne" class="collapse in">
+		              		<div class="index-grid">
+								<div class="checkall">
+									<div class="right">
+										<input type="checkbox" name="sysAdmin" onclick="selectAllCheckBox('templateOne',this.checked)"><label>全选</label>
 									</div>
 								</div>
-							<input id="roleOne" type="hidden" value="1" />
+								<div id="templateOne"></div>
+								<div class="link-group">
+									<input id="sbmOne" type="button"  value="提交" class="link link-primary" onclick="subOne();"/>
+								</div>
 							</div>
 						</div>
-					</div>
-				</div>
-				
-				<div class="accordion-group">
-					<div class="accordion-heading container-self">
-						<a class="role-name" data-toggle="collapse" data-parent="#roleconfig" href="#collapseTwo">课题组PI</a>
-						<div id="collapseTwo" class="accordion-body collapse">
-							<div class="accordion-inner">
-								<div class="index-grid">
-									<div class="checkall">
-										<div class="right">
-											<input type="checkbox" name="sysAdmin" onclick="selectAllCheckBox('templateTwo',this.checked)"><label>全选</label>
-										</div>
-									</div>
-									<div id="templateTwo"></div>
-									<div class="link-group">
-										<input id="sbmTwo" type="button"  value="提交" class="link link-primary" onclick="subTwo();"/>
+		        	</div>
+		        
+		        	<div class="panel panel-default panel-fixed">
+		            	<a class="role-name" data-toggle="collapse" data-parent="#roleconfig" href="#collapseTwo">中心管理员</a>           
+		            	<div id="collapseTwo" class="collapse">
+		              		<div class="index-grid">
+								<div class="checkall">
+									<div class="right">
+										<input type="checkbox" name="sysAdmin" onclick="selectAllCheckBox('templateOne',this.checked)"><label>全选</label>
 									</div>
 								</div>
-								<input id="roleTwo" type="hidden" value="2" />
+								<div id="templateTwo"></div>
+								<div class="link-group">
+									<input id="sbmTwo" type="button"  value="提交" class="link link-primary" onclick="subTwo();"/>
+								</div>
 							</div>
 						</div>
-					</div>
-				</div>
-				
-				<div class="accordion-group">
-					<div class="accordion-heading container-self">
-						<a class="role-name" data-toggle="collapse" data-parent="#roleconfig" href="#collapseThree">仪器管理员</a>
-						<div id="collapseThree" class="accordion-body collapse">
-							<div class="accordion-inner">
-								<div class="index-grid">
-									<div class="checkall">
-										<div class="right">
-											<input type="checkbox" name="sysAdmin" onclick="selectAllCheckBox('templateThree',this.checked)"><label>全选</label>
-										</div>
-									</div>
-									<div id="templateThree"></div>
-									<div class="link-group">
-										<input id="sbmThree" type="button"  value="提交" class="link link-primary" onclick="subThree();"/>
+		        	</div>
+		        
+		        	<div class="panel panel-default panel-fixed">
+		            	<a class="role-name" data-toggle="collapse" data-parent="#roleconfig" href="#collapseThree">仪器管理员</a>
+		            	<div id="collapseThree" class="collapse">
+		              		<div class="index-grid">
+								<div class="checkall">
+									<div class="right">
+										<input type="checkbox" name="sysAdmin" onclick="selectAllCheckBox('templateOne',this.checked)"><label>全选</label>
 									</div>
 								</div>
-								<input id="roleThree" type="hidden" value="3" />
+								<div id="templateThree"></div>
+								<div class="link-group">
+									<input id="sbmThree" type="button"  value="提交" class="link link-primary" onclick="subThree();"/>
+								</div>
 							</div>
-						</div>
-					</div>
-				</div>	
-			</div>
-		</div><!-- container-fluid -->
-	</div><!-- pannel -->
-</div>	
+						</div>            
+		        	</div>
+			</div><!-- roleconfig --> 
+		</div><!-- panel self -->
+	</div><!-- main -->
+	
 	<script type="text/javascript">		
 		// 定义指标类型的全局变量 
 		var types = (function GetTypeJsonString() {
@@ -100,7 +84,7 @@
 			$.ajax({
 				type:"GET",
 				async: false, // 同步加载，因为这组数据要优先获取
-				url:"<%=webPath %>" + "statistics/indexconfig/type",
+				url:"<%=webPath %>" + "statistics/type",
 				success: function(infoType){
 					result = infoType;
 				}
@@ -114,7 +98,7 @@
 			// 对中心管理员的数据请求
 			$.ajax({
 				type: "GET",
-				url: "<%=webPath %>" + "statistics/indexconfig/1",
+				url: "<%=webPath %>" + "statistics/1",
 				success: function(infoRole){	
 					var arrRoleIndex = []; // 用来存放角色已拥有指标ID的数组
 					var dataRole = JSON.parse(infoRole);
@@ -133,6 +117,7 @@
 						$divIndex = $("<div class='index-list' id='" + 1 + "-" + typeKey.tId + "'>" + "</div>");
 						$divIndex.appendTo("#1_" + typeKey.tId);
 						$.each(typeKey.indexs, function(j, indexKey){
+							console.log(indexKey.sName);
 							$index = $("<li><input type='checkbox' name='ckbOne' value='" + indexKey.sId + "'><label>" + indexKey.sName + "</label></li>" );
 							$index.appendTo("#1-" + typeKey.tId);
 							if($.inArray(indexKey.sId, arrRoleIndex) != -1){
@@ -146,7 +131,7 @@
 			// 对课题组PI的数据请求
 			$.ajax({
 				type: "GET",
-				url: "<%=webPath %>" + "statistics/indexconfig/2",
+				url: "<%=webPath %>" + "statistics/2",
 				success: function(infoRole){
 					var arrRoleIndex = []; // 用来存放角色已拥有指标ID的数组
 					var dataRole = JSON.parse(infoRole);
@@ -178,7 +163,7 @@
 			// 对仪器管理员的数据请求
 			$.ajax({
 				type: "GET",
-				url: "<%=webPath %>" + "statistics/indexconfig/3",
+				url: "<%=webPath %>" + "statistics/3",
 				success: function(infoRole){
 					var arrRoleIndex = []; // 用来存放角色已拥有指标ID的数组
 					var dataRole = JSON.parse(infoRole);
@@ -225,7 +210,7 @@
 				else {	
 					$.ajax({
 						type:"POST",
-						url: "statistics/indexconfig/editrole",
+						url: "statistics/editindex",
 						cache: false,
 						data: { 
 						 "roleId" : roleId,
