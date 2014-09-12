@@ -148,13 +148,13 @@
                         </li>
                         <li>
                           <label>仪器负责人</label>
-                          <input type="text" class="form-control" id="eq_incharge_tokenfield" value=""  placeholder="可添加5个"/>
-                          <input id="eq_incharge" name="eq_incharge" type="hidden"/>
+                          <input type="text" class="form-control" id="eq_incharge_tokenfield" value="" <% if(loggedRoleId.equals("3")) {%>disabled="disabled"<%} %> placeholder="可添加5个"/>
+                          <input id="eq_incharge" name="eq_incharge" type="hidden" value="<% if(loggedRoleId.equals("3")) {%><%=loggedUserId %><%} %>"/>
                         </li>
                         <li>
                           <label>仪器联系人</label>
-                          <input type="text" class="form-control" id="eq_contact_tokenfield" value=""  placeholder="可添加5个"/>
-                          <input id="eq_contact" name="eq_contact" type="hidden"/>
+                          <input type="text" class="form-control" id="eq_contact_tokenfield" value="" <% if(loggedRoleId.equals("3")) {%>disabled="disabled"<%} %>  placeholder="可添加5个"/>
+                          <input id="eq_contact" name="eq_contact" type="hidden" value="<% if(loggedRoleId.equals("3")) {%><%=loggedUserId %><%} %>"/>
                         </li>
                       </ul>
                     </div>
@@ -174,8 +174,8 @@
                         </li>
                         <li>
                           <label>课题组</label>
-                          <input type="text" class="form-control" id="lab_tokenfield" value=""  placeholder="可添加5个"/>
-                        	 <input id="lab" name="lab" type="hidden" />
+                          <input type="text" class="form-control" id="lab_tokenfield" value="" <% if(loggedRoleId.equals("2")) {%>disabled="disabled"<%} %> placeholder="可添加5个"/>
+                        	 <input id="lab" name="lab" type="hidden" value="<% if(loggedRoleId.equals("3")) {%><%=loggedLabId %><%} %>" />
                         </li>
                         <li>
                           <label>使用者</label>

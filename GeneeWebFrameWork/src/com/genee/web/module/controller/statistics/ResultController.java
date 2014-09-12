@@ -58,6 +58,11 @@ public class ResultController extends BaseController {
 	@RequestMapping(value = "search", method = RequestMethod.GET)
 	public String execute(HttpServletRequest request,
 			HttpServletResponse response) {
+		Map<String, String> sessionMap = new HashMap<String, String>();
+		sessionMap.put(SessionAttributeType.USER_ID, "1");
+		sessionMap.put(SessionAttributeType.ROLE, "3");
+		sessionMap.put(SessionAttributeType.LAB_ID, "2");
+		request.getSession().setAttribute(SessionAttributeType.PARAM_USER, sessionMap);
 		return "statistics/indexlist/resultlist";
 	}
 
