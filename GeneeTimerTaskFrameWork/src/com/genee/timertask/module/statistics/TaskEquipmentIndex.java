@@ -102,11 +102,6 @@ public class TaskEquipmentIndex {
 					logger.info("\t\t参数:"
 							+"\n\t\tstartdate:" + lStartDate
 							+"\n\t\tenddate:" + lEndDate);
-					/*try {
-						indexBase.run(lStartDate, lEndDate, equipments);
-					} catch (Exception ex) {
-						logger.error(index.getIndexName() + "指标执行错误：" + ex.getMessage());
-					}*/
 					indexBase.run(lStartDate, lEndDate, equipments);
 					logger.info("\t执行[" + index.getIndexCode() + "]指标结束");
 				}

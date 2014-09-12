@@ -6,7 +6,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>统计列表</title>
 <style type="text/css">
-	.text_overflow{white-space:nowrap; text-overflow:ellipsis; -o-text-overflow:ellipsis; -moz-binding:url('ellipsis.xml#ellipsis'); overflow:hidden;}
+.text_overflow {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+	-moz-binding: url('ellipsis.xml#ellipsis');
+	overflow: hidden;
+}
 </style>
 <script src="js/statistics/eqindex-table.js"></script>
 <link href="css/jquery/jquery-ui.css" rel="stylesheet"/>
@@ -158,29 +164,33 @@
 		$("#dosearch").click(function() {
 			// 加载等待效果
 			overlayShow();
-			// 获取查询条件
-			searchParam = getSearchParam(1, 16);
-			// 创建表头左侧
-			buildTableHeaderLeft();
-			// 创建表头右侧
-			indexEntityArray = buildTableHeaderRight();
-			// 获取统计列表记录
-			var equipmentIndexData = getEquipmentIndexData(searchParam);
-			pageCount = equipmentIndexData.pageCount;
-			page = equipmentIndexData.page;
-			// 创建统计列表右侧
-			buildTableBodyRight(equipmentIndexData, indexEntityArray, true);
-			// 创建统计列表左侧
-			buildTableBodyLeft(equipmentIndexData, true);
-			// 获取总计记录
-			var equipmentIndexCount = getEquipmentIndexCount(searchParam);
-			// 创建总计左侧
-			buildTableFootLeft(equipmentIndexCount);
-			// 创建总计右侧
-			buildTableFootRight(equipmentIndexCount, indexEntityArray);
-			// 点击搜索后，将滚动到顶部
-			$("#table-right-body").scrollTop(0);
-			$("#table-right-body").scrollLeft(0);
+			try{
+				// 获取查询条件
+				searchParam = getSearchParam(1, 16);
+				// 创建表头左侧
+				buildTableHeaderLeft();
+				// 创建表头右侧
+				indexEntityArray = buildTableHeaderRight();
+				// 获取统计列表记录
+				var equipmentIndexData = getEquipmentIndexData(searchParam);
+				pageCount = equipmentIndexData.pageCount;
+				page = equipmentIndexData.page;
+				// 创建统计列表右侧
+				buildTableBodyRight(equipmentIndexData, indexEntityArray, true);
+				// 创建统计列表左侧
+				buildTableBodyLeft(equipmentIndexData, true);
+				// 获取总计记录
+				var equipmentIndexCount = getEquipmentIndexCount(searchParam);
+				// 创建总计左侧
+				buildTableFootLeft(equipmentIndexCount);
+				// 创建总计右侧
+				buildTableFootRight(equipmentIndexCount, indexEntityArray);
+				// 点击搜索后，将滚动到顶部
+				$("#table-right-body").scrollTop(0);
+				$("#table-right-body").scrollLeft(0);
+			} catch(e){
+				alert("异常的错误信息：" + e.message);  
+			}
 			// 收回窗口
 			displaySearchProperties();
 			// 去掉等待效果
@@ -208,6 +218,44 @@
 				overlayHide();
 			}
 		});
+		
+		function orderFilterFunction(obj){
+			// 加载等待效果
+			overlayShow();
+			// 获取查询条件
+			searchParam = getSearchParam(1, 16);
+			searchParam.sort_name = obj.id;
+			searchParam.sort = obj.sort;
+			try{
+				// 创建表头左侧
+				buildTableHeaderLeft();
+				// 创建表头右侧
+				indexEntityArray = buildTableHeaderRight();
+				// 获取统计列表记录
+				var equipmentIndexData = getEquipmentIndexData(searchParam);
+				pageCount = equipmentIndexData.pageCount;
+				page = equipmentIndexData.page;
+				// 创建统计列表右侧
+				buildTableBodyRight(equipmentIndexData, indexEntityArray, true);
+				// 创建统计列表左侧
+				buildTableBodyLeft(equipmentIndexData, true);
+				// 获取总计记录
+				var equipmentIndexCount = getEquipmentIndexCount(searchParam);
+				// 创建总计左侧
+				buildTableFootLeft(equipmentIndexCount);
+				// 创建总计右侧
+				buildTableFootRight(equipmentIndexCount, indexEntityArray);
+				// 点击搜索后，将滚动到顶部
+				$("#table-right-body").scrollTop(0);
+				$("#table-right-body").scrollLeft(0);
+			} catch(e){
+				alert("异常的错误信息：" + e.message);  
+			}
+			// 收回窗口
+			displaySearchProperties();
+			// 去掉等待效果
+			overlayHide();
+		}
 	});
 	
 	function displaySearchProperties() {
@@ -360,11 +408,11 @@
                     <label>基本信息</label>
                   </div>
                   <div class="index">
-                    <input type="checkbox" value="2" index-width="100" index-not-count="1" code="eq_price" class="middle"><label class="middle">仪器价格</label>
-                    <input type="checkbox" value="3" index-width="200" index-not-count="1" code="principal" class="middle"><label class="middle">负责人</label>
-                    <input type="checkbox" value="4" index-width="200" index-not-count="1" code="linkman" class="middle"><label class="middle">联系人</label>
-                    <input type="checkbox" value="5" index-width="80" index-not-count="1" code="innet_dur" class="middle"><label class="middle">入网时长</label>
-                    <input type="checkbox" value="6" index-width="80" index-not-count="0" code="fault_dur" class="middle"><label class="middle">故障时长</label>
+                    <input type="checkbox" value="2" index-description="abc" index-width="100" index-not-count="1" code="eq_price" class="middle"><label class="middle">仪器价格</label>
+                    <input type="checkbox" value="3" index-description="abc" index-width="200" index-not-count="1" code="principal" class="middle"><label class="middle">负责人</label>
+                    <input type="checkbox" value="4" index-description="abc" index-width="200" index-not-count="1" code="linkman" class="middle"><label class="middle">联系人</label>
+                    <input type="checkbox" value="5" index-description="abc" index-width="80" index-not-count="1" code="innet_dur" class="middle"><label class="middle">入网时长</label>
+                    <input type="checkbox" value="6" index-description="abc" index-width="80" index-not-count="0" code="fault_dur" class="middle"><label class="middle">故障时长</label>
                   </div>
                 </div>
                 <div>
@@ -372,12 +420,12 @@
                     <label>计费信息</label>
                   </div>
                   <div class="index">
-                    <input type="checkbox" value="22" index-width="80" index-not-count="0" code="used_charge" class="middle"><label class="middle">使用收费</label>
-                    <input type="checkbox" value="23" index-width="80" index-not-count="0" code="on_cam_charge" class="middle"><label class="middle">校内收费</label>
-                    <input type="checkbox" value="24" index-width="80" index-not-count="0" code="off_cam_charge" class="middle"><label class="middle">校外收费</label>
-                    <input type="checkbox" value="25" index-width="80" index-not-count="0" code="delegation_charge" class="middle"><label class="middle">委托测试收费</label>
-                    <input type="checkbox" value="26" index-width="80" index-not-count="0" code="earnings_charge" class="middle"><label class="middle">创收金额</label>
-                    <input type="checkbox" value="27" index-width="80" index-not-count="0" code="repair_cost" class="middle"><label class="middle">维修费</label>
+                    <input type="checkbox" value="22" index-description="abc" index-width="80" index-not-count="0" code="used_charge" class="middle"><label class="middle">使用收费</label>
+                    <input type="checkbox" value="23" index-description="abc" index-width="80" index-not-count="0" code="on_cam_charge" class="middle"><label class="middle">校内收费</label>
+                    <input type="checkbox" value="24" index-description="abc" index-width="80" index-not-count="0" code="off_cam_charge" class="middle"><label class="middle">校外收费</label>
+                    <input type="checkbox" value="25" index-description="abc" index-width="80" index-not-count="0" code="delegation_charge" class="middle"><label class="middle">委托测试收费</label>
+                    <input type="checkbox" value="26" index-description="abc" index-width="80" index-not-count="0" code="earnings_charge" class="middle"><label class="middle">创收金额</label>
+                    <input type="checkbox" value="27" index-description="abc" index-width="80" index-not-count="0" code="repair_cost" class="middle"><label class="middle">维修费</label>
                   </div>
                 </div>
               </div>

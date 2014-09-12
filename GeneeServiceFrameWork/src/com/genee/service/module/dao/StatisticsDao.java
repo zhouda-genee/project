@@ -46,8 +46,8 @@ public class StatisticsDao {
 														  PageSupport<EquipmentIndexEntity> pageSupport) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("select _eq.eq_id, "); // 仪器ID
-		sql.append("       _eq.eq_name, "); // 仪器名称
-		sql.append("       _eq.eq_price, "); // 仪器价格
+		sql.append("       case when _eq.status = 0 then concat(_eq.eq_name, '(正常)') when _eq.status = 1 then concat(_eq.eq_name, '(临时故障)') when _eq.status = 2 then concat(_eq.eq_name, '(报废)') end as eq_name	, "); // 仪器名称
+		sql.append("       format(cast(_eq.eq_price as decimal), 2) 				 as eq_price, "); // 仪器价格
 		sql.append("       _eq.principal, "); // 负责人
 		sql.append("       _eq.linkman, "); // 联系人
 		sql.append("       _eq.innet_dur, "); // 入网时长
@@ -67,13 +67,13 @@ public class StatisticsDao {
 		sql.append("       sum(_stat.give_sam_cnt)                                   as give_sam_cnt, "); // 送样测样数
 		sql.append("       sum(_stat.owner_sam_cnt)                                  as owner_sam_cnt, "); // 机主测样数
 		sql.append("       sum(_stat.stu_sam_cnt)                                    as stu_sam_cnt, "); // 学生测样数
-		sql.append("       round(sum(_stat.used_charge), 2)                          as used_charge, "); // 使用收费
-		sql.append("       round(sum(_stat.on_cam_charge), 2)                        as on_cam_charge, "); // 校内收费
-		sql.append("       round(sum(_stat.off_cam_charge), 2)                       as off_cam_charge, "); // 校外收费
-		sql.append("       round(sum(_stat.delegation_charge), 2)                    as delegation_charge, "); // 委托测试收费
-		sql.append("       round(sum(_stat.earnings_charge), 2)                      as earnings_charge, "); // 创收金额
-		sql.append("       round(sum(_stat.repair_cost), 2)                          as repair_cost, "); // 维修费
-		sql.append("       round(sum(_stat.train_cost), 2)                           as train_cost, "); // 培训费
+		sql.append("       format(sum(_stat.used_charge), 2)                          as used_charge, "); // 使用收费
+		sql.append("       format(sum(_stat.on_cam_charge), 2)                        as on_cam_charge, "); // 校内收费
+		sql.append("       format(sum(_stat.off_cam_charge), 2)                       as off_cam_charge, "); // 校外收费
+		sql.append("       format(sum(_stat.delegation_charge), 2)                    as delegation_charge, "); // 委托测试收费
+		sql.append("       format(sum(_stat.earnings_charge), 2)                      as earnings_charge, "); // 创收金额
+		sql.append("       format(sum(_stat.repair_cost), 2)                          as repair_cost, "); // 维修费
+		sql.append("       format(sum(_stat.train_cost), 2)                           as train_cost, "); // 培训费
 		sql.append("       sum(_stat.train_cnt)                                      as train_cnt, "); // 培训人数
 		sql.append("       sum(_stat.train_stu)                                      as train_stu, "); // 培训学生
 		sql.append("       sum(_stat.train_tea)                                      as train_tea, "); // 培训教师
@@ -137,7 +137,10 @@ public class StatisticsDao {
 		}
 		sql.append("group  by _eq.eq_id, _eq.eq_name, _eq.eq_price, _eq.principal, _eq.linkman, _eq.innet_dur ");
 		if (StringUtils.isNotEmpty(sortName) && !"null".equals(sortName)){
-			sql.append("order by " + sortName + " " + sort);
+			if (sortName.equals("eq_price"))
+				sql.append("order by cast(_eq.eq_price as decimal) " + sort);
+			else	
+				sql.append("order by " + sortName + " " + sort);
 		} else {
 			sql.append("order by _eq.eq_name");
 		}
@@ -194,13 +197,13 @@ public class StatisticsDao {
 		sql.append("       sum(_stat.give_sam_cnt)                                   as give_sam_cnt, "); // 送样测样数
 		sql.append("       sum(_stat.owner_sam_cnt)                                  as owner_sam_cnt, "); // 机主测样数
 		sql.append("       sum(_stat.stu_sam_cnt)                                    as stu_sam_cnt, "); // 学生测样数
-		sql.append("       round(sum(_stat.used_charge), 2)                          as used_charge, "); // 使用收费
-		sql.append("       round(sum(_stat.on_cam_charge), 2)                        as on_cam_charge, "); // 校内收费
-		sql.append("       round(sum(_stat.off_cam_charge), 2)                       as off_cam_charge, "); // 校外收费
-		sql.append("       round(sum(_stat.delegation_charge), 2)                    as delegation_charge, "); // 委托测试收费
-		sql.append("       round(sum(_stat.earnings_charge), 2)                      as earnings_charge, "); // 创收金额
-		sql.append("       round(sum(_stat.repair_cost), 2)                          as repair_cost, "); // 维修费
-		sql.append("       round(sum(_stat.train_cost), 2)                           as train_cost, "); // 培训费
+		sql.append("       format(sum(_stat.used_charge), 2)                          as used_charge, "); // 使用收费
+		sql.append("       format(sum(_stat.on_cam_charge), 2)                        as on_cam_charge, "); // 校内收费
+		sql.append("       format(sum(_stat.off_cam_charge), 2)                       as off_cam_charge, "); // 校外收费
+		sql.append("       format(sum(_stat.delegation_charge), 2)                    as delegation_charge, "); // 委托测试收费
+		sql.append("       format(sum(_stat.earnings_charge), 2)                      as earnings_charge, "); // 创收金额
+		sql.append("       format(sum(_stat.repair_cost), 2)                          as repair_cost, "); // 维修费
+		sql.append("       format(sum(_stat.train_cost), 2)                           as train_cost, "); // 培训费
 		sql.append("       sum(_stat.train_cnt)                                      as train_cnt, "); // 培训人数
 		sql.append("       sum(_stat.train_stu)                                      as train_stu, "); // 培训学生
 		sql.append("       sum(_stat.train_tea)                                      as train_tea, "); // 培训教师

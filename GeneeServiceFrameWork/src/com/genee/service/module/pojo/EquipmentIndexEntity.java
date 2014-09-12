@@ -18,146 +18,146 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class EquipmentIndexEntity implements Serializable {
-	
+
 	private static final long serialVersionUID = 4995122871109032905L;
 
 	// 仪器ID
 	@XmlAttribute(name = "eq_id")
 	private long eq_id;
-	
+
 	// 仪器名称
 	private String eq_name;
-	
+
 	// 仪器数量
 	private int eq_count;
-	
+
 	// 仪器价格
 	@XmlAttribute(name = "eq_price")
 	private String eq_price;
-	
+
 	// 仪器负责人
 	private String principal;
-	
+
 	// 仪器联系人
 	private String linkman;
-	
+
 	// 入网时长
 	private double innet_dur;
-	
+
 	// 故障时长
 	private double fault_dur;
-	
+
 	// 预约机时
 	private double appointment_dur;
-	
+
 	// 使用机时
 	private double used_dur;
-	
+
 	// 机主使用机时
 	private double owner_used_dur;
-	
+
 	// 开放机时
 	private double open_dur;
-	
+
 	// 有效机时
 	private double valid_dur;
-	
+
 	// 委托测试机时
 	private double test_dur;
-	
+
 	// 科研机时
 	private double scientific_dur;
-	
+
 	// 教学机时
 	private double teach_dur;
-	
+
 	// 社会项目机时
 	private double society_dur;
-	
+
 	// 使用次数
 	private int used_times;
-	
+
 	// 测样数
 	private int test_sam_cnt;
-	
+
 	// 使用测样数
 	private int used_sam_cnt;
-	
+
 	// 送样测样数
 	private int give_sam_cnt;
-	
+
 	// 机主测样数
 	private int owner_sam_cnt;
-	
+
 	// 学生测样数
 	private int stu_sam_cnt;
-	
+
 	// 使用收费
-	private double used_charge;
-	
+	private String used_charge;
+
 	// 校内收费
-	private double on_cam_charge;
-	
+	private String on_cam_charge;
+
 	// 校外收费
-	private double off_cam_charge;
-	
+	private String off_cam_charge;
+
 	// 委托测试收费
-	private double delegation_charge;
-	
+	private String delegation_charge;
+
 	// 创收金额
-	private double earnings_charge;
-	
+	private String earnings_charge;
+
 	// 维修费
-	private double repair_cost;
-	
+	private String repair_cost;
+
 	// 培训费
-	private double train_cost;
-	
+	private String train_cost;
+
 	// 培训人数
 	private int train_cnt;
-	
+
 	// 培训学生
 	private int train_stu;
-	
+
 	// 培训教师
 	private int train_tea;
-	
+
 	// 培训其他人
 	private int train_oth;
-	
+
 	// 服务科研项目数
 	private int serv_scientific_cnt;
-	
+
 	// 服务教学项目数
 	private int serv_teach_cnt;
-	
+
 	// 服务社会项目数
 	private int serv_society_cnt;
-	
+
 	// 论文数
 	private int essay_cnt;
-	
+
 	// 三大检索
 	private int three_search;
-	
+
 	// 核心刊物
 	private int core_publication;
-	
+
 	// 获奖数
 	private int awards_cnt;
-	
+
 	// 国家级获奖数
 	private int national_awards_cnt;
-	
+
 	// 省部级获奖数
 	private int provincial_awards_cnt;
-	
+
 	// 专利数
 	private int patent_cnt;
-	
+
 	// 教师专利数
 	private int tea_patent_cnt;
-	
+
 	// 学生专利数
 	private int stu_patent_cnt;
 
@@ -337,59 +337,59 @@ public class EquipmentIndexEntity implements Serializable {
 		this.stu_sam_cnt = stu_sam_cnt;
 	}
 
-	public double getUsed_charge() {
+	public String getUsed_charge() {
 		return used_charge;
 	}
 
-	public void setUsed_charge(double used_charge) {
+	public void setUsed_charge(String used_charge) {
 		this.used_charge = used_charge;
 	}
 
-	public double getOn_cam_charge() {
+	public String getOn_cam_charge() {
 		return on_cam_charge;
 	}
 
-	public void setOn_cam_charge(double on_cam_charge) {
+	public void setOn_cam_charge(String on_cam_charge) {
 		this.on_cam_charge = on_cam_charge;
 	}
 
-	public double getOff_cam_charge() {
+	public String getOff_cam_charge() {
 		return off_cam_charge;
 	}
 
-	public void setOff_cam_charge(double off_cam_charge) {
+	public void setOff_cam_charge(String off_cam_charge) {
 		this.off_cam_charge = off_cam_charge;
 	}
 
-	public double getDelegation_charge() {
+	public String getDelegation_charge() {
 		return delegation_charge;
 	}
 
-	public void setDelegation_charge(double delegation_charge) {
+	public void setDelegation_charge(String delegation_charge) {
 		this.delegation_charge = delegation_charge;
 	}
 
-	public double getEarnings_charge() {
+	public String getEarnings_charge() {
 		return earnings_charge;
 	}
 
-	public void setEarnings_charge(double earnings_charge) {
+	public void setEarnings_charge(String earnings_charge) {
 		this.earnings_charge = earnings_charge;
 	}
 
-	public double getRepair_cost() {
+	public String getRepair_cost() {
 		return repair_cost;
 	}
 
-	public void setRepair_cost(double repair_cost) {
+	public void setRepair_cost(String repair_cost) {
 		this.repair_cost = repair_cost;
 	}
 
-	public double getTrain_cost() {
+	public String getTrain_cost() {
 		return train_cost;
 	}
 
-	public void setTrain_cost(double train_cost) {
+	public void setTrain_cost(String train_cost) {
 		this.train_cost = train_cost;
 	}
 
@@ -528,5 +528,5 @@ public class EquipmentIndexEntity implements Serializable {
 	public void setEq_count(int eq_count) {
 		this.eq_count = eq_count;
 	}
-	
+
 }
