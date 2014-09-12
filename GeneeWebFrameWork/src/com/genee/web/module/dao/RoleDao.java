@@ -14,6 +14,7 @@ import com.genee.web.module.constants.GlobalStatus;
 import com.genee.web.module.pojo.IndexEntity;
 import com.genee.web.module.pojo.IndexTypeEntity;
 import com.genee.web.module.pojo.RoleInfoEntity;
+import com.genee.web.module.pojo.UserEntity;
 
 @Repository
 public class RoleDao {
@@ -30,10 +31,11 @@ public class RoleDao {
 	 * @return int
 	 * @throws
 	 */
-	public int queryUserIdByToken(String token){
-		String sql = "select id from user where token = ?";
+	public UserEntity queryUserIdByToken(String token){
+		String sql = "select id as userid, name as username from user where token = ?";
 		JdbcTemplateParam param = new JdbcTemplateParam(sql, new Object[]{token}, new int[]{java.sql.Types.VARCHAR});
-		return baseDao.queryForInt(param);
+		Map<String, Object> result = baseDao.queryForMap(param);
+		return MapToBeanUtil.MapToBean(UserEntity.class, result);
 	}
 	
 	/**
