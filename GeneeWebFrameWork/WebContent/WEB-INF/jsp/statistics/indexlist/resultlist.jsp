@@ -34,7 +34,7 @@
     <body>
         <%@include file="../common/title.jsp" %>
         <div class="container-fluid">
-            <div class="row">
+        	<div class="row">
                 <%@include file="../common/menu.jsp" %>
                 <div class="col-md-10 main">
                     <div class="link-group">
@@ -47,17 +47,17 @@
                                 <ul>
                                     <li>
                                     	<label>仪器名称</label>
-                                    	<input type="text" id="s_eq_name" readonly="true" value=""/>
+                                    	<span id="s_eq_name"></span>
                                     </li>
 									<li>
 										<label>仪器分类</label>
-										<input type="text" id="s_eq_type" readonly="true" value=""/>
+										<span id="s_eq_type"></span>
 									</li>
 									<li>
 										<label>时间范围</label>
-										<input type="text" id="s_dstart" readonly="true" class="time-input" value=""/>
+										<span id="s_dstart" class="time-input"></span>
 										<span style="color: #777;">到</span>
-										<input type="text" readonly="true" id="s_dend" class="time-input" value=""/>
+										<span id="s_end" class="time-input"></span>
 									</li>
                                 </ul>
                             </div><!-- result left -->
@@ -65,15 +65,15 @@
                                 <ul>
                                     <li>
                                     	<label>仪器组织机构</label>
-										<input type="text" readonly="true" id="s_eq_org" value=""/>
+										<span id="s_eq_org"></span>
 									</li>
 									<li>
 										<label>仪器负责人</label>
-										<input type="text" readonly="true" id="s_eq_incharge" value=""/>
+										<span id="s_eq_incharge"></span>
 									</li>
 									<li>
 										<label>仪器联系人</label>
-										<input type="text" readonly="true" id="s_eq_contact" value=""/>
+										<span id="s_eq_contact"></span>
 									</li>
                                 </ul>
                             </div><!-- result middle -->
@@ -81,19 +81,19 @@
                                 <ul>
                                     <li>
                                     	<label>课题组组织机构</label>
-                                    	<input type="text" readonly="true" id="s_lab_org" value=""/>
+                                    	<span id="s_lab_org"></span>
                                     </li>
 									<li>
 										<label>课题组</label>
-										<input type="text" id="s_lab" readonly="true" value=""/>
+										<span id="s_lab"></span>
 									</li>
 									<li>
 										<label>使用者</label>
-										<input type="text" id="s_user" readonly="true" value="">
+										<span id="s_user"></span>
 									</li>
                                 </ul>               
                             </div><!-- result right -->
-                        </div><!-- panel head -->
+                        </div><!-- search-result -->
                         <div class="table-container">
                             <div class="table-left">
                                 <div class="table-left-head" id="table-left-head">
@@ -115,88 +115,80 @@
                     </div><!-- panel self -->
                 </div><!-- main -->
             </div><!-- row -->
-        </div>
+        </div><!-- container-fluid -->
 
 
         <!-- 搜索的弹出框效果 -->
-    <div id="searchProperties" class="modal-self" aria-labelledby="myModalLabel" aria-hidden="true">
-
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" onclick="displaySearchProperties()"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
-              <h4 class="modal-title" id="myModalLabel">请输入搜索内容</h4>
-            </div>
-            <div class="modal-body">
-              <label class="search-title">搜索条件</label>
-                <div style="position: relative;">
-                    <div class="left-list">
-                      <ul>
-                        <li>
-                          <label>仪器名称</label>
-                          <input id="eq_name" name="eq_name" type="text" placeholder="请输入仪器名称">
-                        </li>
-                        <li>
-                          <label>仪器分类</label>
-                          <input id="eq_type" name="eq_type" type="hidden"/>
-                          <input id="eq_type_name" type="hidden"/>
-                          <div id="eq_type_tagselector"></div>
-                        </li>
-                        <li>
-                          <label>仪器组织机构</label>
-                          <input type="hidden" id="eq_org" name="eq_org"/>
-                          <input type="hidden" id="eq_org_name"/>
-						  <div id="eq_org_tagselector"></div>
-                        </li>
-                        <li>
-                          <label>仪器负责人</label>
-                          <input type="text" class="form-control" id="eq_incharge_tokenfield" value="" <% if(loggedRoleId.equals(RoleEnum.INCHARGE.getId()) || loggedRoleId.equals(RoleEnum.LAB_INCHARGE.getId())) {%>disabled="disabled"<%} %> placeholder="可添加5个"/>
-                          <input id="eq_incharge" name="eq_incharge" type="hidden" value="<% if(loggedRoleId.equals(RoleEnum.INCHARGE.getId()) || loggedRoleId.equals(RoleEnum.LAB_INCHARGE.getId())) {%><%=loggedUserId %><%} %>"/>
-                        </li>
-                        <li>
-                          <label>仪器联系人</label>
-                          <input type="text" class="form-control" id="eq_contact_tokenfield" value="" <% if(loggedRoleId.equals(RoleEnum.INCHARGE.getId()) || loggedRoleId.equals(RoleEnum.LAB_INCHARGE.getId())) {%>disabled="disabled"<%} %>  placeholder="可添加5个"/>
-                          <input id="eq_contact" name="eq_contact" type="hidden" value="<% if(loggedRoleId.equals(RoleEnum.INCHARGE.getId()) || loggedRoleId.equals(RoleEnum.LAB_INCHARGE.getId())) {%><%=loggedUserId %><%} %>"/>
-                        </li>
-                      </ul>
-                    </div>
-                    <div class="right-list">
-                      <ul>
-                        <li>
-                          <label>时间范围</label>
-                          <input id="dstart" name="dstart" value=""  readonly="" type="text" placeholder="YYYY-MM-DD">
-                          <span style="color: #d7d7d7;">到</span>
-                          <input id="dend" name="dend" value="" readonly="" type="text" placeholder="YYYY-MM-DD">
-                        </li>
-                        <li>
-                          <label>课题组组织机构</label>
-                          <input id="lab_org" name="lab_org" type="hidden"/>
-                          <input id="lab_org_name" type="hidden"/>
-                          <div id="lab_org_tagselector"></div>
-                        </li>
-                        <li>
-                          <label>课题组</label>
-                          <input type="text" class="form-control" id="lab_tokenfield" value="" <% if(loggedRoleId.equals(RoleEnum.LAB.getId()) || loggedRoleId.equals(RoleEnum.LAB_INCHARGE.getId())) {%>disabled="disabled"<%} %> placeholder="可添加5个"/>
-                        	 <input id="lab" name="lab" type="hidden" value="<% if(loggedRoleId.equals(RoleEnum.LAB.getId()) || loggedRoleId.equals(RoleEnum.LAB_INCHARGE.getId())) {%><%=loggedLabId %><%} %>" />
-                        </li>
-                        <li>
-                          <label>使用者</label>
-                          <input type="text" class="form-control" id="user_tokenfield" value=""  placeholder="可添加5个"/>
-                          <input id="user" name="user" type="hidden" />
-                        </li>
-                      </ul>               
-                    </div>
-                </div>
-              <label style="margin-top: 3em ;">搜索结果</label>
-              <div class="index-grid" id="indexContent">
-              </div><!-- index-grid -->
-            </div>
-
-            <div class="modal-footer">
-              <button type="button" class="link link-primary" id="dosearch" onclick="dosearch()">提交</button>
-              <button type="button" class="link link-default" data-dismiss="modal" onclick="displaySearchProperties()">取消</button>
-            </div>
-        </div>
-      </div>
+	    <div id="searchProperties" class="popup" aria-labelledby="myModalLabel" aria-hidden="true">
+	    	<div class="modal-content panel-content">
+			<label class="search-title">搜索条件</label>
+	        	<div class="search-list">
+	            	<div class="left-list">
+	                	<ul>
+	                    	<li>
+	                          	<label>仪器名称</label>
+	                          	<input id="eq_name" name="eq_name" type="text" placeholder="请输入仪器名称">
+	                        </li>
+	                        <li>
+	                          	<label>仪器分类</label>
+	                          	<input id="eq_type" name="eq_type" type="hidden"/>
+	                          	<input id="eq_type_name" type="hidden"/>
+	                          	<div id="eq_type_tagselector"></div>
+	                        </li>
+	                        <li>
+	                          	<label>仪器组织机构</label>
+	                          	<input type="hidden" id="eq_org" name="eq_org"/>
+	                          	<input type="hidden" id="eq_org_name"/>
+							  	<div id="eq_org_tagselector"></div>
+	                        </li>
+	                        <li>
+	                          	<label>仪器负责人</label>
+	                          	<input type="text" class="form-control" id="eq_incharge_tokenfield" value="" <% if(loggedRoleId.equals(RoleEnum.INCHARGE.getId()) || loggedRoleId.equals(RoleEnum.LAB_INCHARGE.getId())) {%>disabled="disabled"<%} %> placeholder="可添加5个"/>
+	                          	<input id="eq_incharge" name="eq_incharge" type="hidden" value="<% if(loggedRoleId.equals(RoleEnum.INCHARGE.getId()) || loggedRoleId.equals(RoleEnum.LAB_INCHARGE.getId())) {%><%=loggedUserId %><%} %>"/>
+	                        </li>
+	                        <li>
+	                          	<label>仪器联系人</label>
+	                          	<input type="text" class="form-control" id="eq_contact_tokenfield" value="" <% if(loggedRoleId.equals(RoleEnum.INCHARGE.getId()) || loggedRoleId.equals(RoleEnum.LAB_INCHARGE.getId())) {%>disabled="disabled"<%} %>  placeholder="可添加5个"/>
+	                          	<input id="eq_contact" name="eq_contact" type="hidden" value="<% if(loggedRoleId.equals(RoleEnum.INCHARGE.getId()) || loggedRoleId.equals(RoleEnum.LAB_INCHARGE.getId())) {%><%=loggedUserId %><%} %>"/>
+	                        </li>
+						</ul>
+					</div>
+	                <div class="right-list">
+	                 	<ul>
+	                        <li>
+	                          	<label>时间范围</label>
+	                          	<input id="dstart" name="dstart" type="text" class="time-input" placeholder="YYYY-MM-DD">
+	                          	<span style="color: #d7d7d7; font-size: 12px;">到</span>
+	                          	<input id="dend" name="dend" type="text" class="time-input" placeholder="YYYY-MM-DD">
+	                        </li>
+	                        <li>
+	                          	<label>课题组组织机构</label>
+	                          	<input id="lab_org" name="lab_org" type="hidden"/>
+	                          	<input id="lab_org_name" type="hidden"/>
+	                          	<div id="lab_org_tagselector"></div>
+	                        </li>
+	                        <li>
+	                          	<label>课题组</label>
+	                          	<input type="text" class="form-control" id="lab_tokenfield" value="" <% if(loggedRoleId.equals(RoleEnum.LAB.getId()) || loggedRoleId.equals(RoleEnum.LAB_INCHARGE.getId())) {%>disabled="disabled"<%} %> placeholder="可添加5个"/>
+	                        	<input id="lab" name="lab" type="hidden" value="<% if(loggedRoleId.equals(RoleEnum.LAB.getId()) || loggedRoleId.equals(RoleEnum.LAB_INCHARGE.getId())) {%><%=loggedLabId %><%} %>" />
+	                        </li>
+	                        <li>
+	                          	<label>使用者</label>
+	                          	<input type="text" class="form-control" placeholder="可添加5个"/>
+	                          	<input id="user" name="user" type="hidden" />
+	                        </li>
+	                    </ul>               
+	               	</div>
+				</div>
+	           	<label class="search-title">搜索结果</label>
+	            <div class="index-grid" id="indexContent"></div><!-- index-grid -->
+	
+	            <div class="search-link-group">
+	              	<a class="link link-primary link-tab-primary" id="dosearch" onclick="dosearch()">搜索</a>
+	              	<a class="link link-default link-tab-default" data-dismiss="modal" onclick="displaySearchProperties()">取消</a>
+	            </div>
+	        </div>
+	   	</div>
       <input type="hidden" id="pagecode" value="result-list"/>
     </body>
 </html>
