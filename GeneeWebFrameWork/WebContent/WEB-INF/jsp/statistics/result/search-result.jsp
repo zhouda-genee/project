@@ -399,28 +399,35 @@
 		
 		
 		$("#exportBtn").click(function(){
-			
-			var url = webPath + "statistics/result/excel?";
-		/* 	url += "eq_name=" + $("eq_name").val();
-			url += "&eq_type=" + $("#hidEqType").val();
-			url += "&eq_org=" + $("#hidEqOrg").val();
-			url += "&eq_contact=" + $("#hidEqContact").val();
-			url += "&eq_incharge=" + $("#hidEqIncharge").val();
-			url += "&lab_org=" + $("#hidLabOrg").val();
-			url += "&lab=" + $("#hidLab").val();
-			url += "&user=" + $("#hidUser").val(); */
-			url += "dstart=1314806400";
-			url += "&dend=1314892799";
 			var indexId = "";
+			var ckbIndex = $("input:checkbox[name=ckbIndex]:checked");
 			
-			$('input[name="ckbIndex"]:checked').each(function(){    
-				indexId += $(this).val() + ",";
-			});
+			var indexId = "";
+			$.each(ckbIndex, function(index, checkbox) {
+				indexId += checkbox.value + ",";
+            });
+
+			indexId = indexId.substring(0,indexId.length-1);
+			$("#indexId").val(indexId);
 			
-			indexId = indexId.substr(0, indexId.length-1);//除去最后一个逗号
+			$("#searchForm").attr("action", "statistics/result/excel");
+			$("#searchForm").submit();
+		});
+		
+		$("#printBtn").click(function(){
+			var indexId = "";
+			var ckbIndex = $("input:checkbox[name=ckbIndex]:checked");
 			
-			url += "&index_id=" + indexId;
-			window.open(url,"导出");
+			var indexId = "";
+			$.each(ckbIndex, function(index, checkbox) {
+				indexId += checkbox.value + ",";
+            });
+
+			indexId = indexId.substring(0,indexId.length-1);
+			$("#indexId").val(indexId);
+			
+			$("#searchForm").attr("action", "statistics/result/print");
+			$("#searchForm").submit();
 		});
 	
 		$("#dosearch").click(function() {
@@ -430,7 +437,7 @@
 			//填充搜索项
 			fillSearchItem();
 			
-			// 获取查询条件
+			/* // 获取查询条件
 			searchParam = getSearchParam(1, 16);
 			// 创建表头左侧
 			buildTableHeaderLeft();
@@ -452,7 +459,7 @@
 			buildTableFootRight(equipmentIndexCount, indexEntityArray);
 			// 点击搜索后，将滚动到顶部
 			$("#table-right-body").scrollTop(0);
-			$("#table-right-body").scrollLeft(0);
+			$("#table-right-body").scrollLeft(0); */
 			// 收回窗口
 			displaySearchProperties();
 			// 去掉等待效果
@@ -499,8 +506,7 @@
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<div class="link-group">
 					<a href="javascript:displaySearchProperties();" id="searchBtn" class="link link-primary">搜索</a> <a
-						href="#" class="link link-primary right" data-toggle="modal"
-						data-target="#myModal">打印</a> <a href="#" id="exportBtn"
+						data-target="#myModal" class="link link-primary right" id="printBtn">打印</a> <a href="#" id="exportBtn"
 						class="link link-primary right" data-toggle="modal"
 						data-target="#myModal">导出</a>
 				</div>
@@ -570,6 +576,7 @@
 	</div>
 
 	<div id="searchProperties" style="display:none;position: absolute;left:185px;top:100px;" aria-labelledby="myModalLabel" aria-hidden="true">
+          <form id="searchForm" method="post" target="_blank">
           <div class="modal-content">
             <div class="modal-header">
               <h3 class="modal-title" id="myModalLabel">请输入搜索内容</h3>
@@ -581,29 +588,29 @@
                       <ul>
                         <li>
                           <label>仪器名称</label>
-                          <input id="eq_name" type="text" placeholder="请输入仪器名称">
+                          <input id="eq_name" name="eq_name" type="text" placeholder="请输入仪器名称">
                         </li>
                         <li>
                           <label>仪器分类</label>
-                          <input id="eq_type" type="hidden"/>
+                          <input id="eq_type" name="eq_type" type="hidden"/>
                           <input id="eq_type_name" type="hidden"/>
                           <div id="eq_type_tagselector"></div>
                         </li>
                         <li>
                           <label>仪器组织机构</label>
-                          <input type="hidden" id="eq_org"/>
+                          <input type="hidden" id="eq_org" name="eq_org"/>
                           <input type="hidden" id="eq_org_name"/>
 						 <div id="eq_org_tagselector"></div>
                         </li>
                         <li>
                           <label>仪器负责人</label>
                           <input type="text" class="form-control" id="eq_incharge_tokenfield" value=""  placeholder="可添加5个"/>
-                          <input id="eq_incharge" type="hidden"/>
+                          <input id="eq_incharge" name="eq_incharge" type="hidden"/>
                         </li>
                         <li>
                           <label>仪器联系人</label>
                           <input type="text" class="form-control" id="eq_contact_tokenfield" value=""  placeholder="可添加5个"/>
-                          <input id="eq_contact" type="hidden"/>
+                          <input id="eq_contact" name="eq_contact" type="hidden"/>
                         </li>
                       </ul>
                     </div>
@@ -611,57 +618,32 @@
                       <ul>
                         <li>
                           <label>时间范围</label>
-                          <input id="dstart" value="" type="text" placeholder="YYYY-MM-DD">
+                          <input id="dstart" name="dstart" value="" type="text" placeholder="YYYY-MM-DD">
                           <span style="color: #d7d7d7;">到</span>
-                          <input id="dend" value="" type="text" placeholder="YYYY-MM-DD">
+                          <input id="dend" name="dend" value="" type="text" placeholder="YYYY-MM-DD">
                         </li>
                         <li>
                           <label>课题组组织机构</label>
-                          <input id="lab_org" type="hidden"/>
+                          <input id="lab_org" name="lab_org" type="hidden"/>
                           <input id="lab_org_name" type="hidden"/>
                           <div id="lab_org_tagselector"></div>
                         </li>
                         <li>
                           <label>课题组</label>
                           <input type="text" class="form-control" id="lab_tokenfield" value=""  placeholder="可添加5个"/>
-                        	 <input id="lab" type="hidden" />
+                        	 <input id="lab" name="lab" type="hidden" />
                         </li>
                         <li>
                           <label>使用者</label>
                           <input type="text" class="form-control" id="user_tokenfield" value=""  placeholder="可添加5个"/>
-                          <input id="user" type="hidden" />
+                          <input id="user" name="user" type="hidden" />
                         </li>
                       </ul>               
                     </div>
                 </div>
               <label style="margin-top: 3em ;">搜索结果</label>
-              <div class="index-grid" id="indexContent">
-                <div>
-                  <div class="type">
-                    <label>基本信息</label>
-                  </div>
-                  <div class="index">
-                    <input type="checkbox" value="2" index-width="100" index-not-count="1" code="eq_price" class="middle"><label class="middle">仪器价格</label>
-                    <input type="checkbox" value="3" index-width="200" index-not-count="1" code="principal" class="middle"><label class="middle">负责人</label>
-                    <input type="checkbox" value="4" index-width="200" index-not-count="1" code="linkman" class="middle"><label class="middle">联系人</label>
-                    <input type="checkbox" value="5" index-width="80" index-not-count="1" code="innet_dur" class="middle"><label class="middle">入网时长</label>
-                    <input type="checkbox" value="6" index-width="80" index-not-count="0" code="fault_dur" class="middle"><label class="middle">故障时长</label>
-                  </div>
-                </div>
-                <div>
-                  <div class="type">
-                    <label>计费信息</label>
-                  </div>
-                  <div class="index">
-                    <input type="checkbox" value="22" index-width="80" index-not-count="0" code="used_charge" class="middle"><label class="middle">使用收费</label>
-                    <input type="checkbox" value="23" index-width="80" index-not-count="0" code="on_cam_charge" class="middle"><label class="middle">校内收费</label>
-                    <input type="checkbox" value="24" index-width="80" index-not-count="0" code="off_cam_charge" class="middle"><label class="middle">校外收费</label>
-                    <input type="checkbox" value="25" index-width="80" index-not-count="0" code="delegation_charge" class="middle"><label class="middle">委托测试收费</label>
-                    <input type="checkbox" value="26" index-width="80" index-not-count="0" code="earnings_charge" class="middle"><label class="middle">创收金额</label>
-                    <input type="checkbox" value="27" index-width="80" index-not-count="0" code="repair_cost" class="middle"><label class="middle">维修费</label>
-                  </div>
-                </div>
-              </div>
+              <input id="indexId" name="indexId" type="hidden"/>
+              <div class="index-grid" id="indexContent"></div>
             </div>
 
             <div class="modal-footer">
@@ -669,6 +651,7 @@
               <button type="button" class="link link-default" data-dismiss="modal">取消</button>
             </div>
           </div>
+          </form>
          </div>
 </body>
 </html>

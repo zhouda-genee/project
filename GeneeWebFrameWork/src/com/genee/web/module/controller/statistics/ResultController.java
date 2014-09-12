@@ -6,13 +6,19 @@ package com.genee.web.module.controller.statistics;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import net.minidev.json.JSONObject;
 
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,58 +110,17 @@ public class ResultController extends BaseController {
 	 * @param request
 	 * @param response
 	 * @throws IOException
+	 * @throws ParseException 
 	 */
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "excel", method = RequestMethod.GET)
+	@RequestMapping(value = "excel", method = RequestMethod.POST)
 	public void exportExcel(HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
-		String indexId = request.getParameter("index_id");
-		
-		//查询表头
-		List<Map<String, Object>> topHeaders = excelService.getTopHeaders(indexId);
-		List<Map<String, Object>> midHeaders = excelService.getMidHeaders(indexId);
-		
-		//根据条件查询所有指标
-		String servletUrl = PropertiesUtil.getPropertiesValue("application-config.properties", "servlet_url");
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("jsonrpc", "2.0");
-		params.put("id", String.valueOf(System.currentTimeMillis()));
-		params.put("method", "statistics_eqindex");
-		
-		Map<String,Object> param = new HashMap<String, Object>();
-		param.put("eq_name", request.getParameter("eq_name"));
-		param.put("eq_type", request.getParameter("eq_type"));
-		param.put("eq_org", request.getParameter("eq_org"));
-		param.put("eq_contact", request.getParameter("eq_contact"));
-		param.put("eq_incharge", request.getParameter("eq_incharge"));
-		param.put("lab_org", request.getParameter("lab_org"));
-		param.put("lab", request.getParameter("lab"));
-		param.put("user", request.getParameter("user"));
-		param.put("dstart", request.getParameter("dstart"));
-		param.put("dend", request.getParameter("dend"));
-		param.put("sort_name", request.getParameter("sort_name"));
-		param.put("sort", request.getParameter("sort"));
-
-		params.put("params", JsonUtil.getJsonString4JavaPOJO(param));
-		Map<String, String> headers = new HashMap<String, String>();
-		headers.put("Accept", "application/json");
-		
-		String result = HttpClientUtil.post(servletUrl, params, headers);
-		Map<String, Object> resultMap = JsonUtil.getMap4Json(result);
-		List<Map<String, Object>> contents = 
-				JsonUtil.getList4Json(resultMap.get("result").toString(), Map.class);
-		
-		//根据条件查询所有指标的总计
-		Map<String, String> totalParams = new HashMap<String, String>();
-		totalParams.put("jsonrpc", "2.0");
-		totalParams.put("id", String.valueOf(System.currentTimeMillis()));
-		totalParams.put("method", "statistics_eqindex_count");
-		totalParams.put("params", JsonUtil.getJsonString4JavaPOJO(param));
-		
-		String totalResult = HttpClientUtil.post(servletUrl, totalParams, headers);
-		Map<String, Object> totalResultMap = JsonUtil.getMap4Json(totalResult);
-		Map<String, Object> total = 
-				JsonUtil.getMap4Json(totalResultMap.get("result").toString());
+			HttpServletResponse response) throws IOException, ParseException {
+		Map<String, Object> indexMap = this.queryIndex(request);
+		List<Map<String, Object>> topHeaders = (List<Map<String, Object>>) indexMap.get("topHeaders");
+		List<Map<String, Object>> midHeaders = (List<Map<String, Object>>) indexMap.get("midHeaders");
+		List<Map<String, Object>> contents = (List<Map<String, Object>>) indexMap.get("contents");
+		Map<String, Object> total = (Map<String, Object>) indexMap.get("total");
 
 		Workbook workbook = ExcelUtil.buildExcel(ExcelType.XLS, topHeaders,
 				midHeaders, contents, total);
@@ -171,6 +136,38 @@ public class ResultController extends BaseController {
 		out.flush();
 		workbook.write(out);
 		out.close();
+	}
+	
+	/**
+	 * 跳转到打印页面的方法
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 * @throws ParseException 
+	 */
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "print", method = RequestMethod.POST)
+	public String printIndex(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ParseException {
+		return "statistics/result/search-print";
+	}
+	
+	/**
+	 * 获取需要打印的数据的方法
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 * @throws ParseException 
+	 */
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "print/data", method = RequestMethod.POST)
+	public void printData(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ParseException {
+		Map<String, Object> indexMap = this.queryIndex(request);
+		String result = JSONObject.toJSONString(indexMap);
+		outJson(response, result, null);
 	}
 	
 	/**
@@ -383,5 +380,68 @@ public class ResultController extends BaseController {
 		
 		String result = HttpClientUtil.post(servletUrl, params, headers);
 		outJson(response, result, null);
+	}
+	
+	@SuppressWarnings("unchecked")
+	private Map<String, Object> queryIndex(HttpServletRequest request) throws ParseException {
+		String indexId = request.getParameter("indexId");
+		
+		//查询表头
+		List<Map<String, Object>> topHeaders = excelService.getTopHeaders(indexId);
+		List<Map<String, Object>> midHeaders = excelService.getMidHeaders(indexId);
+		
+		//根据条件查询所有指标
+		String servletUrl = PropertiesUtil.getPropertiesValue("application-config.properties", "servlet_url");
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("jsonrpc", "2.0");
+		params.put("id", String.valueOf(System.currentTimeMillis()));
+		params.put("method", "statistics_eqindex");
+		
+		DateFormat dd=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date startDate = dd.parse(request.getParameter("dstart") + " 00:00:00");
+		Date endDate = dd.parse(request.getParameter("dend") + " 23:59:59");
+		long dstart = startDate.getTime()/1000;
+		long dend = endDate.getTime()/1000;
+		
+		Map<String,Object> param = new HashMap<String, Object>();
+		param.put("eq_name", request.getParameter("eq_name"));
+		param.put("eq_type", request.getParameter("eq_type"));
+		param.put("eq_org", request.getParameter("eq_org"));
+		param.put("eq_contact", request.getParameter("eq_contact"));
+		param.put("eq_incharge", request.getParameter("eq_incharge"));
+		param.put("lab_org", request.getParameter("lab_org"));
+		param.put("lab", request.getParameter("lab"));
+		param.put("user", request.getParameter("user"));
+		param.put("dstart", dstart);
+		param.put("dend", dend);
+		param.put("sort_name", request.getParameter("sort_name"));
+		param.put("sort", request.getParameter("sort"));
+
+		params.put("params", JsonUtil.getJsonString4JavaPOJO(param));
+		Map<String, String> headers = new HashMap<String, String>();
+		headers.put("Accept", "application/json");
+		
+		String result = HttpClientUtil.post(servletUrl, params, headers);
+		Map<String, Object> resultMap = JsonUtil.getMap4Json(result);
+		List<Map<String, Object>> contents = 
+				JsonUtil.getList4Json(resultMap.get("result").toString(), Map.class);
+		
+		//根据条件查询所有指标的总计
+		Map<String, String> totalParams = new HashMap<String, String>();
+		totalParams.put("jsonrpc", "2.0");
+		totalParams.put("id", String.valueOf(System.currentTimeMillis()));
+		totalParams.put("method", "statistics_eqindex_count");
+		totalParams.put("params", JsonUtil.getJsonString4JavaPOJO(param));
+		
+		String totalResult = HttpClientUtil.post(servletUrl, totalParams, headers);
+		Map<String, Object> totalResultMap = JsonUtil.getMap4Json(totalResult);
+		Map<String, Object> total = 
+				JsonUtil.getMap4Json(totalResultMap.get("result").toString());
+		Map<String, Object> indexMap = new HashMap<String, Object>();
+		indexMap.put("topHeaders", topHeaders);
+		indexMap.put("midHeaders", midHeaders);
+		indexMap.put("contents", contents);
+		indexMap.put("total", total);
+		return indexMap;
 	}
 }
