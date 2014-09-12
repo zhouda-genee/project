@@ -277,6 +277,9 @@ function buildTableHeaderRight() {
 function buildTableBodyRight(equipmentIndexPageSupport, indexEntityArray,
 		isEmpty) {
 	var equipmentIndexDataArray = equipmentIndexPageSupport.indexData;
+	if (!equipmentIndexDataArray) {
+		return;
+	}
 	var html = "";
 	var width = 0;
 	for (var i = 0; i < equipmentIndexDataArray.length; i++) {
@@ -317,6 +320,9 @@ function buildTableBodyRight(equipmentIndexPageSupport, indexEntityArray,
 // 创建统计列表左侧体
 function buildTableBodyLeft(equipmentIndexPageSupport, isEmpty) {
 	var equipmentIndexDataArray = equipmentIndexPageSupport.indexData;
+	if (!equipmentIndexDataArray){
+		return;
+	}
 	var html = "";
 	for (var i = 0; i < equipmentIndexDataArray.length; i++) {
 		var equipmentIndexData = equipmentIndexDataArray[i];

@@ -4,6 +4,10 @@
 <head>
 	<!-- 公用base -->
 	<%@include file="../common/base.jsp" %>
+	<link href="css/bootstrap/bootstrap-tokenfield.css" rel="stylesheet"/>
+	<link href="css/bootstrap/tokenfield-typeahead.css" rel="stylesheet"/>
+	<link href="css/bootstrap/bootstrap-datepicker.css" rel="stylesheet"/>
+	<link href="css/tag.css" rel="stylesheet"/>
 	<!-- 自己的js文件 -->
 	<script src="js/statistics/eqindex-table.js"></script>
 	<script type="text/javascript" src="js/bootstrap/bootstrap-tokenfield.js"></script>
@@ -19,8 +23,7 @@
 		};
 
 		$("label").tooltip(options);
-	});
-	$(document).ready(function() {
+		
 		var contactPath = webPath + 'statistics/result/contact';
 		var inchargePath = webPath + 'statistics/result/incharge';
 		var labPath = webPath + 'statistics/result/lab';

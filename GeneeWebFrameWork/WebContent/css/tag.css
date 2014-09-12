@@ -12,8 +12,8 @@
 
 .tag_selector .tag_selector_link {
 	display: inline-block;
-	background: url(../img/tagselector/tag_selector_sep.png) 100% 50% no-repeat;
-	_background-image: url(../img/tagselector/tag_selector_sep.gif);
+	background: url(../icon/tagselector/tag_selector_sep.png) 100% 50% no-repeat;
+	_background-image: url(../icon/tagselector/tag_selector_sep.gif);
 	padding: 0 9px 0 0;
 	padding-right: 10px\9;
 	color: #fff;
@@ -41,8 +41,8 @@
 
 .tag_selector .tag_selector_more {
 	cursor: pointer;
-	background-image: url(../img/tagselector/tag_selector_more.png);
-	_background-image: url(../img/tagselector/tag_selector_more.gif);
+	background-image: url(../icon/tagselector/tag_selector_more.png);
+	_background-image: url(../icon/tagselector/tag_selector_more.gif);
 	width: 20px;
 	/* 多余的改动 */
 	/* position: relative; */
@@ -57,8 +57,8 @@
 }
 
 .tag_selector .tag_selector_last {
-	background-image: url(../img/tagselector/tag_selector_last.png);
-	_background-image: url(../img/tagselector/tag_selector_last.gif);
+	background-image: url(../icon/tagselector/tag_selector_last.png);
+	_background-image: url(../icon/tagselector/tag_selector_last.gif);
 }
 
 .tag_selector_menu {
@@ -109,8 +109,8 @@
 }
 
 .flag_more {
-	background: url(../img/tagselector/collapse.png) no-repeat right center;
-	_background-image: url(../img/tagselector/collapse.gif);
+	background: url(../icon/tagselector/collapse.png) no-repeat right center;
+	_background-image: url(../icon/tagselector/collapse.gif);
 }
 
 .tag_selector_menu .tag_item_active td {
