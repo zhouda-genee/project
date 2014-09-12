@@ -26,7 +26,7 @@ import com.genee.web.module.service.statistics.IndexService;
  * @author yanan.che 2014年8月13日
  */
 @Controller
-@RequestMapping("statistics/indexconfig/")
+@RequestMapping("statistics")
 public class IndexController extends BaseController {
 	@Autowired
 	private IndexService iIndexService;
@@ -50,7 +50,7 @@ public class IndexController extends BaseController {
 	 * @param roleId
 	 * @return
 	 */	
-	@RequestMapping(value = "editrole", method=RequestMethod.POST) 
+	@RequestMapping(value = "editindex", method=RequestMethod.POST) 
 	public void editRole(HttpServletRequest request, HttpServletResponse response) {
 		String roleId = request.getParameter("roleId");
 		int rId = Integer.parseInt(roleId);
@@ -92,7 +92,7 @@ public class IndexController extends BaseController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value = "roles", method = RequestMethod.GET)
+	@RequestMapping(value = "indexconfig", method = RequestMethod.GET)
 	public String test(HttpServletRequest request, HttpServletResponse response){
 		return "statistics/indexconfig/roleindex";
 	}

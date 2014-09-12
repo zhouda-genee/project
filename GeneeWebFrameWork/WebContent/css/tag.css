@@ -1,0 +1,123 @@
+.text_like {
+    padding: 3px;
+    border: 1px solid #CCC;
+    background-color: #FFF;
+    margin: 0px;
+    color: #000;
+}
+.tag_selector {
+	display: inline-block;
+	padding: 1px;
+}
+
+.tag_selector .tag_selector_link {
+	display: inline-block;
+	background: url(../img/tagselector/tag_selector_sep.png) 100% 50% no-repeat;
+	_background-image: url(../img/tagselector/tag_selector_sep.gif);
+	padding: 0 9px 0 0;
+	padding-right: 10px\9;
+	color: #fff;
+	height: 20px;
+	line-height: 20px;
+	vertical-align: top;
+	_width:0;
+}
+
+.tag_selector .tag_selector_link a {
+	color: #fff;
+	background-color: #7498E0; 
+	display: block;
+	text-decoration: none !important;
+	white-space: nowrap;
+	line-height: 16px;
+	height: 16px;
+	padding: 3px 6px 1px;
+	_padding: 1px 6px 3px;
+}
+
+.tag_selector .tag_selector_first a {
+	border-radius: 2px 0 0 2px;
+}
+
+.tag_selector .tag_selector_more {
+	cursor: pointer;
+	background-image: url(../img/tagselector/tag_selector_more.png);
+	_background-image: url(../img/tagselector/tag_selector_more.gif);
+	width: 20px;
+	/* 多余的改动 */
+	/* position: relative; */
+}
+
+
+
+.tag_selector .tag_selector_more.active,
+.tag_selector .tag_selector_more:hover
+{
+	background-color: #fff !important;
+}
+
+.tag_selector .tag_selector_last {
+	background-image: url(../img/tagselector/tag_selector_last.png);
+	_background-image: url(../img/tagselector/tag_selector_last.gif);
+}
+
+.tag_selector_menu {
+	position:absolute;
+	z-index: 100;
+	display: block;
+	background-color: #fff;
+	color: #000;
+	border:1px solid #999\9;
+	box-shadow:rgba(0,0,0,0.5) 0 4px 8px;
+	filter: progid:DXImageTransform.Microsoft.Shadow (Color=#000000, Direction=135, Strength=2);
+}
+
+.tag_selector_menu .loading {
+		width: 128px;
+		height: 22px;
+	}
+
+.tag_selector_menu .tag_item {
+	display: block;
+	clear:both;
+	cursor: pointer;
+}
+
+.tag_selector_menu .tag_item td {
+	vertical-align: middle;
+}
+
+.tag_selector_menu .tag_item .text {
+	padding: 2px 10px 2px 5px;
+	min-width : 80px;
+	_width: 80px;
+	white-space: nowrap;
+}
+
+.tag_selector_menu .tag_item .number {
+	display: block;
+	padding: 1px 4px;
+	color: #999;
+	border-radius:2px;
+	font-size: 10px;
+	font-weight: bold;
+}
+
+.tag_selector_menu .tag_item .flag {
+	width: 8px;
+	height: 8px;
+}
+
+.flag_more {
+	background: url(../img/tagselector/collapse.png) no-repeat right center;
+	_background-image: url(../img/tagselector/collapse.gif);
+}
+
+.tag_selector_menu .tag_item_active td {
+	background-color: #7498E0;
+	color: #fff;
+}
+
+.tag_selector_menu .tag_item_active .number {
+	color: #ccc;
+}

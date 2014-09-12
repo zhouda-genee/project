@@ -62,7 +62,7 @@ public class UserDao {
 	public List<BaseEntity> queryUserInRecord(String name) {
 		String sql = "select distinct u.id, u.name from eq_record er "
 				+ "inner join user u on er.user_id = u.id where u.name like ? "
-				+ "order by u.id";
+				+ "order by u.id limit 0, 10";
 		JdbcTemplateParam param = new JdbcTemplateParam(sql, new Object[] { "%"
 				+ name + "%" }, new int[] { java.sql.Types.VARCHAR });
 		return MapToBeanUtil.MapToBean(BaseEntity.class,
@@ -86,7 +86,7 @@ public class UserDao {
 	private List<BaseEntity> queryUserByType(String name, String type) {
 		String sql = "select distinct u.id, u.name from _r_user_equipment ue "
 				+ "inner join user u on ue.id1 = u.id where ue.type = ? and u.name like ? "
-				+ "order by u.id";
+				+ "order by u.id limit 0, 10";
 		JdbcTemplateParam param = new JdbcTemplateParam(sql, new Object[] {
 				type, "%" + name + "%" }, new int[] { java.sql.Types.VARCHAR,
 				java.sql.Types.VARCHAR });

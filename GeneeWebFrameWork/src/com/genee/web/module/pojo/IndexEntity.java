@@ -24,6 +24,18 @@ public class IndexEntity implements Serializable {
 
 	// 指标代码
 	private String sCode;
+	
+	//位置
+	private String sLocation;
+	
+	//描述
+	private String sDescription;
+	
+	//宽度
+	private String sWidth;
+
+	//是否统计
+	private String sNotCount;
 
 	// 指标实现类
 	private String sClassName;
@@ -112,4 +124,35 @@ public class IndexEntity implements Serializable {
 		this.sOnOff = sOnOff;
 	}
 
+	public String getsLocation() {
+		return sLocation;
+	}
+
+	public void setsLocation(String sLocation) {
+		this.sLocation = sLocation;
+	}
+
+	public String getsDescription() {
+		return sDescription;
+	}
+
+	public void setsDescription(String sDescription) {
+		this.sDescription = sDescription;
+	}
+
+	public String getsWidth() {
+		return sWidth;
+	}
+
+	public void setsWidth(String sWidth) {
+		this.sWidth = sWidth;
+	}
+
+	public String getsNotCount() {
+		return sNotCount;
+	}
+
+	public void setsNotCount(String sNotCount) {
+		this.sNotCount = sNotCount;
+	}
 }
