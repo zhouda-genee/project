@@ -1,3 +1,4 @@
+<%@page import="com.genee.web.module.enums.RoleEnum"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="zh-cn">
@@ -148,13 +149,13 @@
                         </li>
                         <li>
                           <label>仪器负责人</label>
-                          <input type="text" class="form-control" id="eq_incharge_tokenfield" value="" <% if(loggedRoleId.equals("3")) {%>disabled="disabled"<%} %> placeholder="可添加5个"/>
-                          <input id="eq_incharge" name="eq_incharge" type="hidden" value="<% if(loggedRoleId.equals("3")) {%><%=loggedUserId %><%} %>"/>
+                          <input type="text" class="form-control" id="eq_incharge_tokenfield" value="" <% if(loggedRoleId.equals(RoleEnum.INCHARGE.getId()) || loggedRoleId.equals(RoleEnum.LAB_INCHARGE.getId())) {%>disabled="disabled"<%} %> placeholder="可添加5个"/>
+                          <input id="eq_incharge" name="eq_incharge" type="hidden" value="<% if(loggedRoleId.equals(RoleEnum.INCHARGE.getId()) || loggedRoleId.equals(RoleEnum.LAB_INCHARGE.getId())) {%><%=loggedUserId %><%} %>"/>
                         </li>
                         <li>
                           <label>仪器联系人</label>
-                          <input type="text" class="form-control" id="eq_contact_tokenfield" value="" <% if(loggedRoleId.equals("3")) {%>disabled="disabled"<%} %>  placeholder="可添加5个"/>
-                          <input id="eq_contact" name="eq_contact" type="hidden" value="<% if(loggedRoleId.equals("3")) {%><%=loggedUserId %><%} %>"/>
+                          <input type="text" class="form-control" id="eq_contact_tokenfield" value="" <% if(loggedRoleId.equals(RoleEnum.INCHARGE.getId()) || loggedRoleId.equals(RoleEnum.LAB_INCHARGE.getId())) {%>disabled="disabled"<%} %>  placeholder="可添加5个"/>
+                          <input id="eq_contact" name="eq_contact" type="hidden" value="<% if(loggedRoleId.equals(RoleEnum.INCHARGE.getId()) || loggedRoleId.equals(RoleEnum.LAB_INCHARGE.getId())) {%><%=loggedUserId %><%} %>"/>
                         </li>
                       </ul>
                     </div>
@@ -174,8 +175,8 @@
                         </li>
                         <li>
                           <label>课题组</label>
-                          <input type="text" class="form-control" id="lab_tokenfield" value="" <% if(loggedRoleId.equals("2")) {%>disabled="disabled"<%} %> placeholder="可添加5个"/>
-                        	 <input id="lab" name="lab" type="hidden" value="<% if(loggedRoleId.equals("3")) {%><%=loggedLabId %><%} %>" />
+                          <input type="text" class="form-control" id="lab_tokenfield" value="" <% if(loggedRoleId.equals(RoleEnum.LAB.getId()) || loggedRoleId.equals(RoleEnum.LAB_INCHARGE.getId())) {%>disabled="disabled"<%} %> placeholder="可添加5个"/>
+                        	 <input id="lab" name="lab" type="hidden" value="<% if(loggedRoleId.equals(RoleEnum.LAB.getId()) || loggedRoleId.equals(RoleEnum.LAB_INCHARGE.getId())) {%><%=loggedLabId %><%} %>" />
                         </li>
                         <li>
                           <label>使用者</label>
