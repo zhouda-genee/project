@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.genee.web.module.pojo.IndexEntity;
 import com.genee.web.module.pojo.IndexTypeEntity;
+import com.genee.web.module.pojo.UserEntity;
 
 public interface UserService {
 	
@@ -27,7 +28,7 @@ public interface UserService {
 	 * @return int
 	 * @throws
 	 */
-	public int queryUserByToken(String token);
+	public UserEntity queryUserByToken(String token);
 
 	/**
 	 * 

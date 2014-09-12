@@ -196,5 +196,6 @@
             </div>
         </div>
       </div>
+      <input type="hidden" id="pagecode" value="result-list"/>
     </body>
 </html>

@@ -14,7 +14,7 @@
 		</li>
 	</ul>
 	<ul class="nav nav-sidebar">
-		<li><a href="statistics/result/search">统计列表</a></li>
+		<li id="result-list"><a href="statistics/result/search">统计列表</a></li>
 		<!-- <li><a href="#">统计图表</a></li>
 		<li><a href="#">绩效评估</a></li> -->
 		<li><a href="statistics/result/search">权限设置</a></li>
@@ -22,12 +22,8 @@
 </div>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("#menu > ul:last > li:first").addClass("active");
-		$("#menu > ul:last").children("li").click(function(){
-			var li = $(this);
-			li.siblings("li").removeClass("active");
-			li.addClass("active");
-		});
+		$("#menu > ul:last > li").removeClass("active");
+		$("#"+$("#pagecode").val()).addClass("active");
 	});
 </script>
 <!-- sidebar -->

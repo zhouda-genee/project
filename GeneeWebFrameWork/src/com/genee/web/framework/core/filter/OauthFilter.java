@@ -30,6 +30,8 @@ import com.genee.web.framework.utils.http.HttpClientUtil;
 import com.genee.web.framework.utils.prop.PropertiesUtil;
 import com.genee.web.framework.utils.stringutil.StringUtil;
 import com.genee.web.module.constants.SessionAttributeType;
+import com.genee.web.module.enums.RoleEnum;
+import com.genee.web.module.pojo.UserEntity;
 import com.genee.web.module.service.statistics.UserService;
 
 @WebFilter(description = "oauth过滤器", urlPatterns = { "/abc" })
@@ -107,10 +109,12 @@ public class OauthFilter extends HttpServlet implements Filter {
 						param.put(SessionAttributeType.TOKEN, token);
 						// 获取用户角色
 						UserService userService = (UserService) SpringContext.getBean("userservice");
-						int userId = userService.queryUserByToken(token);
-						param.put(SessionAttributeType.USER_ID, String.valueOf(userId));
+						UserEntity userEntity = userService.queryUserByToken(token);
+						param.put(SessionAttributeType.USER_ID, String.valueOf(userEntity.getUserId()));
+						param.put(SessionAttributeType.USER_NAME, userEntity.getUserName());
 						
-						String role = userService.queryRoleByUser(userId);
+						String role = userService.queryRoleByUser(userEntity.getUserId());
+						
 						if (StringUtils.isEmpty(role)){
 							// 没有角色跳回请求者页面
 							responseSendRedirect(httpServletResponse, backUrl);
@@ -118,9 +122,12 @@ public class OauthFilter extends HttpServlet implements Filter {
 						}
 						// 如果包含课题组PI,则去查找该课题组PI对应的课题组
 						if (role.equals("2") || role.equals("2,3")){
-							int labId = userService.queryLabByUser(userId);
+							int labId = userService.queryLabByUser(userEntity.getUserId());
 							param.put(SessionAttributeType.LAB_ID, String.valueOf(labId));
 						}
+						// 获取用户角色名称
+						String roleName = RoleEnum.getName(role);
+						param.put(SessionAttributeType.ROLE_NAME, roleName);
 						param.put(SessionAttributeType.ROLE, role);
 						session.setAttribute(SessionAttributeType.PARAM_USER, param);
 					} else {

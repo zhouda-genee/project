@@ -15,6 +15,7 @@ import com.genee.web.module.pojo.IndexEntity;
 import com.genee.web.module.pojo.IndexTypeEntity;
 import com.genee.web.module.pojo.LabEntity;
 import com.genee.web.module.pojo.RoleInfoEntity;
+import com.genee.web.module.pojo.UserEntity;
 
 @Service("userservice")
 public class UserServiceImpl implements UserService {
@@ -68,7 +69,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int queryUserByToken(String token) {
+	public UserEntity queryUserByToken(String token) {
 		return roleDao.queryUserIdByToken(token);
 	}
 
