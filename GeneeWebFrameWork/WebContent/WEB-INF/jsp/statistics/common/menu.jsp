@@ -4,11 +4,8 @@
 	<ul class="nav nav-sidebar">
 		<li>
 			<div class="avatar">
-				<div class="left">
-					<a href="#"><img src="" alt="头像" class="img-responsive"></a>
-				</div>
 				<div class="left avatar-intro">
-					<a href="#">用户名</a><br> <a href="#" class="role">用户级别</a>
+					<a href="#"><%=loggedUserName %></a><br> <a href="#" class="role"><%=loggedRoleName %></a>
 				</div>
 			</div>
 		</li>

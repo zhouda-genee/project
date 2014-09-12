@@ -56,13 +56,14 @@ public class ResultController extends BaseController {
 	private ExcelService excelService;
 
 	@RequestMapping(value = "search", method = RequestMethod.GET)
-	public String execute(HttpServletRequest request,
-			HttpServletResponse response) {
-//		Map<String, String> sessionMap = new HashMap<String, String>();
-//		sessionMap.put(SessionAttributeType.USER_ID, "1");
-//		sessionMap.put(SessionAttributeType.ROLE, "2,3");
+	public String execute(HttpServletRequest request, HttpServletResponse response) {
+		Map<String, String> sessionMap = new HashMap<String, String>();
+		sessionMap.put(SessionAttributeType.USER_ID, "1");
+		sessionMap.put(SessionAttributeType.USER_NAME, "技术支持");
+		sessionMap.put(SessionAttributeType.ROLE, "1");
+		sessionMap.put(SessionAttributeType.ROLE_NAME, "校级管理员");
 //		sessionMap.put(SessionAttributeType.LAB_ID, "2");
-//		request.getSession().setAttribute(SessionAttributeType.PARAM_USER, sessionMap);
+		request.getSession().setAttribute(SessionAttributeType.PARAM_USER, sessionMap);
 		return "statistics/indexlist/resultlist";
 	}
 
@@ -77,12 +78,10 @@ public class ResultController extends BaseController {
 	public void getRoleIndexType(HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		// Map<String, Object> sessionMap = (Map<String, Object>)
-		// request.getSession().getAttribute(SessionAttributeType.PARAM_USER);
-		// String roleId = sessionMap.get(SessionAttributeType.ROLE).toString();
-		String roleId = "1";
-		List<IndexTypeEntity> entities = userService
-				.queryIndexTypeEntityByRole(roleId);
+		Map<String, Object> sessionMap = (Map<String, Object>)
+		request.getSession().getAttribute(SessionAttributeType.PARAM_USER);
+		String roleId = sessionMap.get(SessionAttributeType.ROLE).toString();
+		List<IndexTypeEntity> entities = userService.queryIndexTypeEntityByRole(roleId);
 		result.put("result", entities);
 		result.put("request-status", "success");
 		outJson(response, result, null);
@@ -96,13 +95,11 @@ public class ResultController extends BaseController {
 	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "roleindex", method = RequestMethod.GET)
-	public void getRoleIndex(HttpServletRequest request,
-			HttpServletResponse response) {
+	public void getRoleIndex(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		// Map<String, Object> sessionMap = (Map<String, Object>)
-		// request.getSession().getAttribute(SessionAttributeType.PARAM_USER);
-		// String roleId = sessionMap.get(SessionAttributeType.ROLE).toString();
-		String roleId = "1";
+		Map<String, Object> sessionMap = (Map<String, Object>)
+		request.getSession().getAttribute(SessionAttributeType.PARAM_USER);
+		String roleId = sessionMap.get(SessionAttributeType.ROLE).toString();
 		List<IndexEntity> entities = userService.queryIndexEntityByRole(roleId);
 		result.put("result", entities);
 		result.put("request-status", "success");
