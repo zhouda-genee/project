@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="session.jsp" %>
 <!-- 左侧菜单 -->
 <div id="menu" class="col-md-2 sidebar">
 	<ul class="nav nav-sidebar">

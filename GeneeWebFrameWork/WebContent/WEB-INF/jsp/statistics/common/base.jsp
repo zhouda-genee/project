@@ -4,7 +4,6 @@
 	String webPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort() + this.getServletContext().getContextPath() + "/" ;
 	String servletPath = PropertiesUtil.getPropertiesValue("application-config.properties", "servlet_url");
 %>
-<%@ include file="session.jsp" %>
 <base href="<%=webPath %>" />
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
