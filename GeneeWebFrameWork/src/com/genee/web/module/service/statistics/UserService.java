@@ -6,6 +6,28 @@ import com.genee.web.module.pojo.IndexEntity;
 import com.genee.web.module.pojo.IndexTypeEntity;
 
 public interface UserService {
+	
+	/**
+	 * 
+	 * @Title: queryLabByUser 
+	 * @Description: 根据课题组负责人查找课题组 
+	 * @param @param userId
+	 * @param @return
+	 * @return int
+	 * @throws
+	 */
+	public int queryLabByUser(int userId);
+	
+	/**
+	 * 
+	 * @Title: queryUserByToken 
+	 * @Description: 根据token查找用户ID
+	 * @param @param token
+	 * @param @return
+	 * @return int
+	 * @throws
+	 */
+	public int queryUserByToken(String token);
 
 	/**
 	 * 
@@ -18,7 +40,7 @@ public interface UserService {
 	 * @return String
 	 * @throws
 	 */
-	public String queryRoleByUser(String token);
+	public String queryRoleByUser(int userId);
 
 	/**
 	 * 

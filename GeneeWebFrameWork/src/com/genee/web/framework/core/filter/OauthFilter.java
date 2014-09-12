@@ -103,15 +103,23 @@ public class OauthFilter extends HttpServlet implements Filter {
 					if (userObject.get(PARAM_ERROR) != null){
 						// 获取用户信息成功，将结果存入session
 						String token = userObject.optString("result");
-						Map<String, String> param = new HashMap<String, String>(2);
+						Map<String, String> param = new HashMap<String, String>(4);
 						param.put(SessionAttributeType.TOKEN, token);
 						// 获取用户角色
 						UserService userService = (UserService) SpringContext.getBean("userservice");
-						String role = userService.queryRoleByUser(token);
+						int userId = userService.queryUserByToken(token);
+						param.put(SessionAttributeType.USER_ID, String.valueOf(userId));
+						
+						String role = userService.queryRoleByUser(userId);
 						if (StringUtils.isEmpty(role)){
 							// 没有角色跳回请求者页面
 							responseSendRedirect(httpServletResponse, backUrl);
 							return;
+						}
+						// 如果包含课题组PI,则去查找该课题组PI对应的课题组
+						if (role.equals("2") || role.equals("2,3")){
+							int labId = userService.queryLabByUser(userId);
+							param.put(SessionAttributeType.LAB_ID, String.valueOf(labId));
 						}
 						param.put(SessionAttributeType.ROLE, role);
 						session.setAttribute(SessionAttributeType.PARAM_USER, param);

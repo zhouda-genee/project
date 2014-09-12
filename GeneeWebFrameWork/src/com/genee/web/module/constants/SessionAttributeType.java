@@ -9,5 +9,7 @@ public class SessionAttributeType {
 	public static final String ROLE = "role";
 	
 	public static final String PARAM_USER = "user";
+	
+	public static final String LAB_ID = "labid";
 
 }
