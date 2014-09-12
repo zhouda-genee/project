@@ -446,37 +446,52 @@
                         <div class="search-result">
                             <div class="result-left">
                                 <ul>
-                                    <li><label>仪器名称</label> <input type="text" id="s_eq_name" readonly="true"
-										value=""></li>
-									<li><label>仪器分类</label> <input type="text" id="s_eq_type" readonly="true"
-										value=""></li>
-									<li><label>时间范围</label>
+                                    <li>
+                                    	<label>仪器名称</label>
+                                    	<input type="text" id="s_eq_name" readonly="true" value=""/>
+                                    </li>
+									<li>
+										<label>仪器分类</label>
+										<input type="text" id="s_eq_type" readonly="true" value=""/>
+									</li>
+									<li>
+										<label>时间范围</label>
 										<input type="text" id="s_dstart" readonly="true" class="time-input" value=""/>
 										<span style="color: #777;">到</span>
-										<input type="text" readonly="true" 
-										 id="s_dend" class="time-input" value=""/>
+										<input type="text" readonly="true" id="s_dend" class="time-input" value=""/>
 									</li>
                                 </ul>
                             </div><!-- result left -->
                             <div class="result-middle">
                                 <ul>
-                                    <li><label>仪器组织机构</label>
-									<input type="text"
-										readonly="true" id="s_eq_org" value=""></li>
-									<li><label>仪器负责人</label> <input type="text"
-										readonly="true" id="s_eq_incharge" value=""></li>
-									<li><label>仪器联系人</label> <input type="text"
-										readonly="true" id="s_eq_contact" value=""></li>
+                                    <li>
+                                    	<label>仪器组织机构</label>
+										<input type="text" readonly="true" id="s_eq_org" value=""/>
+									</li>
+									<li>
+										<label>仪器负责人</label>
+										<input type="text" readonly="true" id="s_eq_incharge" value=""/>
+									</li>
+									<li>
+										<label>仪器联系人</label>
+										<input type="text" readonly="true" id="s_eq_contact" value=""/>
+									</li>
                                 </ul>
                             </div><!-- result middle -->
                             <div class="result-right">
                                 <ul>
-                                    <li><label>课题组组织机构</label> <input type="text"
-										readonly="true" id="s_lab_org" value=""></li>
-									<li><label>课题组</label> <input type="text" id="s_lab" readonly="true"
-										value=""></li>
-									<li><label>使用者</label> <input type="text" id="s_user" readonly="true"
-										value=""></li>
+                                    <li>
+                                    	<label>课题组组织机构</label>
+                                    	<input type="text" readonly="true" id="s_lab_org" value=""/>
+                                    </li>
+									<li>
+										<label>课题组</label>
+										<input type="text" id="s_lab" readonly="true" value=""/>
+									</li>
+									<li>
+										<label>使用者</label>
+										<input type="text" id="s_user" readonly="true" value="">
+									</li>
                                 </ul>               
                             </div><!-- result right -->
                         </div><!-- panel head -->
