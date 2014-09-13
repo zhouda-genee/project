@@ -307,11 +307,18 @@ input::-webkit-input-placeholder {
 	padding-left: 22px;
 	padding-right: 22px;
 }
-.table-border-diy {
-	width: 1px;
+.table-border-diy-up {
+	display: none;
 	height: 3px;
 	background-color: #b7b7b7;
 }
+
+.table-border-diy-down {
+	display: none;
+	height: 3px;
+	background-color: #b7b7b7;
+}
+
 .table-container {
 	width: 100%;
 }

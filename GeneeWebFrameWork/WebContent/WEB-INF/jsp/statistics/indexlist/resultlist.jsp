@@ -97,20 +97,20 @@
                             <div class="table-left">
                                 <div class="table-left-head" id="table-left-head">
                                 </div>
-								<div class="table-border-diy"></div>
+								<div class="table-border-diy-up"></div>
                                 <div class="table-left-body" id="table-left-body">    
                                 </div>
- 								<div class="table-border-diy"></div>
+ 								<div class="table-border-diy-down"></div>
                                 <div class="table-left-foot" id="table-left-foot">
                                 </div>
                             </div><!-- table left -->
                             <div class="table-right">
                                 <div class="table-right-head" id="table-right-head">
                                 </div>
-								<div class="table-border-diy"></div>
+								<div class="table-border-diy-up"></div>
                                 <div class="table-right-body" id="table-right-body"  onscroll="scorlling();">
                                 </div>
- 								<div class="table-border-diy"></div>
+ 								<div class="table-border-diy-down"></div>
                                 <div class="table-right-foot" id="table-right-foot">
                                 </div>
                             </div><!-- table right -->
