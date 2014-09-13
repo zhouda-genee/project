@@ -549,25 +549,25 @@ table.data-table thead .sorting-desc {
 	float:left;
 	width: 49%;
 }
+
 .right-list	{
 	margin-left: 2%;
 	float:left;
 	width: 49%;
 }
-.index-item {
-	display: inline-block;
-}
-.search-list ul {
-	-webkit-padding-start: 0;
-	-moz-padding-start:0;
-}
-.search-list li {
-	height:36px;
-	list-style: none;
+
+.list-item {
+	min-height:36px;
+	height:auto;
 	border-bottom: 2px solid #dadada;
 	vertical-align: middle;
 	margin-top: 10px;
 }
+
+.index-item {
+	display: inline-block;
+}
+
 .search-list label {
 	margin-bottom: 0;
 	line-height:30px;

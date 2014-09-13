@@ -415,8 +415,18 @@ function interleaveChangeColor(object) {
 
 function dosearch() {
 	//校验
+	var valid = false;
 	if ($("#dstart").val() == "" || $("dend").val() == "") {
 		$('#alert-warning').removeClass('hide');
+		valid = true;
+	}
+	
+	if ($("input[name=ckbIndex]:checked").length == 0) {
+		$('#alert-index').removeClass('hide');
+		valid = true;
+	}
+	
+	if (valid) {
 		return;
 	}
 	
