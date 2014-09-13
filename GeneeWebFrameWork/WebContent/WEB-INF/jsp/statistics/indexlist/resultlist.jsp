@@ -125,6 +125,10 @@
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" onclick="displaySearchProperties()"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
               <h4 class="modal-title" id="myModalLabel">请输入搜索内容</h4>
+              <div id="alert-warning" class="alert alert-warning fade hide in">
+					<button type="button" class="close">&times;</button>
+			  		时间范围不允许为空
+			  </div>
             </div>
             <div class="modal-body">
               <label class="search-title">搜索条件</label>
