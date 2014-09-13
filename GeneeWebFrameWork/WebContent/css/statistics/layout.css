@@ -558,6 +558,7 @@ table.data-table thead .sorting-desc {
 }
 
 .index-item {
+	margin-top:25px;
 	display: inline-block;
 }
 
