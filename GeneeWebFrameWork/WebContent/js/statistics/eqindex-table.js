@@ -218,6 +218,8 @@ function buildTableHeaderLeft() {
 	var html = "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"data-table table-condensed\">" +
 			"<thead><tr class=\"index-name\"><th name=\"eq_name\" style=\"height: 66px;\" rowspan=\"2\" onclick=\"sortHeader(this)\">" +
 			"<label data-toggle=\"tooltip\ data-placement=\"top\ title=\"abc\">仪器名称</label><span class=\"sorting\"></span></th></tr></thead></table>";
+	$(".table-left > .table-border-diy-up").css("width","160px");
+	$(".table-left > .table-border-diy-down").css("width","160px");
 	$("#table-left-head").empty().append(html);
 }
 
@@ -272,6 +274,9 @@ function buildTableHeaderRight() {
 			+ "px\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"data-table table-condensed\"><thead>"
 			+ html + "</thead></table>";
 	$("#table-right-head").empty().append(html);
+	
+	$(".table-right > .table-border-diy-up").css("width", width + "px");
+	$(".table-right > .table-border-diy-down").css("width", width + "px");
 
 	return indexEntityArray;
 }
@@ -316,6 +321,12 @@ function buildTableBodyRight(equipmentIndexPageSupport, indexEntityArray,
 	} else {
 		$("#table-right-body > table > tbody").append(html);
 	}
+	
+	$(".table-right > .table-border-diy-up").show();
+	$(".table-right > .table-border-diy-down").show();
+	
+	$("#table-right-body").css("width", width + "px");
+	
 	interleaveChangeColor($("#table-right-body > table > tbody"));
 
 }
@@ -344,6 +355,9 @@ function buildTableBodyLeft(equipmentIndexPageSupport, isEmpty) {
 	} else {
 		$("#table-left-body > table > tbody").append(html);
 	}
+	
+	$(".table-left > .table-border-diy-up").show();
+	$(".table-left > .table-border-diy-down").show();
 
 	interleaveChangeColor($("#table-left-body > table > tbody"));
 }
