@@ -129,6 +129,10 @@
 					<button type="button" class="close">&times;</button>
 			  		时间范围不允许为空
 			</div>
+			<div id="alert-index" class="alert alert-warning fade hide in">
+					<button type="button" class="close">&times;</button>
+			  		请至少选择一个指标
+			</div>
 	        	<div class="search-list">
 	            	<div class="left-list">
 	                    	<div class="list-item">

@@ -442,6 +442,6 @@ function initSearchItems() {
 	
 	//加载弹出框事件
 	$('.close').click(function(){
-		$('.close').parent().addClass('hide'); 
+		$(this).parent().addClass('hide'); 
 	 });
 }
