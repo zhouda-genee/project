@@ -398,6 +398,12 @@ function interleaveChangeColor(object) {
 }
 
 function dosearch() {
+	//校验
+	if ($("#dstart").val() == "" || $("dend").val() == "") {
+		$('#alert-warning').removeClass('hide');
+		return;
+	}
+	
 	// 填充查询条件
 	fillSearchItem();
 	orderFilterFunction("eq_name", "asc");

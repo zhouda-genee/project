@@ -432,4 +432,9 @@ function initSearchItems() {
 		$("#searchForm").attr("action", "statistics/result/print");
 		$("#searchForm").submit();
 	});
+	
+	//加载弹出框事件
+	$('.close').click(function(){
+		$('.close').parent().addClass('hide'); 
+	 });
 }

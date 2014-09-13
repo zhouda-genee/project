@@ -9,7 +9,8 @@
 
 	$.fn.tagSelector = function(opt) {
 		var $root = $(this);
-		var groupId = opt.root_id;
+		var temp_group_id = opt.root_id;
+		var group_id = opt.root_id;
 		
 		opt = opt || {};
 		opt.menu = opt.menu || '<div class="tag_selector_menu"><table class="content" width="1"></table></div>';
@@ -32,7 +33,7 @@
 		};
 		
 		var _change_value = function (id, name) {
-			groupId = id;
+			group_id = id;
 			opt.receiver.id.val(id);
 			opt.receiver.name.val(name);
 		}
@@ -66,7 +67,7 @@
 					$current_root = $root;
 				}
 
-				_show_next_for_tag(groupId);
+				_show_next_for_tag(group_id);
 			})
 			.mouseleave(function(){
 				if (removeTimeout) {
@@ -79,7 +80,7 @@
 				if ($(this).attr('q-tag-id') != undefined) {
 					_change_value($(this).attr('q-tag-id'), $(this).html());
 				} else {
-					groupId = opt.root_id
+					group_id = opt.root_id
 					opt.receiver.id.val("");
 					opt.receiver.name.val("");
 				}
@@ -99,7 +100,7 @@
 					$(this).parent().remove();
 				}
 				
-				_select_tag(groupId);
+				_select_tag(group_id);
 				
 				$root.find('.tag_selector_more').click(function(){
 					if (removeTimeout) {
@@ -112,7 +113,7 @@
 						$current_root = $root;
 					}
 
-					_show_next_for_tag(groupId);
+					_show_next_for_tag(group_id);
 				})
 				.mouseleave(function(){
 					if (removeTimeout) {
@@ -276,7 +277,7 @@
 			}
 			
 			var parameter = {
-				id: groupId
+				id: group_id
 			};
 			$.get(opt.url, parameter, function (data) {
 				if (data.hasOwnProperty('result')) {
@@ -310,7 +311,7 @@
 								ajaxTimeout = null;
 							}
 							
-							groupId = item.id;
+							group_id = item.id;
 							
 							if ($t.data('children_count') > 0) {
 								ajaxTimeout = setTimeout(function(){
@@ -324,6 +325,7 @@
 							
 						})
 						.mouseleave(function(){
+							group_id = temp_group_id;
 							$(this).removeClass('tag_item_active');
 						})
 						.click(function(){
@@ -333,6 +335,7 @@
 
 							_fill_content($t);
 
+							temp_group_id = item.id;
 							_change_value(item.id, item.name);
 							_select_tag($t.data('tag_id'));
 							_bind_event();

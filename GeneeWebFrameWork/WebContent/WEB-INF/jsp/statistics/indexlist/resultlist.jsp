@@ -121,6 +121,10 @@
 	    <div id="searchProperties" class="popup" aria-labelledby="myModalLabel" aria-hidden="true">
 	    	<div class="modal-content panel-content">
 			<label class="search-title">搜索条件</label>
+			<div id="alert-warning" class="alert alert-warning fade hide in">
+					<button type="button" class="close">&times;</button>
+			  		时间范围不允许为空
+			</div>
 	        	<div class="search-list">
 	            	<div class="left-list">
 	                	<ul>
@@ -156,9 +160,9 @@
 	                 	<ul>
 	                        <li>
 	                          	<label>时间范围</label>
-	                          	<input id="dstart" name="dstart" type="text" class="time-input" placeholder="YYYY-MM-DD">
+	                          	<input id="dstart" name="dstart" type="text" class="time-input" readonly="" placeholder="YYYY-MM-DD">
 	                          	<span style="color: #d7d7d7; font-size: 12px;">到</span>
-	                          	<input id="dend" name="dend" type="text" class="time-input" placeholder="YYYY-MM-DD">
+	                          	<input id="dend" name="dend" type="text" class="time-input" readonly="" placeholder="YYYY-MM-DD">
 	                        </li>
 	                        <li>
 	                          	<label>课题组组织机构</label>
@@ -173,7 +177,7 @@
 	                        </li>
 	                        <li>
 	                          	<label>使用者</label>
-	                          	<input type="text" class="form-control" placeholder="可添加5个"/>
+	                          	<input type="text" class="form-control" id="user_tokenfield" placeholder="可添加5个"/>
 	                          	<input id="user" name="user" type="hidden" />
 	                        </li>
 	                    </ul>               
