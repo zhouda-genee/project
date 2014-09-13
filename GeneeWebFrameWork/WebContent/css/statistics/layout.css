@@ -565,6 +565,7 @@ table.data-table thead .sorting-desc {
 }
 
 .index-item {
+	width: 100%;
 	display: inline-block;
 }
 
