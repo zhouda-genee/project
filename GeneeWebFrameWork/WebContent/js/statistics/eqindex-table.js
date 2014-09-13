@@ -332,6 +332,10 @@ function buildTableBodyRight(equipmentIndexPageSupport, indexEntityArray,
 		$("#table-right-body").css("width", width + "px");
 		$(".table-right > .table-border-diy-up").css("width", width + "px");
 		$(".table-right > .table-border-diy-down").css("width", width + "px");
+	} else {
+		$("#table-right-body").css("width", "100%");
+		$(".table-right > .table-border-diy-up").css("width", "100%");
+		$(".table-right > .table-border-diy-down").css("width", "100%");
 	}
 	
 	interleaveChangeColor($("#table-right-body > table > tbody"));
