@@ -3,6 +3,6 @@
 <div class="topbar navbar-fixed-top" role="navigation">
 	<div class="container-self">
 		<label class="topbar-brand" href="#">南开大学大型仪器管理平台</label>
-		<a href="#" class="clear topbar-signout right"></a>
+		<a href="statistics/result/layout" class="clear topbar-signout right"></a>
 	</div>
 </div>

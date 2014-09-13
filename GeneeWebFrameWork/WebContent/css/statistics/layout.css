@@ -375,7 +375,7 @@ table.data-table {
 @media (min-width: 768px) {
 	.table-left-body,
 	.table-right-body {
-		max-height: 400px;
+		max-height: 320px;
 		overflow: auto;
 	}
 }

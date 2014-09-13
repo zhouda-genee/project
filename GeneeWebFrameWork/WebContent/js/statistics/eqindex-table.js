@@ -215,7 +215,9 @@ function getEquipmentIndexCount(param) {
 
 // 创建表头左侧
 function buildTableHeaderLeft() {
-	var html = "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"data-table table-condensed\"><thead><tr class=\"index-name\"><th name=\"eq_name\" style=\"height: 66px;\" class=\"sorting\" rowspan=\"2\" onclick=\"sortHeader(this)\">仪器名称</th></tr></thead></table>";
+	var html = "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"data-table table-condensed\">" +
+			"<thead><tr class=\"index-name\"><th name=\"eq_name\" style=\"height: 66px;\" rowspan=\"2\" onclick=\"sortHeader(this)\">" +
+			"<label data-toggle=\"tooltip\ data-placement=\"top\ title=\"abc\">仪器名称</label><span class=\"sorting\"></span></th></tr></thead></table>";
 	$("#table-left-head").empty().append(html);
 }
 
@@ -327,7 +329,7 @@ function buildTableBodyLeft(equipmentIndexPageSupport, isEmpty) {
 	var html = "";
 	for (var i = 0; i < equipmentIndexDataArray.length; i++) {
 		var equipmentIndexData = equipmentIndexDataArray[i];
-		html += "<tr><td class=\"text_overflow\">"
+		html += "<tr><td class=\"text_overflow\" style=\"text-align:left;\">"
 				+ "<label data-toggle=\"tooltip\" data-placement=\"top\" title=\""
 				+ equipmentIndexData["eq_name"] + "\">"
 				+ equipmentIndexData["eq_name"] + "</label></td></tr>";

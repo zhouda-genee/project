@@ -17,8 +17,8 @@
 <body>
     <div class="col-md-10 main">
 		<div class="link-group">
-		  <a href="#" class="link link-tab-primary">统计项设置</a>
-		  <a href="#" class="link link-tab-default">绩效评估设置</a>
+		  <a href="javascript:void(0);" class="link link-tab-primary">统计项设置</a>
+		  <!-- <a href="#" class="link link-tab-default">绩效评估设置</a> -->
 		</div>
 		<div class="panel-self panel-content">
 			<div id="alert-success" class="alert alert-success fade hide in">
