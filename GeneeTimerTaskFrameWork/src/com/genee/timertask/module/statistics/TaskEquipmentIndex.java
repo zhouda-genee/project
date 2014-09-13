@@ -80,6 +80,7 @@ public class TaskEquipmentIndex {
 		int i = 1;
 		// 计算日期
 		Date calcDate = startDate;
+		logger.info("任务开始时间:" + System.currentTimeMillis());
 		while (DateUtil.compareDate(calcDate, endDate) <= 0) {
 			
 			// 一天所有的仪器指标记录
@@ -121,5 +122,6 @@ public class TaskEquipmentIndex {
 			calcDate = DateUtil.addDate(startDate, DateType.DAY, i);
 			i++;
 		}
+		logger.info("任务结束时间:" + System.currentTimeMillis());
 	}
 }
