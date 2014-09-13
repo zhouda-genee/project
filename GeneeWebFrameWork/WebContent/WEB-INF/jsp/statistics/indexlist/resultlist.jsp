@@ -178,7 +178,7 @@
 	                        </li>
 	                        <li>
 	                          	<label>使用者</label>
-	                          	<input type="text" class="form-control" placeholder="可添加5个"/>
+	                          	<input type="text" class="form-control" id="user_tokenfield" placeholder="可添加5个"/>
 	                          	<input id="user" name="user" type="hidden" />
 	                        </li>
 	                    </ul>               
