@@ -175,7 +175,6 @@
 					return false;
 				}
 				w -= $l.outerWidth();
-				$l.remove();
 			});
 
 		};
