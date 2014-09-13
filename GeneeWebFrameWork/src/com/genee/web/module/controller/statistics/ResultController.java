@@ -26,6 +26,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import sun.rmi.log.LogOutputStream;
+
 import com.genee.web.framework.utils.json.JsonUtil;
 import com.genee.web.framework.core.base.controller.BaseController;
 import com.genee.web.framework.utils.http.HttpClientUtil;
@@ -54,6 +56,11 @@ public class ResultController extends BaseController {
 
 	@Autowired
 	private ExcelService excelService;
+	
+	@RequestMapping(value = "layout", method = RequestMethod.GET)
+	public String layout(){
+		return "statistics/common/layout";
+	}
 
 	@RequestMapping(value = "search", method = RequestMethod.GET)
 	public String execute(HttpServletRequest request, HttpServletResponse response) {

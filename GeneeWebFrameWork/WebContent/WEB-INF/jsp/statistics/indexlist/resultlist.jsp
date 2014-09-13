@@ -56,7 +56,7 @@
 										<label>时间范围</label>
 										<span id="s_dstart" class="time-input"></span>
 										<span style="color: #777;">到</span>
-										<span id="s_end" class="time-input"></span>
+										<span id="s_dend" class="time-input"></span>
 									</li>
                                 </ul>
                             </div><!-- result left -->
@@ -177,7 +177,7 @@
 	                        <li>
 	                          	<label>课题组</label>
 	                          	<input type="text" class="form-control" id="lab_tokenfield" value="" <% if(loggedRoleId.equals(RoleEnum.LAB.getId()) || loggedRoleId.equals(RoleEnum.LAB_INCHARGE.getId())) {%>disabled="disabled"<%} %> placeholder="可添加5个"/>
-	                        	<input id="lab" name="lab" type="hidden" value="<% if(loggedRoleId.equals(RoleEnum.LAB.getId()) || loggedRoleId.equals(RoleEnum.LAB_INCHARGE.getId())) {%><%=loggedLabId %><%} %>" />
+	                        		<input id="lab" name="lab" type="hidden" value="<% if(loggedRoleId.equals(RoleEnum.LAB.getId()) || loggedRoleId.equals(RoleEnum.LAB_INCHARGE.getId())) {%><%=loggedLabId %><%} %>" />
 	                        </li>
 	                        <li>
 	                          	<label>使用者</label>
@@ -187,12 +187,14 @@
 	                    </ul>               
 	               	</div>
 				</div>
-	           	<label class="search-title">搜索结果</label>
-	            <div class="index-grid" id="indexContent"></div><!-- index-grid -->
-	
-	            <div class="search-link-group">
-	              	<a class="link link-primary link-tab-primary" id="dosearch" onclick="dosearch()">搜索</a>
-	              	<a class="link link-default link-tab-default" data-dismiss="modal" onclick="displaySearchProperties()">取消</a>
+				<div class="index-item">
+		            <label class="search-title">搜索结果</label>
+		            <div class="index-grid" id="indexContent"></div><!-- index-grid -->
+		
+		            <div class="search-link-group">
+		              	<a class="link link-primary link-tab-primary" id="dosearch" onclick="dosearch()">搜索</a>
+		              	<a class="link link-default link-tab-default" data-dismiss="modal" onclick="displaySearchProperties()">取消</a>
+		            </div>
 	            </div>
 	        </div>
 	   	</div>

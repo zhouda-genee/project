@@ -29,7 +29,7 @@
 .twitter-typeahead .tt-hint {
   height: 34px;
   padding: 6px 12px;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1.428571429;
 }
 .twitter-typeahead .input-sm.tt-input,
@@ -79,7 +79,7 @@
 .input-group.input-group-lg .tt-hint {
   height: 45px;
   padding: 10px 16px;
-  font-size: 18px;
+  font-size: 12px;
   line-height: 1.33;
 }
 .tt-dropdown-menu {
@@ -133,9 +133,9 @@
 .tokenfield.input-lg .twitter-typeahead .tt-input,
 .tokenfield.input-lg .twitter-typeahead .tt-hint {
   height: 23px;
-  font-size: 18px;
+  font-size: 12px;
   line-height: 1.33;
 }
 .tokenfield .twitter-typeahead .tt-suggestions {
-  font-size: 14px;
+  font-size: 12px;
 }

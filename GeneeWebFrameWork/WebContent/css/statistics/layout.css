@@ -381,7 +381,7 @@ table.data-table {
 @media (min-width: 768px) {
 	.table-left-body,
 	.table-right-body {
-		max-height: 400px;
+		max-height: 320px;
 		overflow: auto;
 	}
 }
@@ -532,18 +532,23 @@ table.data-table thead .sorting-desc {
 	margin-top: -20px;
 }
 .left-list {
-	position: absolute;
-	width: 40%;
+	float:left;
+	width: 49%;
 }
 .right-list	{
-	margin-left: 50%;
-	width: 50%;
+	margin-left: 2%;
+	float:left;
+	width: 49%;
+}
+.index-item {
+	display: inline-block;
 }
 .search-list ul {
 	-webkit-padding-start: 0;
 	-moz-padding-start:0;
 }
 .search-list li {
+	height:36px;
 	list-style: none;
 	border-bottom: 2px solid #dadada;
 	vertical-align: middle;
@@ -551,6 +556,7 @@ table.data-table thead .sorting-desc {
 }
 .search-list label {
 	margin-bottom: 0;
+	line-height:30px;
 	width: 100px;
 	font-size: 12px;
 	color: #333;
