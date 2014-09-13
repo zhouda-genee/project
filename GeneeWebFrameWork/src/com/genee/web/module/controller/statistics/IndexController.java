@@ -57,7 +57,7 @@ public class IndexController extends BaseController {
 		String ckbString = request.getParameter("ckbString");
 		String[] arrCkbString = ckbString.split(",");
 		if (arrCkbString == null || arrCkbString.length == 0) {
-			logger.error("\t用户没有勾选任何指标");
+			logger.warn("\t用户没有勾选任何指标");
 		}
 		else 
 		{
