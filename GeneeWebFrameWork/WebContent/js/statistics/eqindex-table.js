@@ -101,13 +101,13 @@ function getSearchParam(page, size) {
 // 填充搜索结果中的搜索项
 function fillSearchItem() {
 	// 仪器名称
-	$("#s_eq_name").val($("#eq_name").val());
+	$("#s_eq_name").html($("#eq_name").val());
 	
 	// 仪器类型
-	$("#s_eq_type").val($("#eq_type_name").val());
+	$("#s_eq_type").html($("#eq_type_name").val());
 	
 	// 仪器组织机构
-	$("#s_eq_org").val($("#eq_org_name").val());
+	$("#s_eq_org").html($("#eq_org_name").val());
 	
 	// 仪器负责人
 	var incharge_tokens = $("#eq_incharge_tokenfield").tokenfield('getTokens');
@@ -118,7 +118,7 @@ function fillSearchItem() {
 	if (incharge_tokens.length > 0) {
 		incharge_label = incharge_label.substring(0, incharge_label.length - 1);
 	}
-	$("#s_eq_incharge").val(incharge_label);
+	$("#s_eq_incharge").html(incharge_label);
 	
 	// 仪器联系人
 	var contact_tokens = $("#eq_contact_tokenfield").tokenfield('getTokens');
@@ -129,7 +129,7 @@ function fillSearchItem() {
 	if (contact_tokens.length > 0) {
 		contact_label = contact_label.substring(0, contact_label.length - 1);
 	}
-	$("#s_eq_contact").val(contact_label);
+	$("#s_eq_contact").html(contact_label);
 	
 	// 课题组组织机构
 	$("#s_lab_org").val($("#lab_org_name").val());
@@ -143,7 +143,7 @@ function fillSearchItem() {
 	if (lab_tokens.length > 0) {
 		lab_label = lab_label.substring(0, lab_label.length - 1);
 	}
-	$("#s_lab").val(lab_label);
+	$("#s_lab").html(lab_label);
 	
 	// 使用者
 	var user_tokens = $("#user_tokenfield").tokenfield('getTokens');
@@ -154,10 +154,10 @@ function fillSearchItem() {
 	if (user_tokens.length > 0) {
 		user_label = user_label.substring(0, user_label.length - 1);
 	}
-	$("#s_user").val(user_label);
+	$("#s_user").html(user_label);
 
-	$("#s_dstart").val($("#dstart").val());
-	$("#s_dend").val($("#dend").val());
+	$("#s_dstart").html($("#dstart").val());
+	$("#s_dend").html($("#dend").val());
 }
 
 // 获取仪器统计列表数据

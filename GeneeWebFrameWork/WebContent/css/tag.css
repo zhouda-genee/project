@@ -85,6 +85,7 @@
 .tag_selector_menu .tag_item .text {
 	padding: 2px 10px 2px 5px;
 	min-width : 80px;
+	font-size: 12px;
 	_width: 80px;
 	white-space: nowrap;
 }

@@ -56,7 +56,7 @@
 										<label>时间范围</label>
 										<span id="s_dstart" class="time-input"></span>
 										<span style="color: #777;">到</span>
-										<span id="s_end" class="time-input"></span>
+										<span id="s_dend" class="time-input"></span>
 									</li>
                                 </ul>
                             </div><!-- result left -->
