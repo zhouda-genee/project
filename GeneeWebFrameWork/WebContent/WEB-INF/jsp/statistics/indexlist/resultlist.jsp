@@ -131,60 +131,56 @@
 			</div>
 	        	<div class="search-list">
 	            	<div class="left-list">
-	                	<ul>
-	                    	<li>
+	                    	<div class="list-item">
 	                          	<label>仪器名称</label>
 	                          	<input id="eq_name" name="eq_name" type="text" placeholder="请输入仪器名称">
-	                        </li>
-	                        <li>
+	                        </div>
+	                        <div class="list-item">
 	                          	<label>仪器分类</label>
 	                          	<input id="eq_type" name="eq_type" type="hidden"/>
 	                          	<input id="eq_type_name" type="hidden"/>
 	                          	<div id="eq_type_tagselector"></div>
-	                        </li>
-	                        <li>
+	                        </div>
+	                        <div class="list-item">
 	                          	<label>仪器组织机构</label>
 	                          	<input type="hidden" id="eq_org" name="eq_org"/>
 	                          	<input type="hidden" id="eq_org_name"/>
 							  	<div id="eq_org_tagselector"></div>
-	                        </li>
-	                        <li>
+	                        </div>
+	                        <div class="list-item">
 	                          	<label>仪器负责人</label>
 	                          	<input type="text" class="form-control" id="eq_incharge_tokenfield" value="" <% if(loggedRoleId.equals(RoleEnum.INCHARGE.getId()) || loggedRoleId.equals(RoleEnum.LAB_INCHARGE.getId())) {%>disabled="disabled"<%} %> placeholder="可添加5个"/>
 	                          	<input id="eq_incharge" name="eq_incharge" type="hidden" value="<% if(loggedRoleId.equals(RoleEnum.INCHARGE.getId()) || loggedRoleId.equals(RoleEnum.LAB_INCHARGE.getId())) {%><%=loggedUserId %><%} %>"/>
-	                        </li>
-	                        <li>
+	                        </div>
+	                        <div class="list-item">
 	                          	<label>仪器联系人</label>
 	                          	<input type="text" class="form-control" id="eq_contact_tokenfield" value="" <% if(loggedRoleId.equals(RoleEnum.INCHARGE.getId()) || loggedRoleId.equals(RoleEnum.LAB_INCHARGE.getId())) {%>disabled="disabled"<%} %>  placeholder="可添加5个"/>
 	                          	<input id="eq_contact" name="eq_contact" type="hidden" value="<% if(loggedRoleId.equals(RoleEnum.INCHARGE.getId()) || loggedRoleId.equals(RoleEnum.LAB_INCHARGE.getId())) {%><%=loggedUserId %><%} %>"/>
-	                        </li>
-						</ul>
+	                        </div>
 					</div>
 	                <div class="right-list">
-	                 	<ul>
-	                        <li>
+	                        <div class="list-item">
 	                          	<label>时间范围</label>
 	                          	<input id="dstart" name="dstart" type="text" class="time-input" readonly="" placeholder="YYYY-MM-DD">
 	                          	<span style="color: #d7d7d7; font-size: 12px;">到</span>
 	                          	<input id="dend" name="dend" type="text" class="time-input" readonly="" placeholder="YYYY-MM-DD">
-	                        </li>
-	                        <li>
+	                        </div>
+	                        <div class="list-item">
 	                          	<label>课题组组织机构</label>
 	                          	<input id="lab_org" name="lab_org" type="hidden"/>
 	                          	<input id="lab_org_name" type="hidden"/>
 	                          	<div id="lab_org_tagselector"></div>
-	                        </li>
-	                        <li>
+	                        </div>
+	                        <div class="list-item">
 	                          	<label>课题组</label>
 	                          	<input type="text" class="form-control" id="lab_tokenfield" value="" <% if(loggedRoleId.equals(RoleEnum.LAB.getId()) || loggedRoleId.equals(RoleEnum.LAB_INCHARGE.getId())) {%>disabled="disabled"<%} %> placeholder="可添加5个"/>
 	                        		<input id="lab" name="lab" type="hidden" value="<% if(loggedRoleId.equals(RoleEnum.LAB.getId()) || loggedRoleId.equals(RoleEnum.LAB_INCHARGE.getId())) {%><%=loggedLabId %><%} %>" />
-	                        </li>
-	                        <li>
+	                        </div>
+	                        <div class="list-item">
 	                          	<label>使用者</label>
 	                          	<input type="text" class="form-control" id="user_tokenfield" placeholder="可添加5个"/>
 	                          	<input id="user" name="user" type="hidden" />
-	                        </li>
-	                    </ul>               
+	                        </div>
 	               	</div>
 				</div>
 				<div class="index-item">
