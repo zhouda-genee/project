@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 public class MapToBeanUtil {
@@ -48,6 +49,8 @@ public class MapToBeanUtil {
 				if (map.containsKey(propertyName)) {
 					// 下面一句可以 try 起来，这样当一个属性赋值失败的时候就不会影响其他属性赋值。
 					String value = map.get(propertyName).toString();
+					if (StringUtils.isEmpty(value))
+						continue;
 					if (descriptor.getPropertyType().getName().equals("java.lang.String")) {
 						descriptor.getWriteMethod().invoke(obj, value);
 					} else if (descriptor.getPropertyType().getName().equals("int")) {
@@ -60,7 +63,8 @@ public class MapToBeanUtil {
 				}
 			}
 		} catch (Exception ex) {
-			logger.error(ex);
+			ex.printStackTrace();
+			logger.error(ex.getMessage());
 		}
 		return obj;
 	}
