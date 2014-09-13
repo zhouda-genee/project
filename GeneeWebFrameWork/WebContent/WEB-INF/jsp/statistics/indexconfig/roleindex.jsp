@@ -85,7 +85,7 @@
 			</div><!-- roleconfig --> 
 		</div><!-- panel self -->
 	</div><!-- main -->
-	
+	<input type="hidden" id="pagecode" value="role-index"/>
 	<!-- 
 		<script type="text/javascript" src="js/alloydesigner.js"></script>
 	-->

@@ -425,16 +425,22 @@ table.data-table thead .index-name {
   *cursor: hand;
 }
 table.data-table thead .sorting {
-  	background: url('../../icon/sort_both.png') no-repeat right;
-  	background-position-x: 90%;
+	padding-left: 20px;
+	background-repeat: no-repeat;
+	background-position: center center;
+  	background-image: url('../../icon/sort_both.png');
 }
 table.data-table thead .sorting-asc {
-  	background: url('../../icon/sortTG.png') no-repeat right;
-  	background-position-x: 90%;
+	padding-left: 20px;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-image: url('../../icon/sortTG.png');
 }
 table.data-table thead .sorting-desc {
-  	background: url("../../icon/sortBG.png") no-repeat right;
-  	background-position-x: 90%;
+	padding-left: 20px;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-image: url("../../icon/sortBG.png");
 }
 /* tooltip css */
 .tooltip-inner {
@@ -576,4 +582,11 @@ table.data-table thead .sorting-desc {
 	margin-right: 5px;
 }
 
-
+.text_overflow label {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	-ms-text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+	-moz-binding: url('ellipsis.xml#ellipsis');
+	overflow: hidden;
+}
