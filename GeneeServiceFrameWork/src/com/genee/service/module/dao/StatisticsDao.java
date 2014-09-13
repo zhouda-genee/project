@@ -130,7 +130,7 @@ public class StatisticsDao {
 			paramType.add(java.sql.Types.INTEGER);
 		}
 		if (StringUtils.isNotEmpty(lab) && !"null".equals(lab)) { // 课题组查询
-			sql.append(" and _stat.user_id in (select _u.id from user where user _u where _u.lab_id in (" + lab + ")) ");
+			sql.append(" and _stat.user_id in (select _u.id from user _u where _u.lab_id in (" + lab + ")) ");
 		}
 		if (StringUtils.isNotEmpty(user) && !"null".equals(user)) { // 使用者查询
 			sql.append(" and _stat.user_id in (" + user + ")");
@@ -260,7 +260,7 @@ public class StatisticsDao {
 			paramType.add(java.sql.Types.INTEGER);
 		}
 		if (StringUtils.isNotEmpty(lab) && !"null".equals(lab)) { // 课题组查询
-			sql.append(" and _stat.user_id in (select _u.id from user where user _u where _u.lab_id in (" + lab + ")) ");
+			sql.append(" and _stat.user_id in (select _u.id from user _u where _u.lab_id in (" + lab + ")) ");
 		}
 		if (StringUtils.isNotEmpty(user) && !"null".equals(user)) { // 使用者查询
 			sql.append(" and _stat.user_id in (" + user + ")");

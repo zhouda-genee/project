@@ -10,9 +10,11 @@ function initSearchItems() {
 	var labPath = webPath + 'statistics/result/lab';
 	var userPath = webPath + 'statistics/result/user';
 	
+	// 清除hidden值
+	$(".search-list").find("input").val("");
 	//加载时间控件
-	$('#dstart').val("");
-	$('#dend').val("");
+	//$('#dstart').val("");
+	//$('#dend').val("");
 	$('#dstart').datepicker({
 		format : 'yyyy-mm-dd'
 	});
