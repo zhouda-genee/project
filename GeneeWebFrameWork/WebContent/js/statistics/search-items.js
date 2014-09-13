@@ -324,6 +324,9 @@ function initSearchItems() {
 													function(typeNum, typeValue) {
 
 														var rootDiv = $("<div/>");
+														var classDiv = $("<div/>").addClass("indextype");
+														rootDiv.append(classDiv);
+														
 														var parentDiv = $(
 																"<div/>")
 																.attr(
@@ -337,6 +340,9 @@ function initSearchItems() {
 
 														parentDiv
 																.append(parentLabel);
+														
+														
+														
 
 														var childDiv = $(
 																"<div/>")
@@ -344,6 +350,7 @@ function initSearchItems() {
 																		{
 																			"class" : "index-list"
 																		});
+														
 
 														$
 																.each(
@@ -353,6 +360,7 @@ function initSearchItems() {
 																				indexValue) {
 																			if (typeValue.tId == indexValue.tId) {
 																				if (indexValue.sCode != "eq_name") {
+																					var li = $("<li/>");
 																					var checkBox = $(
 																							"<input/>")
 																							.attr(
@@ -364,29 +372,26 @@ function initSearchItems() {
 																										"index-location" : indexValue.sLocation,
 																										"index-description" : indexValue.sDescription,
 																										"index-width" : indexValue.sWidth,
-																										"index-not-count" : indexValue.sNotCount,
-																										"class" : "middle"
+																										"index-not-count" : indexValue.sNotCount
 																									});
 
 																					var childLabel = $(
 																							"<label/>")
-																							.attr(
-																									{
-																										"class" : "middle"
-																									})
 																							.html(
 																									indexValue.sName);
 
-																					childDiv
+																					li
 																							.append(
 																									checkBox)
 																							.append(
 																									childLabel);
+																					
+																					childDiv.append(li);
 																				}
 																			}
 																		});
 
-														rootDiv
+														classDiv
 																.append(
 																		parentDiv)
 																.append(

@@ -1,13 +1,8 @@
-.text_like {
-    padding: 3px;
-    border: 1px solid #CCC;
-    background-color: #FFF;
-    margin: 0px;
-    color: #000;
-}
+
 .tag_selector {
 	display: inline-block;
 	padding: 1px;
+	font-size:12px;
 }
 
 .tag_selector .tag_selector_link {
@@ -24,13 +19,12 @@
 }
 
 .tag_selector .tag_selector_link a {
-	color: #fff;
-	background-color: #7498E0; 
+	color: #83B13E;
 	display: block;
 	text-decoration: none !important;
 	white-space: nowrap;
 	line-height: 16px;
-	height: 16px;
+	height: 20px;
 	padding: 3px 6px 1px;
 	_padding: 1px 6px 3px;
 }
@@ -43,7 +37,7 @@
 	cursor: pointer;
 	background-image: url(../icon/tagselector/tag_selector_more.png);
 	_background-image: url(../icon/tagselector/tag_selector_more.gif);
-	width: 20px;
+	width: 30px;
 	/* 多余的改动 */
 	/* position: relative; */
 }
@@ -73,9 +67,10 @@
 }
 
 .tag_selector_menu .loading {
-		width: 128px;
-		height: 22px;
-	}
+	background: url(../icon/tagselector/loading.gif) no-repeat center;
+	width: 128px;
+	height: 22px;
+}
 
 .tag_selector_menu .tag_item {
 	display: block;

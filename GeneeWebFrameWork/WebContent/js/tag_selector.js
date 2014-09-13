@@ -68,12 +68,6 @@
 				}
 
 				_show_next_for_tag(group_id);
-			})
-			.mouseleave(function(){
-				if (removeTimeout) {
-					clearTimeout(removeTimeout);
-				}
-				removeTimeout = setTimeout(_remove_all_menus, 1000);
 			});
 
 			$root.find('.tag_selector_link:not(.tag_selector_more) a').click(function(e){
@@ -98,6 +92,40 @@
 							.attr("q-tag-id", $(this).attr('q-tag-id')).attr("href", "#").html($(this).attr('title')));
 					$(this).parent().after(changeElem);
 					$(this).parent().remove();
+					
+					changeElem.click(function(e){
+						if ($(this).attr('q-tag-id') != undefined) {
+							_change_value($(this).attr('q-tag-id'), $(this).html());
+						} else {
+							group_id = opt.root_id
+							opt.receiver.id.val("");
+							opt.receiver.name.val("");
+						}
+						
+						if($(this).parent().nextAll().length > 0) {
+							$(this).parent().nextAll().remove();
+							$(this).parent().after($("<div/>").addClass("tag_selector_link")
+							.addClass("tag_selector_more").addClass("tooltip:请点击")
+							.addClass("tooltip_position:left"));
+						}
+						
+						$root.find('.tag_selector_more').click(function(){
+							if (removeTimeout) {
+								clearTimeout(removeTimeout);
+								removeTimeout = null;
+							}
+
+							if ($current_root != $root) {
+								_remove_all_menus();
+								$current_root = $root;
+							}
+							
+							_show_next_for_tag(group_id);
+						});
+						
+						e.preventDefault();
+						return false;
+					});
 				}
 				
 				_select_tag(group_id);
@@ -112,7 +140,7 @@
 						_remove_all_menus();
 						$current_root = $root;
 					}
-
+					
 					_show_next_for_tag(group_id);
 				})
 				.mouseleave(function(){
@@ -277,13 +305,14 @@
 			}
 			
 			var parameter = {
-				id: group_id
+				id: tag_id
 			};
 			$.get(opt.url, parameter, function (data) {
 				if (data.hasOwnProperty('result')) {
 					var items = data.result || {};
 					var count = 0;
 					$menu.find('.loading').remove();
+					opt.receiver.id.val(opt.receiver.id.val() + "1");
 
 					$.each(items, function(i, item) {
 						count ++;
@@ -303,7 +332,7 @@
 						$tag_map[item.id] = $t;
 						$menu_content.append($t);
 						$t.data('children_count', item.ccount);
-						$t.mouseenter(function(){
+						$t.mouseover(function(){
 							var $t = $(this);
 							$t.addClass('tag_item_active');
 							if (ajaxTimeout) {
