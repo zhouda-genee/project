@@ -15,7 +15,7 @@
 		<li id="result-list"><a href="statistics/result/search">统计列表</a></li>
 		<!-- <li><a href="#">统计图表</a></li>
 		<li><a href="#">绩效评估</a></li> -->
-		<li><a href="statistics/result/search">权限设置</a></li>
+		<li id="role-index"><a href="statistics/indexconfig">权限设置</a></li>
 	</ul>
 </div>
 <script type="text/javascript">

@@ -18,15 +18,14 @@
 	<script type="text/javascript" src="js/tag_selector.js"></script>
 	<script type="text/javascript" src="js/statistics/search-items.js"></script>
 	<script>
-	$(document).ready(function() {
-		// 指标消息提示
-		var options = {
-			animation : true,
-			trigger : 'hover'
-		};
+	// 指标消息提示
+	var options = {
+		animation : true,
+		trigger : 'hover'
+	};
 
-		$("label").tooltip(options);
-		
+	$("label").tooltip(options);
+	$(document).ready(function() {
 		initSearchItems();
 	});
 	</script>

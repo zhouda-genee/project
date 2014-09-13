@@ -8,13 +8,14 @@ var pageCount, page;
 var indexEntityArray;
 
 // 指标对象
-function indexEntity(name, code, id, width, notCount, description) {
+function indexEntity(name, code, id, width, notCount, description, location) {
 	this.name = name;
 	this.code = code;
 	this.id = id;
 	this.width = width;
 	this.notCount = notCount;
 	this.description = description;
+	this.location = location;
 }
 
 // 分页结果集
@@ -214,7 +215,7 @@ function getEquipmentIndexCount(param) {
 
 // 创建表头左侧
 function buildTableHeaderLeft() {
-	var html = "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"data-table table-condensed\"><thead><tr class=\"index-name\"><th id=\"eq_name\" style=\"height: 66px;\" class=\"sorting\" rowspan=\"2\" onclick=\"sortHeader(this)\">仪器名称</th></tr></thead></table>";
+	var html = "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"data-table table-condensed\"><thead><tr class=\"index-name\"><th name=\"eq_name\" style=\"height: 66px;\" class=\"sorting\" rowspan=\"2\" onclick=\"sortHeader(this)\">仪器名称</th></tr></thead></table>";
 	$("#table-left-head").empty().append(html);
 }
 
@@ -242,6 +243,7 @@ function buildTableHeaderRight() {
 						index.width = o.attr("index-width");
 						index.notCount = o.attr("index-not-count");
 						index.description = o.attr("index-description");
+						index.location = o.attr("index-location");
 						index.id = o.val();
 						index.name = $(o.next("label")[0]).text();
 						indexEntityArray.push(index);
@@ -255,13 +257,12 @@ function buildTableHeaderRight() {
 	html += "<tr class=\"index-name\">"
 	for (var i = 0; i < indexEntityArray.length; i++) {
 		html += "<th onclick=\"sortHeader(this)\" " +
-				"id=\"" + indexEntityArray[i].code + "\" " +
-				"class=\"sorting\" " +
+				"name=\"" + indexEntityArray[i].code + "\" " +
 				"style=\"width: " + indexEntityArray[i].width + "px;\">" +
 				"<label data-toggle=\"tooltip\" " +
 				"data-placement=\"top\" " +
 				"title=\"" + indexEntityArray[i].description + "\">" 
-				+ indexEntityArray[i].name + "</label></th>";
+				+ indexEntityArray[i].name + "</label><span class=\"sorting\"></span></th>";
 	}
 	html += "</tr>";
 	html = "<table width=\""
@@ -294,7 +295,7 @@ function buildTableBodyRight(equipmentIndexPageSupport, indexEntityArray,
 			} else {
 				html += "<td class=\"text_overflow\" style=\"width:"
 						+ indexEntityArray[j].width
-						+ "px\">"
+						+ "px;text-align:"+indexEntityArray[j].location+"\">"
 						+ "<label data-toggle=\"tooltip\" data-placement=\"top\" title=\""
 						+ index + "\">" + index + "</label></td>";
 			}
@@ -470,22 +471,24 @@ function orderFilterFunction(sortName, sort) {
 // 指标列排序的图标切换效果
 function sortHeader(obj) {
 	var sort;
-	if (obj.className == "sorting-asc") {
+	obj = $(obj);
+	var span = $(obj.children("span")[0]);
+	if (span.attr("class") == "sorting-asc") {
 		// 升序
-		orderFilterFunction(obj.id, "desc");
+		orderFilterFunction(obj.attr("name"), "desc");
 		sort = "desc";
-	} else if (obj.className = "sorting-desc") {
+	} else if (span.attr("class") == "sorting-desc") {
 		// 降序
-		orderFilterFunction(obj.id, "asc");
+		orderFilterFunction(obj.attr("name"), "asc");
 		sort = "asc";
-	} else if (obj.className = "sorting") {
+	} else if (span.attr("class") == "sorting") {
 		// 双箭头
-		orderFilterFunction(obj.id, "asc");
+		orderFilterFunction(obj.attr("name"), "asc");
 		sort = "asc";
 	} 
 	// 初始化
-	$(".index-name > th").removeClass().addClass("sorting");
-	$("#" + obj.id).removeClass().addClass("sorting-" + sort);
+	$(".index-name > th > span").removeClass().addClass("sorting");
+	$(".index-name > th[name='"+obj.attr("name")+"'] > span").removeClass().addClass("sorting-" + sort);
 }
 
 // 搜索框弹出效果
