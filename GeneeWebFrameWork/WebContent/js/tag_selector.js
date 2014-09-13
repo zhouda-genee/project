@@ -312,7 +312,6 @@
 					var items = data.result || {};
 					var count = 0;
 					$menu.find('.loading').remove();
-					opt.receiver.id.val(opt.receiver.id.val() + "1");
 
 					$.each(items, function(i, item) {
 						count ++;
