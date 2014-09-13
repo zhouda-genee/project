@@ -161,9 +161,9 @@
 	                 	<ul>
 	                        <li>
 	                          	<label>时间范围</label>
-	                          	<input id="dstart" name="dstart" type="text" class="time-input" placeholder="YYYY-MM-DD">
+	                          	<input id="dstart" name="dstart" type="text" class="time-input" readonly="" placeholder="YYYY-MM-DD">
 	                          	<span style="color: #d7d7d7; font-size: 12px;">到</span>
-	                          	<input id="dend" name="dend" type="text" class="time-input" placeholder="YYYY-MM-DD">
+	                          	<input id="dend" name="dend" type="text" class="time-input" readonly="" placeholder="YYYY-MM-DD">
 	                        </li>
 	                        <li>
 	                          	<label>课题组组织机构</label>
