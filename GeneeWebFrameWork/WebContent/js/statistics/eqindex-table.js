@@ -1,4 +1,8 @@
 //全局变量
+var options = {
+		animation : true,
+		trigger : 'hover'
+	};
 
 //查询条件
 var searchParam;
@@ -217,7 +221,7 @@ function getEquipmentIndexCount(param) {
 function buildTableHeaderLeft() {
 	var html = "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"data-table table-condensed\">" +
 			"<thead><tr class=\"index-name\"><th name=\"eq_name\" style=\"height: 66px;\" rowspan=\"2\" onclick=\"sortHeader(this)\">" +
-			"<label data-toggle=\"tooltip\ data-placement=\"top\ title=\"abc\">仪器名称</label><span class=\"sorting\"></span></th></tr></thead></table>";
+			"<label data-toggle=\"tooltip\" data-placement=\"top\" title=\"abc\">仪器名称</label><span class=\"sorting\"></span></th></tr></thead></table>";
 	$(".table-left > .table-border-diy-up").css("width","160px");
 	$(".table-left > .table-border-diy-down").css("width","160px");
 	$("#table-left-head").empty().append(html);
@@ -275,9 +279,7 @@ function buildTableHeaderRight() {
 			+ html + "</thead></table>";
 	$("#table-right-head").empty().append(html);
 	
-	$(".table-right > .table-border-diy-up").css("width", width + "px");
-	$(".table-right > .table-border-diy-down").css("width", width + "px");
-
+	var containerWidth = $(".table-container").width();
 	return indexEntityArray;
 }
 
@@ -325,7 +327,12 @@ function buildTableBodyRight(equipmentIndexPageSupport, indexEntityArray,
 	$(".table-right > .table-border-diy-up").show();
 	$(".table-right > .table-border-diy-down").show();
 	
-	$("#table-right-body").css("width", width + "px");
+	var containerWidth = $(".table-container").width();
+	if (width < containerWidth) {
+		$("#table-right-body").css("width", width + "px");
+		$(".table-right > .table-border-diy-up").css("width", width + "px");
+		$(".table-right > .table-border-diy-down").css("width", width + "px");
+	}
 	
 	interleaveChangeColor($("#table-right-body > table > tbody"));
 
@@ -432,7 +439,10 @@ function dosearch() {
 	
 	// 填充查询条件
 	fillSearchItem();
+	
 	orderFilterFunction("eq_name", "asc");
+	// 信息填示
+	$("label").tooltip(options);
 	// 收回窗口
 	displaySearchProperties();
 }

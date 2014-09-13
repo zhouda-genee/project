@@ -19,12 +19,6 @@
 	<script type="text/javascript" src="js/statistics/search-items.js"></script>
 	<script>
 	// 指标消息提示
-	var options = {
-		animation : true,
-		trigger : 'hover'
-	};
-
-	$("label").tooltip(options);
 	$(document).ready(function() {
 		initSearchItems();
 	});
