@@ -472,22 +472,23 @@ function orderFilterFunction(sortName, sort) {
 function sortHeader(obj) {
 	var sort;
 	obj = $(obj);
-	if (obj.attr("class") == "sorting-asc") {
+	var span = $(obj.children("span")[0]);
+	if (span.attr("class") == "sorting-asc") {
 		// 升序
 		orderFilterFunction(obj.attr("name"), "desc");
 		sort = "desc";
-	} else if (obj.attr("class") == "sorting-desc") {
+	} else if (span.attr("class") == "sorting-desc") {
 		// 降序
 		orderFilterFunction(obj.attr("name"), "asc");
 		sort = "asc";
-	} else if (obj.attr("class") == "sorting") {
+	} else if (span.attr("class") == "sorting") {
 		// 双箭头
 		orderFilterFunction(obj.attr("name"), "asc");
 		sort = "asc";
 	} 
 	// 初始化
-	$(".index-name > th").removeClass().addClass("sorting");
-	$(".index-name > th[name='"+obj.attr("name")+"']").removeClass().addClass("sorting-" + sort);
+	$(".index-name > th > span").removeClass().addClass("sorting");
+	$(".index-name > th[name='"+obj.attr("name")+"'] > span").removeClass().addClass("sorting-" + sort);
 }
 
 // 搜索框弹出效果
