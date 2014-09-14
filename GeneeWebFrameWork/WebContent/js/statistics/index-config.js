@@ -197,3 +197,24 @@
 					$('#alert-success').removeClass('hide');
 				}
 			};
+/** 
+ *	点击“全选”复选框的js实现
+ */
+			function selectAllCheckBox (ParentID, bool) {
+				// body...
+				var pID = document.getElementById(ParentID);
+				var cb = pID.getElementsByTagName('input');
+				for (var i=0; i<cb.length; i++) {
+					if (cb[i].type == "checkbox")
+					cb[i].checked = bool;
+				};
+			};
+	
+/**
+ * 警告框的关闭事件
+ */
+			 $('.close').click(function(){
+				 console.log($(this).parent());
+				$(this).parent().addClass('hide'); 
+			 });
+			 

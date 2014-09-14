@@ -28,7 +28,7 @@
 			
 			<div id="alert-warning" class="alert alert-warning fade hide in">
 			  	<button type="button" class="close">&times;</button>
-			  		请勾选指标！
+			  		请至少勾选一个指标！
 			</div>
 	
 			<div id="roleconfig">
@@ -89,30 +89,7 @@
 	<!-- 
 		<script type="text/javascript" src="js/alloydesigner.js"></script>
 	-->
-	
 	<script src="js/statistics/index-config.js"></script>
-	<script type="text/javascript">		
-			
-			/** 
-			 *	点击“全选”复选框的js实现
-			 */
-				function selectAllCheckBox (ParentID, bool) {
-					// body...
-					var pID = document.getElementById(ParentID);
-					var cb = pID.getElementsByTagName('input');
-					for (var i=0; i<cb.length; i++) {
-						if (cb[i].type == "checkbox")
-						cb[i].checked = bool;
-					};
-				};
-				
-			/**
-			 * 警告框的关闭事件
-			 */
-				 $('.close').click(function(){
-					$('.close').parent().addClass('hide'); 
-				 });
-			 
-	</script>    
+	
 </body>
 </html>
