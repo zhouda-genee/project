@@ -26,8 +26,8 @@
 	white-space: nowrap;
 	line-height: 16px;
 	height: 20px;
-	padding: 3px 6px 1px;
-	_padding: 1px 6px 3px;
+	padding: 1px 6px 1px;
+	_padding: 1px 6px 1px;
 }
 
 .tag_selector .tag_selector_first a {
@@ -38,7 +38,7 @@
 	cursor: pointer;
 	background-image: url(../icon/tagselector/tag_selector_more.png);
 	_background-image: url(../icon/tagselector/tag_selector_more.gif);
-	width: 30px;
+	width: 15px;
 	/* 多余的改动 */
 	/* position: relative; */
 }
