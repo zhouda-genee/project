@@ -229,8 +229,8 @@ input::-webkit-input-placeholder {
 }
 @media (min-width: 768px) {
   .main {
-    padding-right: 30px;
-    padding-left: 30px;
+    padding-right: 2%;
+    padding-left: 2%;
     margin-left: 11.667%;
     width: 88.333%;
   }
@@ -536,8 +536,8 @@ table.data-table thead .sorting-desc {
 	display:none; 
 	position: absolute;
 	top: 89px;
-	margin-left: 13.78%;
-	width: 84.22%;
+	margin-left: 13.667%;
+	width: 84.333%;
 }
 .search-title {
 	color: #999;
