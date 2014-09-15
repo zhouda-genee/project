@@ -155,11 +155,10 @@ public class ResultController extends BaseController {
 	 * @throws IOException
 	 * @throws ParseException 
 	 */
-	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "print", method = RequestMethod.POST)
 	public String printIndex(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ParseException {
-		return "statistics/result/search-print";
+		return "statistics/indexlist/search-print";
 	}
 	
 	/**
@@ -170,7 +169,6 @@ public class ResultController extends BaseController {
 	 * @throws IOException
 	 * @throws ParseException 
 	 */
-	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "print/data", method = RequestMethod.POST)
 	public void printData(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ParseException {

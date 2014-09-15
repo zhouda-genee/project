@@ -416,42 +416,74 @@ function initSearchItems() {
 							});
 				}
 			});
-
-	//加载导出、打印按钮点击事件
-	$("#exportBtn").click(function() {
-		var indexId = "";
-		var ckbIndex = $("input:checkbox[name=ckbIndex]:checked");
-
-		var indexId = "";
-		$.each(ckbIndex, function(index, checkbox) {
-			indexId += checkbox.value + ",";
-		});
-
-		indexId = indexId.substring(0, indexId.length - 1);
-		$("#indexId").val(indexId);
-
-		$("#searchForm").attr("action", "statistics/result/excel");
-		$("#searchForm").submit();
-	});
-
-	$("#printBtn").click(function() {
-		var indexId = "";
-		var ckbIndex = $("input:checkbox[name=ckbIndex]:checked");
-
-		var indexId = "";
-		$.each(ckbIndex, function(index, checkbox) {
-			indexId += checkbox.value + ",";
-		});
-
-		indexId = indexId.substring(0, indexId.length - 1);
-		$("#indexId").val(indexId);
-
-		$("#searchForm").attr("action", "statistics/result/print");
-		$("#searchForm").submit();
-	});
 	
 	//加载弹出框事件
 	$('.close').click(function(){
 		$(this).parent().addClass('hide'); 
 	 });
+}
+
+//加载导出、打印按钮点击事件
+function exportExcel() {
+	//校验
+	var valid = false;
+	if ($("#dstart").val() == "" || $("dend").val() == "") {
+		$('#alert-warning').removeClass('hide');
+		valid = true;
+	}
+	
+	if ($("input[name=ckbIndex]:checked").length == 0) {
+		$('#alert-index').removeClass('hide');
+		valid = true;
+	}
+	
+	if (valid) {
+		return;
+	}
+	
+	var indexId = "";
+	var ckbIndex = $("input:checkbox[name=ckbIndex]:checked");
+
+	var indexId = "";
+	$.each(ckbIndex, function(index, checkbox) {
+		indexId += checkbox.value + ",";
+	});
+
+	indexId = indexId.substring(0, indexId.length - 1);
+	$("#indexId").val(indexId);
+
+	$("#searchForm").attr("action", "statistics/result/excel");
+	$("#searchForm").submit();
+}
+
+function printTable() {
+	//校验
+	var valid = false;
+	if ($("#dstart").val() == "" || $("dend").val() == "") {
+		$('#alert-warning').removeClass('hide');
+		valid = true;
+	}
+	
+	if ($("input[name=ckbIndex]:checked").length == 0) {
+		$('#alert-index').removeClass('hide');
+		valid = true;
+	}
+	
+	if (valid) {
+		return;
+	}
+	
+	var indexId = "";
+	var ckbIndex = $("input:checkbox[name=ckbIndex]:checked");
+
+	var indexId = "";
+	$.each(ckbIndex, function(index, checkbox) {
+		indexId += checkbox.value + ",";
+	});
+
+	indexId = indexId.substring(0, indexId.length - 1);
+	$("#indexId").val(indexId);
+
+	$("#searchForm").attr("action", "statistics/result/print");
+	$("#searchForm").submit();
 }

@@ -53,6 +53,7 @@
 <script src="js/jquery/jquery-1.11.1.min.js"></script>
 <script>
 	$(document).ready(function() {
+		alert(123);
 		var webPath = "<%=webPath %>";
 		var printPath = webPath + "statistics/result/print/data";
 		var parameter = {
