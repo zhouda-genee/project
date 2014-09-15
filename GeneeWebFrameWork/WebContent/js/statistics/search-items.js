@@ -4,12 +4,6 @@ var eq_contact_map = [];
 var user_map = [];
 
 function initSearchItems() {
-	//servletURL
-	var contactPath = webPath + 'statistics/result/contact';
-	var inchargePath = webPath + 'statistics/result/incharge';
-	var labPath = webPath + 'statistics/result/lab';
-	var userPath = webPath + 'statistics/result/user';
-	
 	// 清除hidden值
 	$(".search-list").find("input").val("");
 	//加载时间控件
@@ -32,11 +26,15 @@ function initSearchItems() {
 		}, {
 			displayKey : "name",
 			source : function(query, process) {
-				var parameter = {
-					name : query
+				var jsonRPCobject = new JSONRPC2Object();
+				var param = {
+					name: query
 				};
+				jsonRPCobject.id = new Date().getTime();
+				jsonRPCobject.method = "lab_name";
+				jsonRPCobject.params = JSON.stringify(param);
 
-				$.post(labPath, parameter, function(data) {
+				$.post(servletPath, jsonRPCobject, function(data) {
 					$.each(data.result, function(i, object) {
 						lab_map[object.name] = object;
 					});
@@ -88,11 +86,15 @@ function initSearchItems() {
 		}, {
 			displayKey : "name",
 			source : function(query, process) {
-				var parameter = {
-					name : query
+				var jsonRPCobject = new JSONRPC2Object();
+				var param = {
+					name: query
 				};
+				jsonRPCobject.id = new Date().getTime();
+				jsonRPCobject.method = "user_incharge";
+				jsonRPCobject.params = JSON.stringify(param);
 
-				$.post(inchargePath, parameter, function(data) {
+				$.post(servletPath, jsonRPCobject, function(data) {
 					$.each(data.result, function(i, object) {
 						eq_incharge_map[object.name] = object;
 					});
@@ -144,11 +146,15 @@ function initSearchItems() {
 		}, {
 			displayKey : "name",
 			source : function(query, process) {
-				var parameter = {
-					name : query
+				var jsonRPCobject = new JSONRPC2Object();
+				var param = {
+					name: query
 				};
+				jsonRPCobject.id = new Date().getTime();
+				jsonRPCobject.method = "user_contact";
+				jsonRPCobject.params = JSON.stringify(param);
 
-				$.post(contactPath, parameter, function(data) {
+				$.post(servletPath, jsonRPCobject, function(data) {
 					$.each(data.result, function(i, object) {
 						eq_contact_map[object.name] = object;
 					});
@@ -200,11 +206,15 @@ function initSearchItems() {
 		}, {
 			displayKey : "name",
 			source : function(query, process) {
-				var parameter = {
-					name : query
+				var jsonRPCobject = new JSONRPC2Object();
+				var param = {
+					name: query
 				};
+				jsonRPCobject.id = new Date().getTime();
+				jsonRPCobject.method = "user_recuser";
+				jsonRPCobject.params = JSON.stringify(param);
 
-				$.post(userPath, parameter, function(data) {
+				$.post(servletPath, jsonRPCobject, function(data) {
 					$.each(data.result, function(i, object) {
 						user_map[object.name] = object;
 					});

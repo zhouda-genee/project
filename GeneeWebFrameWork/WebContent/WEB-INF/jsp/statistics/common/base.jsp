@@ -2,7 +2,7 @@
 <%@ page import="com.genee.web.framework.utils.prop.PropertiesUtil"%>
 <%
 	String webPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort() + this.getServletContext().getContextPath() + "/" ;
-	String servletPath = PropertiesUtil.getPropertiesValue("application-config.properties", "servlet_url");
+	String servletPath = PropertiesUtil.getPropertiesValue("application-config.properties", "servlet_js_url");
 %>
 <base href="<%=webPath %>" />
 <meta charset="utf-8">
