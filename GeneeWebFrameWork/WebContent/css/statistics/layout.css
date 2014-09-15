@@ -19,6 +19,7 @@ body {
 }
 .right {
 	float: right;
+	margin-left: 10px;
 }
 a {
 	color: #333;	
@@ -72,6 +73,9 @@ a.link-default:active {
 .link-default {
 	background-color: #d7d7d7;
 	border-bottom: 2px solid #bbbbbb;
+}
+.link-group {
+	margin-bottom: 6px;
 }
 .panel-content {
 	padding: 50px;
@@ -226,8 +230,8 @@ input::-webkit-input-placeholder {
 }
 @media (min-width: 768px) {
   .main {
-    padding-right: 30px;
-    padding-left: 30px;
+    padding-right: 2%;
+    padding-left: 2%;
     margin-left: 11.667%;
     width: 88.333%;
   }
@@ -309,14 +313,14 @@ input::-webkit-input-placeholder {
 }
 .table-border-diy-up {
 	display: none;
-	height: 3px;
-	background-color: #b7b7b7;
+	height: 5px;
+	background-image: url('../../icon/shadowTop.png');
 }
 
 .table-border-diy-down {
 	display: none;
-	height: 3px;
-	background-color: #b7b7b7;
+	height: 5px;
+	background-image: url('../../icon/shadowBottom.png');
 }
 
 .table-container {
@@ -346,18 +350,22 @@ table.data-table {
 	height: 36px;
 }
 /* table border */
+.index-name > th {
+	border-bottom: none !important;
+}
 .data-table > tbody > tr > td {
 	border: 1px solid #eee;
 }
 .data-table > thead > tr > th,
 .data-table > thead > tr > th,
+.data-table > tfoot > tr > th,
 .data-table > tfoot > tr > td {
 	border: 1px solid #d7d7d7;
 	font-weight: normal;
 }
 .table-left-head > table > thead > tr > th:first-child,
 .table-left-body > table > tbody > tr > td:first-child,
-.table-left-foot > table > tfoot > tr > td:first-child {
+.table-left-foot > table > tfoot > tr > th:first-child {
 	border-left: 0;
 }
 .table-right-head > table > thead > tr > th:first-child,
@@ -369,6 +377,11 @@ table.data-table {
 .table-right-body > table > tbody > tr > td:last-child,
 .table-right-foot > table > tfoot > tr > td:last-child {
 	border-right: 0;
+}
+.table-left-foot > table > tfoot > tr > th,
+.table-right-foot > table > tfoot > tr > td {
+	border-bottom: none;
+	border-top: none;
 }
 .table-left {
 	position: absolute;
@@ -502,7 +515,6 @@ table.data-table thead .sorting-desc {
 .indextype-name {
     margin-right: 30px;
     float: left;
-    font-size: 12px;
 }
 .index-list {
     position: relative;
@@ -531,6 +543,7 @@ table.data-table thead .sorting-desc {
 }
 .popup {
 	display:none; 
+	font-size: 12px;
 	position: absolute;
 	top: 89px;
 	margin-left: 13.667%;
