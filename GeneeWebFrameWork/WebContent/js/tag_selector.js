@@ -280,7 +280,7 @@
 									ajaxTimeout = null;
 								}
 								
-								this.group_id = item.id;
+								this.temp_group_id = item.id;
 								
 								if ($t.data('children_count') > 0) {
 									ajaxTimeout = setTimeout(function(){
