@@ -314,13 +314,13 @@ input::-webkit-input-placeholder {
 .table-border-diy-up {
 	display: none;
 	height: 5px;
-	background-image: url('../../icon/shadowTop.png');
+	background: url('../../icon/shadowTop.png') repeat-x;
 }
 
 .table-border-diy-down {
 	display: none;
-	height: 5px;
-	background-image: url('../../icon/shadowBottom.png');
+	height: 4px;
+	background: url('../../icon/shadowBottom.png') repeat-x;
 }
 
 .table-container {
@@ -545,9 +545,10 @@ table.data-table thead .sorting-desc {
 	display:none; 
 	font-size: 12px;
 	position: absolute;
-	top: 89px;
-	margin-left: 13.667%;
-	width: 84.333%;
+	/*top: 89px;*/
+	z-index:900;
+	margin-left: -0.1%;
+	width: 95.6%;
 }
 .search-title {
 	color: #999;

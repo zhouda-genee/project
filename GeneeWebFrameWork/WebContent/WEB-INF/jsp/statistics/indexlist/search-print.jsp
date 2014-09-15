@@ -51,9 +51,16 @@
 	}
 </style>
 <script src="js/jquery/jquery-1.11.1.min.js"></script>
+<script src="js/jquery.overlay.js"></script>
 <script>
 	$(document).ready(function() {
-		alert(123);
+		$.ajaxSetup({   
+            async : false  
+        }); 
+		// 加载等待效果
+		$(document).overlayshow({
+			img: "icon/loading40.gif"
+		});
 		var webPath = "<%=webPath %>";
 		var printPath = webPath + "statistics/result/print/data";
 		var parameter = {
@@ -150,6 +157,7 @@
 			
 			$("body").append($center );
         }, "json");
+		$(document).overlayhide();
 	});
 </script>
 </head>

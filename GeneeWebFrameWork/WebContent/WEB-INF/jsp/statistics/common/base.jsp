@@ -40,7 +40,7 @@ function JSONRPC2Object(id, method, params){
 
 function overlayShow(){
 	$(document).overlayshow({
-		img: "<%=webPath%>icon/loading40.gif"
+		img: "icon/loading40.gif"
 	});
 }
 function overlayHide(){
