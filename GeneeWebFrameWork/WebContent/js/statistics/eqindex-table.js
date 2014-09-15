@@ -445,8 +445,6 @@ function dosearch() {
 	fillSearchItem();
 	
 	orderFilterFunction("eq_name", "asc");
-	// 信息填示
-	$("label").tooltip(options);
 	// 收回窗口
 	displaySearchProperties();
 }
@@ -468,6 +466,8 @@ function scorlling() {
 		buildTableBodyRight(equipmentIndexData, indexEntityArray, false);
 		// 创建统计列表左侧
 		buildTableBodyLeft(equipmentIndexData, false);
+		// 信息填示
+		$("label").tooltip(options);
 		// 去掉等待效果
 		overlayHide();
 	}
@@ -505,6 +505,8 @@ function orderFilterFunction(sortName, sort) {
 	} catch (e) {
 		alert("异常的错误信息：" + e.message);
 	}
+	// 信息填示
+	$("label").tooltip(options);
 	// 去掉等待效果
 	overlayHide();
 }
