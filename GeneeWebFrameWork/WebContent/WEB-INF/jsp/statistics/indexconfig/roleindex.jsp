@@ -16,7 +16,7 @@
 </head>
 <body>
     <div class="col-md-10 main">
-		<div class="link-group">
+		<div class="tab-group">
 		  <a href="javascript:void(0);" class="link link-tab-primary">统计项设置</a>
 		  <!-- <a href="#" class="link link-tab-default">绩效评估设置</a> -->
 		</div>
