@@ -32,6 +32,8 @@
                 <div class="col-md-10 main">
                     <div class="link-group">
                     	<a href="javascript:displaySearchProperties();" id="searchBtn" class="link link-primary"><img src="<%=webPath%>icon/search.png" class="icon-search">搜索</a>
+                    	<a href="#" class="link link-primary right">打印</a>
+           				<a href="#" class="link link-primary right">导出</a>
                     </div>
                     <div class="panel-self">
                         <!-- 搜索条件结果 -->
