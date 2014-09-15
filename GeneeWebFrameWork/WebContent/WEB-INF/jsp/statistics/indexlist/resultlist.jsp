@@ -116,7 +116,7 @@
 
 
         <!-- 搜索的弹出框效果 -->
-	    <div id="searchProperties" class="popup panel-self" aria-labelledby="myModalLabel" aria-hidden="true">
+	    <div id="searchProperties" class="popup" aria-labelledby="myModalLabel" aria-hidden="true">
 	    	<div class="modal-content panel-content">
 			<label class="search-title">搜索条件</label>
 			<div id="alert-warning" class="alert alert-warning fade hide in">
