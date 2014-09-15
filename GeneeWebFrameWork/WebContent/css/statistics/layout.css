@@ -73,6 +73,9 @@ a.link-default:active {
 	background-color: #d7d7d7;
 	border-bottom: 2px solid #bbbbbb;
 }
+.link-group {
+	margin-bottom: 6px;
+}
 .panel-content {
 	padding: 50px;
 }
@@ -502,7 +505,7 @@ table.data-table thead .sorting-desc {
 .indextype-name {
     margin-right: 30px;
     float: left;
-    font-size: 12px;
+    font-size: 12px; 
 }
 .index-list {
     position: relative;
@@ -533,8 +536,8 @@ table.data-table thead .sorting-desc {
 	display:none; 
 	position: absolute;
 	top: 89px;
-	margin-left: 13.667%;
-	width: 84.333%;
+	margin-left: 13.78%;
+	width: 84.22%;
 }
 .search-title {
 	color: #999;
