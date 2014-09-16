@@ -60,8 +60,7 @@
   border-color: #b9b9b9;
 }
 .tokenfield .token.active {
-  border-color: #52a8ec;
-  border-color: rgba(82, 168, 236, 0.8);
+  border-color: #00410d;
 }
 .tokenfield .token.duplicate {
   border-color: #ebccd1;
