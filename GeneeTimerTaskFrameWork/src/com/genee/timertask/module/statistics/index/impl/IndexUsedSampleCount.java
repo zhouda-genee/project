@@ -40,12 +40,12 @@ public class IndexUsedSampleCount extends IndexBase {
 
 			if (equipments.containsKey(key)) {
 				EquipmentIndexEntity equipmentIndexEntity = equipments.get(key);
-				equipmentIndexEntity.setTestSamCnt(equipmentIndexEntity
-						.getTestSamCnt() + samples);
+				equipmentIndexEntity.setUsedSamCnt(equipmentIndexEntity
+						.getUsedSamCnt() + samples);
 			} else {
 				EquipmentIndexEntity equipmentIndexEntity = new EquipmentIndexEntity(
 						getId(), iEquipmentId, sUserId, startDate);
-				equipmentIndexEntity.setTestSamCnt(samples);
+				equipmentIndexEntity.setUsedSamCnt(samples);
 				equipments.put(key, equipmentIndexEntity);
 			}
 		}

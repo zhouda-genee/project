@@ -26,10 +26,10 @@ public class TaskEquipmentController extends BaseController {
 		String startDate = request.getParameter("startdate");
 		String endDate = request.getParameter("enddate");
 		try{
-			taskEquipmentIndex.run(DateUtil.string2Date(startDate), DateUtil.string2Date(endDate));
+			taskEquipmentIndex.runHM(DateUtil.string2Date(startDate), DateUtil.string2Date(endDate));
 			result.put("request-status", "success");
 		} catch(Exception ex) {
-			result.put("request-status", "failure");
+			result.put("request-status", ex.getMessage());
 		}
 		outJson(response, result, null);		
 	}

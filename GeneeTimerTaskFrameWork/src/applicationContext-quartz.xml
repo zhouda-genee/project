@@ -7,13 +7,6 @@
 	http://www.springframework.org/schema/context 
 	http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 	
-    <!-- 要调用的工作类 -->  
-    <bean id="reportService" class="com.genee.timertask.module.statistics.TaskEquipmentIndex">
-    	<property name="days">
-    		<value>30</value>
-    	</property>
-    </bean>  
-      
     <!-- 定义调用对象和调用对象的方法 -->  
     <bean id="jobtask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
     	<!--false表示等上一个任务执行完后再开启新的任务-->

@@ -8,7 +8,6 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.genee.timertask.framework.core.context.SpringContext;
@@ -21,7 +20,6 @@ import com.genee.timertask.module.pojo.EquipmentIndexEntity;
 import com.genee.timertask.module.pojo.IndexEntity;
 import com.genee.timertask.module.statistics.index.IndexBase;
 
-@Component
 public class TaskEquipmentIndex {
 	
 	private final static Logger logger = Logger.getLogger("genee");
@@ -40,6 +38,7 @@ public class TaskEquipmentIndex {
 	}
 
 	/**
+	 * @throws Exception 
 	 * 
 	 * @Title: run 
 	 * @Description: 定时任务执行 截止日期为当前系统日期的前一天
@@ -47,7 +46,6 @@ public class TaskEquipmentIndex {
 	 * @return void
 	 * @throws
 	 */
-	@Transactional(rollbackFor=Exception.class)
 	public void run() {
 		// 系统当前时间
 		Date currentDate = DateUtil.sysDate();
@@ -56,10 +54,15 @@ public class TaskEquipmentIndex {
 		// 计算结束日期
 		Date endDate = DateUtil.addDate(currentDate, DateType.DAY, -1);
 		
-		equipmentIndex(startDate, endDate);
+		try {
+			equipmentIndex(startDate, endDate);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
+	 * @throws Exception 
 	 * 
 	 * @Title: run 
 	 * @Description: 指定时间段 
@@ -68,60 +71,65 @@ public class TaskEquipmentIndex {
 	 * @return void
 	 * @throws
 	 */
-	@Transactional(rollbackFor=Exception.class)
-	public void run(Date startDate, Date endDate){
+	public void runHM(Date startDate, Date endDate) throws Exception{
 		equipmentIndex(startDate, endDate);
 	}
 	
-	private void equipmentIndex(Date startDate, Date endDate) {
-		// 待计算的指标集合
-		List<IndexEntity> indexs = indexDao.queryIndexs();
-		
-		int i = 1;
-		// 计算日期
-		Date calcDate = startDate;
-		logger.info("任务开始时间:" + System.currentTimeMillis());
-		while (DateUtil.compareDate(calcDate, endDate) <= 0) {
+	@Transactional(rollbackFor=Exception.class)
+	private void equipmentIndex(Date startDate, Date endDate) throws Exception {
+		try {
+			// 待计算的指标集合
+			List<IndexEntity> indexs = indexDao.queryIndexs();
 			
-			// 一天所有的仪器指标记录
-			Map<String, EquipmentIndexEntity> equipments = new HashMap<String, EquipmentIndexEntity>();
-			
-			String sStartDate = DateUtil.date2String(calcDate) + " 00:00:00";
-			String sEndDate = DateUtil.date2String(calcDate) + " 23:59:59";
-			long lStartDate = TimestampUtil.dateToTimestamp10(DateUtil.string2Timestamp(sStartDate));
-			long lEndDate = TimestampUtil.dateToTimestamp10(DateUtil.string2Timestamp(sEndDate));
-			
-			logger.info("开始计算[" + DateUtil.date2String(calcDate) + "]任务");
-			
-			IndexBase indexBase = null;
-			for (IndexEntity index : indexs) {
-				indexBase = (IndexBase)SpringContext.getBean(index.getIndexCode());
-				if (indexBase == null){
-					logger.error("\t没有找到[" + index.getIndexCode() + "]对应的指标类");
-				} else {
-					logger.info("\t执行[" + index.getIndexCode() + "]指标开始");
-					logger.info("\t\t参数:"
-							+"\n\t\tstartdate:" + lStartDate
-							+"\n\t\tenddate:" + lEndDate);
-					indexBase.run(lStartDate, lEndDate, equipments);
-					logger.info("\t执行[" + index.getIndexCode() + "]指标结束");
+			int i = 1;
+			// 计算日期
+			Date calcDate = startDate;
+			logger.info("任务开始时间:" + System.currentTimeMillis());
+			while (DateUtil.compareDate(calcDate, endDate) <= 0) {
+				
+				// 一天所有的仪器指标记录
+				Map<String, EquipmentIndexEntity> equipments = new HashMap<String, EquipmentIndexEntity>();
+				
+				String sStartDate = DateUtil.date2String(calcDate) + " 00:00:00";
+				String sEndDate = DateUtil.date2String(calcDate) + " 23:59:59";
+				long lStartDate = TimestampUtil.dateToTimestamp10(DateUtil.string2Timestamp(sStartDate));
+				long lEndDate = TimestampUtil.dateToTimestamp10(DateUtil.string2Timestamp(sEndDate));
+				
+				logger.info("开始计算[" + DateUtil.date2String(calcDate) + "]任务");
+				
+				IndexBase indexBase = null;
+				for (IndexEntity index : indexs) {
+					indexBase = (IndexBase)SpringContext.getBean(index.getIndexCode());
+					if (indexBase == null){
+						logger.error("\t没有找到[" + index.getIndexCode() + "]对应的指标类");
+					} else {
+						logger.info("\t执行[" + index.getIndexCode() + "]指标开始");
+						logger.info("\t\t参数:"
+								+"\n\t\tstartdate:" + lStartDate
+								+"\n\t\tenddate:" + lEndDate);
+						indexBase.run(lStartDate, lEndDate, equipments);
+						logger.info("\t执行[" + index.getIndexCode() + "]指标结束");
+					}
 				}
+				
+				// 删除计算日的记录
+				equipmentIndexDao.deleteEquipmentIndexByDay(TimestampUtil.dateToTimestamp10(calcDate));
+				// 数据库插入操作
+				Iterator<EquipmentIndexEntity> iter = equipments.values().iterator();
+				while (iter.hasNext()) {
+					EquipmentIndexEntity equipmentIndex = iter.next();
+					equipmentIndexDao.insertEquipmentIndexByUser(equipmentIndex);
+				}
+				
+				logger.info("结束计算[" + DateUtil.date2String(calcDate) + "]任务，当天共有:" + equipments.size() + "条记录");
+				
+				calcDate = DateUtil.addDate(startDate, DateType.DAY, i);
+				i++;
 			}
-			
-			// 删除计算日的记录
-			equipmentIndexDao.deleteEquipmentIndexByDay(TimestampUtil.dateToTimestamp10(calcDate));
-			// 数据库插入操作
-			Iterator<EquipmentIndexEntity> iter = equipments.values().iterator();
-			while (iter.hasNext()) {
-				EquipmentIndexEntity equipmentIndex = iter.next();
-				equipmentIndexDao.insertEquipmentIndexByUser(equipmentIndex);
-			}
-			
-			logger.info("结束计算[" + DateUtil.date2String(calcDate) + "]任务，当天共有:" + equipments.size() + "条记录");
-			
-			calcDate = DateUtil.addDate(startDate, DateType.DAY, i);
-			i++;
+			logger.info("任务结束时间:" + System.currentTimeMillis());
+		} catch(Exception ex) {
+			logger.error(ex);
+			throw new Exception ("指标执行异常", ex.getCause());
 		}
-		logger.info("任务结束时间:" + System.currentTimeMillis());
 	}
 }

@@ -307,6 +307,7 @@ input::-webkit-input-placeholder {
  
  /* td padding边距样式 */
 .table-left-body > table > tbody > tr > td,
+.table-right-foot > table > tfoot > tr > td,
 .table-right-body > table > tbody > tr > td {
 	padding-left: 22px;
 	padding-right: 22px;

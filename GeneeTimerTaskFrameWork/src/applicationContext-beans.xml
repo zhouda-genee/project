@@ -7,4 +7,11 @@
 
 	<bean id="basedao" class="com.genee.timertask.framework.core.base.dao.MysqlBaseDao" autowire="default"/>
 	
+	<!-- 要调用的工作类 -->  
+    <bean id="reportService" class="com.genee.timertask.module.statistics.TaskEquipmentIndex">
+    	<property name="days">
+    		<value>30</value>
+    	</property>
+    </bean>  
+	
 </beans>

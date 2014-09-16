@@ -111,7 +111,7 @@ public class EquipmentIndexEntity implements Serializable {
 	private String repair_cost;
 
 	// 培训费
-	private String train_cost;
+	private String train_cost_fudangao;
 
 	// 培训人数
 	private int train_cnt;
@@ -385,12 +385,12 @@ public class EquipmentIndexEntity implements Serializable {
 		this.repair_cost = repair_cost;
 	}
 
-	public String getTrain_cost() {
-		return train_cost;
+	public String getTrain_cost_fudangao() {
+		return train_cost_fudangao;
 	}
 
-	public void setTrain_cost(String train_cost) {
-		this.train_cost = train_cost;
+	public void setTrain_cost_fudangao(String train_cost_fudangao) {
+		this.train_cost_fudangao = train_cost_fudangao;
 	}
 
 	public int getTrain_cnt() {

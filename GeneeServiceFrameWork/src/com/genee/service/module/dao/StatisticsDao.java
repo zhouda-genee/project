@@ -67,13 +67,13 @@ public class StatisticsDao {
 		sql.append("       sum(_stat.give_sam_cnt)                                   as give_sam_cnt, "); // 送样测样数
 		sql.append("       sum(_stat.owner_sam_cnt)                                  as owner_sam_cnt, "); // 机主测样数
 		sql.append("       sum(_stat.stu_sam_cnt)                                    as stu_sam_cnt, "); // 学生测样数
-		sql.append("       format(sum(_stat.used_charge), 2)                          as used_charge, "); // 使用收费
-		sql.append("       format(sum(_stat.on_cam_charge), 2)                        as on_cam_charge, "); // 校内收费
-		sql.append("       format(sum(_stat.off_cam_charge), 2)                       as off_cam_charge, "); // 校外收费
-		sql.append("       format(sum(_stat.delegation_charge), 2)                    as delegation_charge, "); // 委托测试收费
-		sql.append("       format(sum(_stat.earnings_charge), 2)                      as earnings_charge, "); // 创收金额
-		sql.append("       format(sum(_stat.repair_cost), 2)                          as repair_cost, "); // 维修费
-		sql.append("       format(sum(_stat.train_cost), 2)                           as train_cost, "); // 培训费
+		sql.append("       format(sum(_stat.used_charge), 2)                         as used_charge, "); // 使用收费
+		sql.append("       format(sum(_stat.on_cam_charge), 2)                       as on_cam_charge, "); // 校内收费
+		sql.append("       format(sum(_stat.off_cam_charge), 2)                      as off_cam_charge, "); // 校外收费
+		sql.append("       format(sum(_stat.delegation_charge), 2)                   as delegation_charge, "); // 委托测试收费
+		sql.append("       format(sum(_stat.earnings_charge), 2)                     as earnings_charge, "); // 创收金额
+		sql.append("       format(sum(_stat.repair_cost), 2)                         as repair_cost, "); // 维修费
+		sql.append("       format(sum(_stat.train_cost), 2)                          as train_cost_fudangao, "); // 培训费
 		sql.append("       sum(_stat.train_cnt)                                      as train_cnt, "); // 培训人数
 		sql.append("       sum(_stat.train_stu)                                      as train_stu, "); // 培训学生
 		sql.append("       sum(_stat.train_tea)                                      as train_tea, "); // 培训教师
@@ -203,7 +203,7 @@ public class StatisticsDao {
 		sql.append("       format(sum(_stat.delegation_charge), 2)                    as delegation_charge, "); // 委托测试收费
 		sql.append("       format(sum(_stat.earnings_charge), 2)                      as earnings_charge, "); // 创收金额
 		sql.append("       format(sum(_stat.repair_cost), 2)                          as repair_cost, "); // 维修费
-		sql.append("       format(sum(_stat.train_cost), 2)                           as train_cost, "); // 培训费
+		sql.append("       format(sum(_stat.train_cost), 2)                           as train_cost_fudangao, "); // 培训费
 		sql.append("       sum(_stat.train_cnt)                                      as train_cnt, "); // 培训人数
 		sql.append("       sum(_stat.train_stu)                                      as train_stu, "); // 培训学生
 		sql.append("       sum(_stat.train_tea)                                      as train_tea, "); // 培训教师

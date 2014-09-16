@@ -20,7 +20,8 @@
 	<script>
 	// 指标消息提示
 	$(document).ready(function() {
-		initSearchItems();
+		// 默认查询前一天的记录
+		init();
 	});
 	</script>
 </head>

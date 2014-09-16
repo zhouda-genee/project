@@ -32,7 +32,7 @@ function EquipmentIndexPageSupport(indexData, pageCount, pageSize, page) {
 
 // 自定义统计列表参数对象
 function SearchParam(eq_name, eq_type, eq_org, eq_contact, eq_incharge,
-		lab_org, lab, user, dstart, dend, sort_name, sort, page, size) {
+		lab_org, lab, user, dstart, dend, sort_name, sort) {
 	this.eq_name = eq_name;
 	this.eq_type = eq_type;
 	this.eq_org = eq_org;
@@ -45,15 +45,13 @@ function SearchParam(eq_name, eq_type, eq_org, eq_contact, eq_incharge,
 	this.dend = dend;
 	this.sort_name = sort_name;
 	this.sort = sort;
-	this.size = size;
-	this.page = page;
+	this.size = 16;
+	this.page = 1;
 }
 
 // 获取查询条件
-function getSearchParam(page, size) {
+function getSearchParam() {
 	var searchParam = new SearchParam();
-	searchParam.size = size;
-	searchParam.page = page;
 	// 仪器名称
 	var eq_name = $("#eq_name").val();
 	if (eq_name != null && eq_name != "") {
@@ -186,7 +184,11 @@ function getEquipmentIndexData(param) {
 			equipmentIndexDataPageSupport.pageCount = result.pageCount;
 			equipmentIndexDataPageSupport.pageSize = result.pageSize;
 			equipmentIndexDataPageSupport.page = result.page;
-			equipmentIndexDataPageSupport.indexData = result.items;
+			if (!result.items){
+				equipmentIndexDataPageSupport.indexData = new Array();
+			} else {
+				equipmentIndexDataPageSupport.indexData = result.items;
+			}
 		}
 	});
 	return equipmentIndexDataPageSupport;
@@ -279,7 +281,6 @@ function buildTableHeaderRight() {
 			+ html + "</thead></table>";
 	$("#table-right-head").empty().append(html);
 	
-	var containerWidth = $(".table-container").width();
 	return indexEntityArray;
 }
 
@@ -393,7 +394,7 @@ function buildTableFootRight(equipmentIndexCount, indexEntityArray) {
 			if (data == 0) {
 				html += "<td style=\"width:" + index.width + "px\">-</td>";
 			} else {
-				html += "<td style=\"width:" + index.width + "px\">" + data
+				html += "<td style=\"width:" + index.width + "px;text-align:"+index.location+"\">" + data
 						+ "</td>";
 			}
 		} else {
@@ -474,12 +475,17 @@ function scorlling() {
 }
 
 function orderFilterFunction(sortName, sort) {
-	// 加载等待效果
-	overlayShow();
 	// 获取查询条件
-	searchParam = getSearchParam(1, 16);
+	searchParam = getSearchParam();
 	searchParam.sort_name = sortName;
 	searchParam.sort = sort;
+	queryEqStat(searchParam);
+}
+
+// 去调用service
+function queryEqStat(searchParam){
+	// 加载等待效果
+	overlayShow();
 	try {
 		// 创建表头左侧
 		buildTableHeaderLeft();
@@ -502,6 +508,8 @@ function orderFilterFunction(sortName, sort) {
 		// 点击搜索后，将滚动到顶部
 		$("#table-right-body").scrollTop(0);
 		$("#table-right-body").scrollLeft(0);
+		$("#table-right-head").scrollLeft(0);
+		$("#table-right-foot").scrollLeft(0);
 	} catch (e) {
 		alert("异常的错误信息：" + e.message);
 	}
@@ -509,6 +517,21 @@ function orderFilterFunction(sortName, sort) {
 	$("label").tooltip(options);
 	// 去掉等待效果
 	overlayHide();
+}
+
+// 初始化查询前一天的记录
+function init(){
+	initSearchItems();
+	var yesterday = new Date();
+	yesterday.setDate(yesterday.getDate() - 1);
+	var strDate = yesterday.getFullYear() + "-" + (yesterday.getMonth() + 1) + "-" + yesterday.getDate();
+	var searchParam = new SearchParam();
+	searchParam.dstart = new Date(strDate.replace(/-/g, '/') + " 00:00:00").getTime();
+	searchParam.dend = new Date(strDate.replace(/-/g, '/') + " 23:59:59").getTime();
+	searchParam.sort_name = "eq_name";
+	searchParam.sort = "asc"
+	queryEqStat(searchParam);
+	
 }
 // 指标列排序的图标切换效果
 function sortHeader(obj) {

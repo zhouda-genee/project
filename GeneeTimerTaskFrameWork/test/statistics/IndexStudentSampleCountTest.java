@@ -18,7 +18,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.genee.timertask.framework.core.base.test.BaseTest;
 import com.genee.timertask.module.pojo.EquipmentIndexEntity;
 import com.genee.timertask.module.statistics.index.impl.IndexStudentSampleCount;
-import com.genee.timertask.module.statistics.index.impl.IndexUsedSampleCount;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class IndexStudentSampleCountTest extends BaseTest {

@@ -381,6 +381,7 @@ function initSearchItems() {
 																										"type" : "checkbox",
 																										"value" : indexValue.sId,
 																										"code" : indexValue.sCode,
+																										"checked" : "checked",
 																										"index-location" : indexValue.sLocation,
 																										"index-description" : indexValue.sDescription,
 																										"index-width" : indexValue.sWidth,
