@@ -230,20 +230,19 @@
 
       // Bail out if there if attributes are empty or event was defaultPrevented
       if (!createEvent.attrs || createEvent.isDefaultPrevented()) return
-
+     
       var $token = $('<div class="token" />')
             .append('<span class="token-label" />')
             .append('<a href="#" class="close" tabindex="-1">&times;</a>')
             .data('attrs', attrs)
-
       // Insert token into HTML
       if (this.$input.hasClass('tt-input')) {
         // If the input has typeahead enabled, insert token before it's parent
         this.$input.parent().before( $token )
+        
       } else {
         this.$input.before( $token )
       }
-
       // Temporarily set input width to minimum
       this.$input.css('width', this.options.minWidth + 'px')
 
@@ -333,7 +332,6 @@
           tokens = [tokens];
         }
       }
-
       var _self = this
       $.each(tokens, function (i, attrs) {
         _self.createToken(attrs, triggerChange)
@@ -435,6 +433,10 @@
               _self.unedit(true)
             }
           }
+          
+          if (_self.$input.is(document.activeElement) && _self.$input.val().length || _self.$input.data('edit')) {
+              return _self.createTokensFromInput(e, _self.$input.data('edit'));
+            }
         })
 
       // Listen to window resize
@@ -487,9 +489,9 @@
           if (this.$input.hasClass('tt-input') && this.$wrapper.find('.tt-hint').val().length) break
 
           // Create token
-          if (this.$input.is(document.activeElement) && this.$input.val().length || this.$input.data('edit')) {
+          /*if (this.$input.is(document.activeElement) && this.$input.val().length || this.$input.data('edit')) {
             return this.createTokensFromInput(e, this.$input.data('edit'));
-          }
+          }*/
 
           // Edit token
           if (e.keyCode === 13) {
@@ -775,13 +777,12 @@
 
       $token.find('.token-label').text(attrs.value)
       var tokenWidth = $token.outerWidth()
-
+      
       var $_input = this.$input.hasClass('tt-input') ? this.$input.parent() : this.$input
 
       $token.replaceWith( $_input )
 
       this.preventCreateTokens = true
-
       this.$input.val( attrs.value )
                 .select()
                 .data( 'edit', true )
@@ -851,6 +852,7 @@
 
       // Adjust input width
       this.$input.css('width', this.options.minWidth + 'px')
+      
       this.update()
 
       // Cancel original event handlers
@@ -866,7 +868,7 @@
         , inputPaddingLeft = parseInt(this.$input.css('padding-left'), 10)
         , inputPaddingRight = parseInt(this.$input.css('padding-right'), 10)
         , inputPadding = inputPaddingLeft + inputPaddingRight
-
+        
       if (this.$input.data('edit')) {
 
         if (!value) {
@@ -893,6 +895,8 @@
         // so placeholder won't be cut off.
         isNaN(w) ? this.$input.width('100%') : this.$input.width(w);
       }
+      
+      this.$input.width('100%');
     }
 
   , focusInput: function (e) {
