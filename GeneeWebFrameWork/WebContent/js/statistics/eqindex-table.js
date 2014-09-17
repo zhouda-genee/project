@@ -134,7 +134,7 @@ function fillSearchItem() {
 	$("#s_eq_contact").html(contact_label);
 	
 	// 课题组组织机构
-	$("#s_lab_org").val($("#lab_org_name").val());
+	$("#s_lab_org").html($("#lab_org_name").val());
 	
 	// 课题组
 	var lab_tokens = $("#lab_tokenfield").tokenfield('getTokens');
