@@ -1,5 +1,6 @@
 package com.genee.timertask.module.statistics.index.impl;
 
+
 import java.util.List;
 import java.util.Map;
 
@@ -54,13 +55,13 @@ public class IndexStudentSampleCount extends IndexBase {
 	private List<Map<String, Object>> queryResult(long startDate, long endDate) {
 		String sql = "select er.equipment_id as equipmentid, er.user_id as userid, sum(samples) as samples "
 				+ "from eq_record er "
-				+ "inner join _r_user_equipment rue on er.user_id != rue.id1 and er.equipment_id = rue.id2 "
-				+ "where er.dtend between ? and ? "
-				+ "group by er.equipment_id, er.user_id "
-				+ "order by er.equipment_id";
+				+ "where " 
+				+ "er.dtend between ? and ? "
+				+ "and not EXISTS (select id1 from _r_user_equipment where id2 = er.equipment_id and id1 = er.user_id)"
+				+ "group by er.equipment_id, er.user_id ";
 		JdbcTemplateParam jdbcTemplateParam = new JdbcTemplateParam(sql,
-				new Object[] { startDate, endDate }, new int[] {
-						java.sql.Types.INTEGER, java.sql.Types.INTEGER });
+				new Object[] { startDate, endDate }, 
+				new int[] { java.sql.Types.INTEGER, java.sql.Types.INTEGER });
 		return baseDao.queryForList(jdbcTemplateParam);
 	}
 
