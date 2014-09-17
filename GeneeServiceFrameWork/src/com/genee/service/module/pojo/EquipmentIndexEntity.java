@@ -42,37 +42,37 @@ public class EquipmentIndexEntity implements Serializable {
 	private String linkman;
 
 	// 入网时长
-	private double innet_dur;
+	private String innet_dur;
 
 	// 故障时长
-	private double fault_dur;
+	private String fault_dur;
 
 	// 预约机时
-	private double appointment_dur;
+	private String appointment_dur;
 
 	// 使用机时
-	private double used_dur;
+	private String used_dur;
 
 	// 机主使用机时
-	private double owner_used_dur;
+	private String owner_used_dur;
 
 	// 开放机时
-	private double open_dur;
+	private String open_dur;
 
 	// 有效机时
-	private double valid_dur;
+	private String valid_dur;
 
 	// 委托测试机时
-	private double test_dur;
+	private String test_dur;
 
 	// 科研机时
-	private double scientific_dur;
+	private String scientific_dur;
 
 	// 教学机时
-	private double teach_dur;
+	private String teach_dur;
 
 	// 社会项目机时
-	private double society_dur;
+	private String society_dur;
 
 	// 使用次数
 	private int used_times;
@@ -201,91 +201,91 @@ public class EquipmentIndexEntity implements Serializable {
 		this.linkman = linkman;
 	}
 
-	public double getInnet_dur() {
+	public String getInnet_dur() {
 		return innet_dur;
 	}
 
-	public void setInnet_dur(double innet_dur) {
+	public void setInnet_dur(String innet_dur) {
 		this.innet_dur = innet_dur;
 	}
 
-	public double getFault_dur() {
+	public String getFault_dur() {
 		return fault_dur;
 	}
 
-	public void setFault_dur(double fault_dur) {
+	public void setFault_dur(String fault_dur) {
 		this.fault_dur = fault_dur;
 	}
 
-	public double getAppointment_dur() {
+	public String getAppointment_dur() {
 		return appointment_dur;
 	}
 
-	public void setAppointment_dur(double appointment_dur) {
+	public void setAppointment_dur(String appointment_dur) {
 		this.appointment_dur = appointment_dur;
 	}
 
-	public double getUsed_dur() {
+	public String getUsed_dur() {
 		return used_dur;
 	}
 
-	public void setUsed_dur(double used_dur) {
+	public void setUsed_dur(String used_dur) {
 		this.used_dur = used_dur;
 	}
 
-	public double getOwner_used_dur() {
+	public String getOwner_used_dur() {
 		return owner_used_dur;
 	}
 
-	public void setOwner_used_dur(double owner_used_dur) {
+	public void setOwner_used_dur(String owner_used_dur) {
 		this.owner_used_dur = owner_used_dur;
 	}
 
-	public double getOpen_dur() {
+	public String getOpen_dur() {
 		return open_dur;
 	}
 
-	public void setOpen_dur(double open_dur) {
+	public void setOpen_dur(String open_dur) {
 		this.open_dur = open_dur;
 	}
 
-	public double getValid_dur() {
+	public String getValid_dur() {
 		return valid_dur;
 	}
 
-	public void setValid_dur(double valid_dur) {
+	public void setValid_dur(String valid_dur) {
 		this.valid_dur = valid_dur;
 	}
 
-	public double getTest_dur() {
+	public String getTest_dur() {
 		return test_dur;
 	}
 
-	public void setTest_dur(double test_dur) {
+	public void setTest_dur(String test_dur) {
 		this.test_dur = test_dur;
 	}
 
-	public double getScientific_dur() {
+	public String getScientific_dur() {
 		return scientific_dur;
 	}
 
-	public void setScientific_dur(double scientific_dur) {
+	public void setScientific_dur(String scientific_dur) {
 		this.scientific_dur = scientific_dur;
 	}
 
-	public double getTeach_dur() {
+	public String getTeach_dur() {
 		return teach_dur;
 	}
 
-	public void setTeach_dur(double teach_dur) {
+	public void setTeach_dur(String teach_dur) {
 		this.teach_dur = teach_dur;
 	}
 
-	public double getSociety_dur() {
+	public String getSociety_dur() {
 		return society_dur;
 	}
 
-	public void setSociety_dur(double society_dur) {
+	public void setSociety_dur(String society_dur) {
 		this.society_dur = society_dur;
 	}
 

@@ -51,16 +51,16 @@ public class StatisticsDao {
 		sql.append("       _eq.principal, "); // 负责人
 		sql.append("       _eq.linkman, "); // 联系人
 		sql.append("       _eq.innet_dur, "); // 入网时长
-		sql.append("       sum(round(_stat.fault_dur / 60 / 60, 2))                  as fault_dur, "); // 故障时长
-		sql.append("       sum(round(_stat.appointment_dur / 60 / 60, 2))            as appointment_dur, "); // 预约机时
-		sql.append("       sum(round(_stat.used_dur / 60 / 60, 2))                   as used_dur, "); // 使用机时
-		sql.append("       sum(round(_stat.owner_used_dur / 60 / 60, 2))             as owner_used_dur, "); // 机主使用机时
-		sql.append("       sum(round(_stat.open_dur / 60 / 60, 2))                   as open_dur, "); // 开放机时
-		sql.append("       sum(round(_stat.valid_dur / 60 / 60, 2))                  as valid_dur, "); // 有效机时
-		sql.append("       sum(round(_stat.test_dur / 60 / 60, 2))                   as test_dur, "); // 委托测试机时
-		sql.append("       sum(round(_stat.scientific_dur / 60 / 60, 2))             as scientific_dur, "); //科研机时
-		sql.append("       sum(round(_stat.teach_dur / 60 / 60, 2))                  as teach_dur, "); // 教学机时
-		sql.append("       sum(round(_stat.society_dur / 60 / 60, 2))                as society_dur, "); // 社会项目机时
+		sql.append("       replace(format(sum(round(_stat.fault_dur / 60 / 60, 2)),2), ',', '')                  as fault_dur, "); // 故障时长
+		sql.append("       replace(format(sum(round(_stat.appointment_dur / 60 / 60, 2)),2), ',', '')            as appointment_dur, "); // 预约机时
+		sql.append("       replace(format(sum(round(_stat.used_dur / 60 / 60, 2)),2), ',', '')                   as used_dur, "); // 使用机时
+		sql.append("       replace(format(sum(round(_stat.owner_used_dur / 60 / 60, 2)),2), ',', '')             as owner_used_dur, "); // 机主使用机时
+		sql.append("       replace(format(sum(round(_stat.open_dur / 60 / 60, 2)),2), ',', '')                   as open_dur, "); // 开放机时
+		sql.append("       replace(format(sum(round(_stat.valid_dur / 60 / 60, 2)),2), ',', '')                  as valid_dur, "); // 有效机时
+		sql.append("       replace(format(sum(round(_stat.test_dur / 60 / 60, 2)),2), ',', '')                   as test_dur, "); // 委托测试机时
+		sql.append("       replace(format(sum(round(_stat.scientific_dur / 60 / 60, 2)),2), ',', '')             as scientific_dur, "); //科研机时
+		sql.append("       replace(format(sum(round(_stat.teach_dur / 60 / 60, 2)),2), ',', '')                  as teach_dur, "); // 教学机时
+		sql.append("       replace(format(sum(round(_stat.society_dur / 60 / 60, 2)),2), ',', '')                as society_dur, "); // 社会项目机时
 		sql.append("       sum(_stat.used_times)                                     as used_times, "); // 使用次数
 		sql.append("       sum(_stat.test_sam_cnt)                                   as test_sam_cnt, "); // 测样数
 		sql.append("       sum(_stat.used_sam_cnt)                                   as used_sam_cnt, "); // 使用测样数
@@ -181,16 +181,16 @@ public class StatisticsDao {
 		
 		StringBuilder sql = new StringBuilder();
 		sql.append("select count(distinct _stat.equipment_id)                		 as eq_count, "); // 仪器数量
-		sql.append("	   sum(round(_stat.fault_dur / 60 / 60, 2))                  as fault_dur, "); // 故障时长
-		sql.append("       sum(round(_stat.appointment_dur / 60 / 60, 2))            as appointment_dur, "); // 预约机时
-		sql.append("       sum(round(_stat.used_dur / 60 / 60, 2))                   as used_dur, "); // 使用机时
-		sql.append("       sum(round(_stat.owner_used_dur / 60 / 60, 2))             as owner_used_dur, "); // 机主使用机时
-		sql.append("       sum(round(_stat.open_dur / 60 / 60, 2))                   as open_dur, "); // 开放机时
-		sql.append("       sum(round(_stat.valid_dur / 60 / 60, 2))                  as valid_dur, "); // 有效机时
-		sql.append("       sum(round(_stat.test_dur / 60 / 60, 2))                   as test_dur, "); // 委托测试机时
-		sql.append("       sum(round(_stat.scientific_dur / 60 / 60, 2))             as scientific_dur, "); //科研机时
-		sql.append("       sum(round(_stat.teach_dur / 60 / 60, 2))                  as teach_dur, "); // 教学机时
-		sql.append("       sum(round(_stat.society_dur / 60 / 60, 2))                as society_dur, "); // 社会项目机时
+		sql.append("	   replace(format(sum(round(_stat.fault_dur / 60 / 60, 2)),2), ',', '')                  as fault_dur, "); // 故障时长
+		sql.append("       replace(format(sum(round(_stat.appointment_dur / 60 / 60, 2)),2), ',', '')            as appointment_dur, "); // 预约机时
+		sql.append("       replace(format(sum(round(_stat.used_dur / 60 / 60, 2)),2), ',', '')                   as used_dur, "); // 使用机时
+		sql.append("       replace(format(sum(round(_stat.owner_used_dur / 60 / 60, 2)),2), ',', '')             as owner_used_dur, "); // 机主使用机时
+		sql.append("       replace(format(sum(round(_stat.open_dur / 60 / 60, 2)),2), ',', '')                   as open_dur, "); // 开放机时
+		sql.append("       replace(format(sum(round(_stat.valid_dur / 60 / 60, 2)),2), ',', '')                  as valid_dur, "); // 有效机时
+		sql.append("       replace(format(sum(round(_stat.test_dur / 60 / 60, 2)),2), ',', '')                   as test_dur, "); // 委托测试机时
+		sql.append("       replace(format(sum(round(_stat.scientific_dur / 60 / 60, 2)),2), ',', '')             as scientific_dur, "); //科研机时
+		sql.append("       replace(format(sum(round(_stat.teach_dur / 60 / 60, 2)),2), ',', '')                  as teach_dur, "); // 教学机时
+		sql.append("       replace(format(sum(round(_stat.society_dur / 60 / 60, 2)),2), ',', '')                as society_dur, "); // 社会项目机时
 		sql.append("       sum(_stat.used_times)                                     as used_times, "); // 使用次数
 		sql.append("       sum(_stat.test_sam_cnt)                                   as test_sam_cnt, "); // 测样数
 		sql.append("       sum(_stat.used_sam_cnt)                                   as used_sam_cnt, "); // 使用测样数
