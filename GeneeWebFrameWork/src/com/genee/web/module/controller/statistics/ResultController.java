@@ -283,7 +283,12 @@ public class ResultController extends BaseController {
 	
 	@SuppressWarnings("unchecked")
 	private Map<String, Object> queryIndex(HttpServletRequest request) throws ParseException {
-		String indexId = request.getParameter("indexId");
+		//仪器名称的ID
+		String indexId = "1";
+		
+		if (request.getParameter("indexId") != null) {
+			indexId += "," + request.getParameter("indexId");
+		}
 		
 		//查询表头
 		List<Map<String, Object>> topHeaders = excelService.getTopHeaders(indexId);
