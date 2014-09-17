@@ -17,6 +17,7 @@
 	line-height: 20px;
 	vertical-align: top;
 	_width:0;
+	word-wrap: break-word; 
 }
 
 .tag_selector .tag_selector_link a {
@@ -81,6 +82,10 @@
 
 .tag_selector_menu .tag_item td {
 	vertical-align: middle;
+}
+
+.tag_selector_menu .tag_item .ckb input {
+	margin-bottom: 5px;
 }
 
 .tag_selector_menu .tag_item .text {
