@@ -205,6 +205,7 @@
 						
 						var $checkAllItem = $(t.opt.item);
 						$checkAllItem.find('.text').html("全选");
+						$checkAllItem.find('.number').html(items.length);
 						
 						var checkboxAll = $("<input/>").attr({
 							"type" : "checkbox",
