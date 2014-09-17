@@ -425,7 +425,7 @@ function interleaveChangeColor(object) {
 	object.find("tr:odd").css("background", "#f7f9fa");
 }
 
-function dosearch() {
+function dosearch(flag) {
 	//校验
 	var valid = false;
 	if ($("#dstart").val() == "" || $("dend").val() == "") {
@@ -447,7 +447,9 @@ function dosearch() {
 	
 	orderFilterFunction("eq_name", "asc");
 	// 收回窗口
-	displaySearchProperties();
+	if (flag){
+		displaySearchProperties();
+	}
 }
 
 function scorlling() {
@@ -525,12 +527,15 @@ function init(){
 	var yesterday = new Date();
 	yesterday.setDate(yesterday.getDate() - 1);
 	var strDate = yesterday.getFullYear() + "-" + (yesterday.getMonth() + 1) + "-" + yesterday.getDate();
-	var searchParam = new SearchParam();
+	$("#dstart").val(strDate);
+	$("#dend").val(strDate);
+	dosearch(false);
+	/*var searchParam = new SearchParam();
 	searchParam.dstart = new Date(strDate.replace(/-/g, '/') + " 00:00:00").getTime();
 	searchParam.dend = new Date(strDate.replace(/-/g, '/') + " 23:59:59").getTime();
 	searchParam.sort_name = "eq_name";
 	searchParam.sort = "asc"
-	queryEqStat(searchParam);
+	queryEqStat(searchParam);*/
 	
 }
 // 指标列排序的图标切换效果

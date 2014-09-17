@@ -107,7 +107,7 @@
 							            <div class="index-grid" id="indexContent"></div><!-- index-grid -->
 							
 							            <div class="search-link-group">
-							              	<a class="link link-primary link-tab-primary" id="dosearch" onclick="dosearch()">搜索</a>
+							              	<a class="link link-primary link-tab-primary" id="dosearch" onclick="dosearch(true)">搜索</a>
 							              	<a class="link link-default link-tab-default" data-dismiss="modal" onclick="displaySearchProperties()">取消</a>
 							            </div>
 						            </div>
