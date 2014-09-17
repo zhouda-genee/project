@@ -53,7 +53,7 @@ function SearchParam(eq_name, eq_type, eq_org, eq_contact, eq_incharge,
 function getSearchParam() {
 	var searchParam = new SearchParam();
 	// 仪器名称
-	var eq_name = $("#eq_name").val();
+	var eq_name = $.trim($("#eq_name").val());
 	if (eq_name != null && eq_name != "") {
 		searchParam.eq_name = eq_name;
 	}
