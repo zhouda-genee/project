@@ -391,7 +391,9 @@ function buildTableFootRight(equipmentIndexCount, indexEntityArray) {
 		// 0 代表统计
 		if (index.notCount == "0") {
 			var data = equipmentIndexCount[index.code];
-			if (data == 0) {
+			if (!data){
+				html += "<td style=\"width:" + index.width + "px\">-</td>";
+			} else if (data == 0) {
 				html += "<td style=\"width:" + index.width + "px\">-</td>";
 			} else {
 				html += "<td style=\"width:" + index.width + "px;text-align:"+index.location+"\">" + data
