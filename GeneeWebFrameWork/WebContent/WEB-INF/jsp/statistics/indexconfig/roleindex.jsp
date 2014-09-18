@@ -1,20 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@include file="../common/base.jsp" %>
-<%@include file="../common/title.jsp" %>
-<%@include file="../common/menu.jsp" %>
 <!DOCTYPE">
 <html>
 <head>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!--[if lt IE 9]>
-	    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-	    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->    
-    <title>角色指标列表</title>
+    <%@include file="../common/base.jsp" %>    
 </head>
 <body>
+	
+	<%@include file="../common/title.jsp" %>
+	<%@include file="../common/menu.jsp" %>
     <div class="col-md-10 main">
 		<div class="tab-group">
 		  <a href="javascript:void(0);" class="link link-tab-primary">统计项设置</a>
