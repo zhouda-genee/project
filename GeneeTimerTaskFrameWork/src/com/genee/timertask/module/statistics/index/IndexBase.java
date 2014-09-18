@@ -71,7 +71,8 @@ public abstract class IndexBase {
 		// 2、如果dStartDate与dResultStartDate的年月日相同，则计算dResultStartDate至23:59:59的秒数
 		// 3、如果dEndDate与dResultEndDate的年月日相同，则计算00:00:00至dResultEndDate的秒数
 		// 4、如果dStartDate在dResultStartDate和dResultEndDate之间，则为24*60*60的秒数
-		// 5、都不满足则为0
+		// 5、如果iResultEndDate＝0，同时dStartDate大于dResultStartDate，则认为是使用中的记录，则为24*60*60的秒数
+		// 6、都不满足则为0
 		if (SDF.format(dResultStartDate).equals(SDF.format(dResultEndDate))){
 			lSecond = dateSubtractSecond(dResultStartDate, dResultEndDate);
 		} else if (SDF.format(dStartDate).equals(SDF.format(dResultStartDate))){
@@ -80,6 +81,8 @@ public abstract class IndexBase {
 			lSecond = dateSubtractSecond(dStartDate, dResultEndDate);
 		} else if (DateUtil.compareDate(dResultStartDate, dStartDate) == -1 && 
 				DateUtil.compareDate(dStartDate, dResultEndDate) == -1){
+			lSecond = 24 * 60 * 60;
+		} else if (iResultEndDate == 0 && DateUtil.compareDate(dResultStartDate, dStartDate) == -1){
 			lSecond = 24 * 60 * 60;
 		} else {
 			lSecond = 0;

@@ -57,13 +57,14 @@ public class IndexTestDuration extends IndexBase {
 				+ "where (a.dtstart between ? and ? "
 				+ "or a.dtend between ? and ? "
 				+ "or ? between a.dtstart and a.dtend "
-				+ "or ? between a.dtstart and a.dtend) "
+				+ "or ? between a.dtstart and a.dtend "
+				+ "or (a.dtend = 0 and a.dtstart < ?)) "
 				+ "and a.id = b.record_id";
 		JdbcTemplateParam jdbcTemplateParam = new JdbcTemplateParam(sql,
-				new Object[] { startDate, endDate, startDate, endDate, startDate, endDate }, 
+				new Object[] { startDate, endDate, startDate, endDate, startDate, endDate, startDate}, 
 				new int[] { java.sql.Types.INTEGER, java.sql.Types.INTEGER,
 						java.sql.Types.INTEGER, java.sql.Types.INTEGER,
-						java.sql.Types.INTEGER, java.sql.Types.INTEGER });
+						java.sql.Types.INTEGER, java.sql.Types.INTEGER, java.sql.Types.INTEGER });
 		return baseDao.queryForList(jdbcTemplateParam);
 	}
 
