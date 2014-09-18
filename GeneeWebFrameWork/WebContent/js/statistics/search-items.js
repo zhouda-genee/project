@@ -328,10 +328,9 @@ function initSearchItems() {
 								type : "get",
 								success : function(indexData) {
 									var indexResult = indexData.result;
-									$('#indexContent').empty();
+									$('#indexContent').empty().append("<div class=\"checkall\"><div class=\"right\"><input type=\"checkbox\" checked=\"checked\" onclick=\"selectAllCheckbox('indexContent', this)\"/><label>全选</label></div></div>");
 
-									$
-											.each(
+									$.each(
 													indexTypeResult,
 													function(typeNum, typeValue) {
 

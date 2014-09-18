@@ -223,7 +223,7 @@ function getEquipmentIndexCount(param) {
 function buildTableHeaderLeft() {
 	var html = "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"data-table table-condensed\">" +
 			"<thead><tr class=\"index-name\"><th name=\"eq_name\" style=\"height: 66px;\" rowspan=\"2\" onclick=\"sortHeader(this)\">" +
-			"<label data-toggle=\"tooltip\" data-placement=\"top\" title=\"abc\">仪器名称</label><span class=\"sorting\"></span></th></tr></thead></table>";
+			"<label data-toggle=\"tooltip\" data-placement=\"top\" >仪器名称</label><span class=\"sorting\"></span></th></tr></thead></table>";
 	$(".table-left > .table-border-diy-up").css("width","160px");
 	$(".table-left > .table-border-diy-down").css("width","160px");
 	$("#table-left-head").empty().append(html);
@@ -532,13 +532,6 @@ function init(){
 	$("#dstart").val(strDate);
 	$("#dend").val(strDate);
 	dosearch(false);
-	/*var searchParam = new SearchParam();
-	searchParam.dstart = new Date(strDate.replace(/-/g, '/') + " 00:00:00").getTime();
-	searchParam.dend = new Date(strDate.replace(/-/g, '/') + " 23:59:59").getTime();
-	searchParam.sort_name = "eq_name";
-	searchParam.sort = "asc"
-	queryEqStat(searchParam);*/
-	
 }
 // 指标列排序的图标切换效果
 function sortHeader(obj) {
@@ -570,4 +563,8 @@ function displaySearchProperties() {
 	} else {
 		$("#searchProperties").slideUp(1000);
 	}
+}
+
+function selectAllCheckbox(target, obj){
+	$("#" + target).find(":checkbox").prop("checked", obj.checked);
 }
