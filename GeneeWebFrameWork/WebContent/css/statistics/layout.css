@@ -304,7 +304,10 @@ input::-webkit-input-placeholder {
 /**
  * table css 
  */ 
- 
+.table-left-body > table > tbody > tr,
+.table-right-body > table > tbody > tr {
+	height: 32px;
+} 
  /* td padding边距样式 */
 .table-left-body > table > tbody > tr > td,
 .table-right-foot > table > tfoot > tr > td,
