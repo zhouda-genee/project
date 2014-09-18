@@ -136,20 +136,32 @@ public class StatisticsDao {
 			sql.append(" and _stat.user_id in (" + user + ")");
 		}
 		sql.append("group  by _eq.eq_id, _eq.eq_name, _eq.eq_price, _eq.principal, _eq.linkman, _eq.innet_dur ");
+		
+		String _sql = sql.toString();
 		if (StringUtils.isNotEmpty(sortName) && !"null".equals(sortName)){
-			if (sortName.equals("eq_price"))
-				sql.append("order by cast(_eq.eq_price as decimal) " + sort);
-			else	
-				sql.append("order by " + sortName + " " + sort);
+			if (sortName.equals("eq_price") ||
+					sortName.equals("fault_dur") ||
+					sortName.equals("appointment_dur") ||
+					sortName.equals("used_dur") ||
+					sortName.equals("owner_used_dur") ||
+					sortName.equals("open_dur") ||
+					sortName.equals("valid_dur") ||
+					sortName.equals("test_dur") ||
+					sortName.equals("scientific_dur") ||
+					sortName.equals("teach_dur") ||
+					sortName.equals("society_dur"))
+				_sql = "select * from (" + _sql + ") a order by cast(" + sortName + " as decimal) " + sort;
+			else
+				_sql = "select * from (" + _sql + ") a order by " + sortName + " " + sort;
 		} else {
-			sql.append("order by _eq.eq_name");
+			_sql = "select * from (" + _sql + ") a order by eq_name";
 		}
 		// 遍历数据类型
 		int[] typeArray = new int[paramType.size()];
 		for (int i = 0; i < paramType.size(); i++) {
 			typeArray[i] = paramType.get(i);
 		}
-		JdbcTemplateParam param = new JdbcTemplateParam(sql.toString(), paramValue.toArray(), typeArray);
+		JdbcTemplateParam param = new JdbcTemplateParam(_sql, paramValue.toArray(), typeArray);
 		List<EquipmentIndexEntity> result = null;
 		if (pageSupport != null) {
 			baseDao.queryForList(param, pageSupport, EquipmentIndexEntity.class);
