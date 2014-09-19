@@ -48,6 +48,7 @@ public class StatisticsDao {
 		sql.append("select _eq.eq_id, "); // 仪器ID
 		sql.append("       case when _eq.status = 0 then concat(_eq.eq_name, '(正常)') when _eq.status = 1 then concat(_eq.eq_name, '(临时故障)') when _eq.status = 2 then concat(_eq.eq_name, '(报废)') end as eq_name	, "); // 仪器名称
 		sql.append("       format(cast(_eq.eq_price as decimal), 2) 				 as eq_price, "); // 仪器价格
+		sql.append("	   _eq.eq_ref_no as eq_ref_no, "); // 仪器编号
 		sql.append("       _eq.principal, "); // 负责人
 		sql.append("       _eq.linkman, "); // 联系人
 		sql.append("       _eq.innet_dur, "); // 入网时长
@@ -149,8 +150,15 @@ public class StatisticsDao {
 					sortName.equals("test_dur") ||
 					sortName.equals("scientific_dur") ||
 					sortName.equals("teach_dur") ||
-					sortName.equals("society_dur"))
-				_sql = "select * from (" + _sql + ") a order by cast(" + sortName + " as decimal) " + sort;
+					sortName.equals("society_dur") || 
+					sortName.equals("used_charge") ||
+					sortName.equals("on_cam_charge") ||
+					sortName.equals("off_cam_charge") ||
+					sortName.equals("delegation_charge") ||
+					sortName.equals("earnings_charge") ||
+					sortName.equals("repair_cost") ||
+					sortName.equals("train_cost_fudangao"))
+				_sql = "select * from (" + _sql + ") a order by replace(" + sortName + ",',','') + 0 " + sort;
 			else
 				_sql = "select * from (" + _sql + ") a order by " + sortName + " " + sort;
 		} else {

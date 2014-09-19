@@ -24,6 +24,9 @@ public class EquipmentIndexEntity implements Serializable {
 	// 仪器ID
 	@XmlAttribute(name = "eq_id")
 	private long eq_id;
+	
+	// 仪器编号
+	private String eq_ref_no;
 
 	// 仪器名称
 	private String eq_name;
@@ -167,6 +170,14 @@ public class EquipmentIndexEntity implements Serializable {
 
 	public void setEq_id(long eq_id) {
 		this.eq_id = eq_id;
+	}
+
+	public String getEq_ref_no() {
+		return eq_ref_no;
+	}
+
+	public void setEq_ref_no(String eq_ref_no) {
+		this.eq_ref_no = eq_ref_no;
 	}
 
 	public String getEq_name() {
