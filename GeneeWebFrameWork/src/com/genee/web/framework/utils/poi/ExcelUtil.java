@@ -74,18 +74,23 @@ public class ExcelUtil {
 		int topHeaderIndex = 0;
 		for (Map<String, Object> header : topHeaders) {
 			Cell cell = topRow.createCell(topHeaderIndex);
-
 			// 计算需要合并的表头的开始列和结束列
 			int headerStart = topHeaderIndex;
 			int headerEnd = topHeaderIndex
 					+ Integer.parseInt(header.get("ccount").toString()) - 1;
 
+			int indexPlugin = 0;
+			
+			if (topHeaderIndex == 0) {
+				indexPlugin = 2;
+			}
+			
 			// 合并单元格
 			sheet.addMergedRegion(new CellRangeAddress(0, 0, headerStart,
-					headerEnd));
+					headerEnd + indexPlugin));
 
 			// 单元格计数
-			topHeaderIndex += Integer.parseInt(header.get("ccount").toString());
+			topHeaderIndex += Integer.parseInt(header.get("ccount").toString()) + indexPlugin;
 
 			// 应用样式
 			cell.setCellStyle(headerStyle);
@@ -110,6 +115,18 @@ public class ExcelUtil {
 			cell.setCellValue(header.get("name").toString());
 			
 			midHeaderIndex ++;
+			
+			if (header.get("code").toString().equals("eq_name")) {
+				Cell eqNoCell = midRow.createCell(midHeaderIndex);
+				eqNoCell.setCellStyle(headerStyle);
+				eqNoCell.setCellValue("仪器编号");
+				midHeaderIndex ++;
+				
+				Cell eqIdCell = midRow.createCell(midHeaderIndex);
+				eqIdCell.setCellStyle(headerStyle);
+				eqIdCell.setCellValue("仪器CF_ID");
+				midHeaderIndex ++;
+			}
 		}
 
 		// 插入数据
@@ -128,6 +145,17 @@ public class ExcelUtil {
 							headerMap.get("code").toString())) {
 
 						cell.setCellValue(contentEntry.getValue().toString());
+						
+						if (headerMap.get("code").toString().equals("eq_name")) {
+							cellIndex ++;
+							Cell eqNoCell = contentRow.createCell(cellIndex);
+							eqNoCell.setCellValue(contentMap.get("eq_ref_no").toString());
+							
+							cellIndex ++;
+							Cell eqIdCell = contentRow.createCell(cellIndex);
+							eqIdCell.setCellValue(contentMap.get("eq_id").toString());
+						}
+						
 						break;
 					}
 				}
@@ -141,6 +169,11 @@ public class ExcelUtil {
 		// 插入总计
 		Row totalRow = sheet.createRow(rowIndex);
 		Cell cellNum = totalRow.createCell(0);
+		CellStyle totalStyle = workbook.createCellStyle();
+		Font totalFont = workbook.createFont();// 设置字体
+		totalFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+		totalStyle.setFont(totalFont);
+		cellNum.setCellStyle(totalStyle);
 		cellNum.setCellValue("总计：仪器台数：" + total.get("eq_count").toString());
 		
 		int cellIndex = 1;
@@ -149,6 +182,7 @@ public class ExcelUtil {
 			if (!headerMap.get("code").toString().equals("eq_name")) {
 				for (Map.Entry<String, Object> totalEntry : total.entrySet()) {
 					Cell cell = totalRow.createCell(cellIndex);
+					cell.setCellStyle(totalStyle);
 					cell.setCellValue("-");
 					
 					if (totalEntry.getKey().equals(
@@ -160,6 +194,14 @@ public class ExcelUtil {
 				}
 				
 				cellIndex++;
+			} else {
+				Cell eqNoCell = totalRow.createCell(cellIndex);
+				eqNoCell.setCellValue("-");
+				cellIndex ++;
+				
+				Cell eqIdCell = totalRow.createCell(cellIndex);
+				eqIdCell.setCellValue("-");
+				cellIndex ++;
 			}
 		}
 

@@ -106,7 +106,13 @@
 			$thead.append($top_row);
 			
 			$.each(topHeaders, function(i, top) {
-				var $top_cell = $("<th/>").addClass("nowrap").attr("colspan", top.ccount).html(top.name);
+				var indexPlugin = 0;
+				if (i == 0) {
+					indexPlugin = 2;
+				}
+				var $top_cell = $("<th/>").addClass("nowrap").attr("colspan", top.ccount + indexPlugin).html(top.name);
+				
+				
 				$top_row.append($top_cell);
 			});
 			
@@ -116,6 +122,15 @@
 			
 			$.each(midHeaders, function(i, mid) {
 				var $mid_cell = $("<td/>").html(mid.name);
+				
+				if (mid.code == "eq_name") {
+					var $eq_no_cell = $("<td/>").html("仪器编号");
+					$mid_row.append($eq_no_cell);
+					
+					var $eq_id_cell = $("<td/>").html("仪器CF_ID");
+					$mid_row.append($eq_id_cell);
+				}
+				
 				$mid_row.append($mid_cell);
 			});
 			
@@ -128,9 +143,19 @@
 						if (key == mid.code) {
 							var $content_cell = $("<td/>").html(cont[key]);
 							$content_row.append($content_cell);
+							
+							if (mid.code == "eq_name") {
+								var $eq_no_cell = $("<td/>").html(cont["eq_ref_no"]);
+								$content_row.append($eq_no_cell);
+								
+								var $eq_id_cell = $("<td/>").html(cont["eq_id"]);
+								$content_row.append($eq_id_cell);
+							}
+							
 							break;
 						}
 					}
+					
 				});
 			});
 			
@@ -139,6 +164,12 @@
 			
 			var $total_cell_eqcount = $("<td/>").html("总计：仪器台数：" + total.eq_count);
 			$total_row.append($total_cell_eqcount);
+			
+			var $total_cell_eqno = $("<td/>").html("-");
+			$total_row.append($total_cell_eqno);
+			
+			var $total_cell_eqid = $("<td/>").html("-");
+			$total_row.append($total_cell_eqid);
 
 			$.each(midHeaders, function(i, mid) {	
 				if (mid.code != "eq_name")  {
