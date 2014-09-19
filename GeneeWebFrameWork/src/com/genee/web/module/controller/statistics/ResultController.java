@@ -30,6 +30,7 @@ import sun.rmi.log.LogOutputStream;
 
 import com.genee.web.framework.utils.json.JsonUtil;
 import com.genee.web.framework.core.base.controller.BaseController;
+import com.genee.web.framework.utils.dateutil.DateUtil;
 import com.genee.web.framework.utils.http.HttpClientUtil;
 import com.genee.web.framework.utils.poi.ExcelUtil;
 import com.genee.web.framework.utils.prop.PropertiesUtil;
@@ -138,8 +139,7 @@ public class ResultController extends BaseController {
 		response.setContentType(ContentType.EXCEL_2003);
 
 		// 解决中文乱码
-		response.setHeader("Content-Disposition", "attachment;filename="
-				+ new String("统计.xls".getBytes("UTF-8"), "ISO-8859-1"));
+		response.setHeader("Content-Disposition", "attachment;filename=" + new String((DateUtil.date2String(DateUtil.sysTimestamp(), "yyMMddHHmmss") + ".xls").getBytes("UTF-8")));
 
 		OutputStream out = response.getOutputStream();
 		out.flush();
