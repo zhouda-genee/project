@@ -51,16 +51,16 @@ public class StatisticsDao {
 		sql.append("       _eq.principal, "); // 负责人
 		sql.append("       _eq.linkman, "); // 联系人
 		sql.append("       _eq.innet_dur, "); // 入网时长
-		sql.append("       replace(format(sum(round(_stat.fault_dur / 60 / 60, 2)),2), ',', '')                  as fault_dur, "); // 故障时长
-		sql.append("       replace(format(sum(round(_stat.appointment_dur / 60 / 60, 2)),2), ',', '')            as appointment_dur, "); // 预约机时
-		sql.append("       replace(format(sum(round(_stat.used_dur / 60 / 60, 2)),2), ',', '')                   as used_dur, "); // 使用机时
-		sql.append("       replace(format(sum(round(_stat.owner_used_dur / 60 / 60, 2)),2), ',', '')             as owner_used_dur, "); // 机主使用机时
-		sql.append("       replace(format(sum(round(_stat.open_dur / 60 / 60, 2)),2), ',', '')                   as open_dur, "); // 开放机时
-		sql.append("       replace(format(sum(round(_stat.valid_dur / 60 / 60, 2)),2), ',', '')                  as valid_dur, "); // 有效机时
-		sql.append("       replace(format(sum(round(_stat.test_dur / 60 / 60, 2)),2), ',', '')                   as test_dur, "); // 委托测试机时
-		sql.append("       replace(format(sum(round(_stat.scientific_dur / 60 / 60, 2)),2), ',', '')             as scientific_dur, "); //科研机时
-		sql.append("       replace(format(sum(round(_stat.teach_dur / 60 / 60, 2)),2), ',', '')                  as teach_dur, "); // 教学机时
-		sql.append("       replace(format(sum(round(_stat.society_dur / 60 / 60, 2)),2), ',', '')                as society_dur, "); // 社会项目机时
+		sql.append("       replace(format(round(sum(_stat.fault_dur) / 60 / 60, 2),2), ',', '')                  as fault_dur, "); // 故障时长
+		sql.append("       replace(format(round(sum(_stat.appointment_dur) / 60 / 60, 2),2), ',', '')            as appointment_dur, "); // 预约机时
+		sql.append("       replace(format(round(sum(_stat.used_dur) / 60 / 60, 2),2), ',', '')                   as used_dur, "); // 使用机时
+		sql.append("       replace(format(round(sum(_stat.owner_used_dur) / 60 / 60, 2),2), ',', '')             as owner_used_dur, "); // 机主使用机时
+		sql.append("       replace(format(round(sum(_stat.open_dur) / 60 / 60, 2),2), ',', '')                   as open_dur, "); // 开放机时
+		sql.append("       replace(format(round(sum(_stat.valid_dur) / 60 / 60, 2),2), ',', '')                  as valid_dur, "); // 有效机时
+		sql.append("       replace(format(round(sum(_stat.test_dur) / 60 / 60, 2),2), ',', '')                   as test_dur, "); // 委托测试机时
+		sql.append("       replace(format(round(sum(_stat.scientific_dur) / 60 / 60, 2),2), ',', '')             as scientific_dur, "); //科研机时
+		sql.append("       replace(format(round(sum(_stat.teach_dur) / 60 / 60, 2),2), ',', '')                  as teach_dur, "); // 教学机时
+		sql.append("       replace(format(round(sum(_stat.society_dur) / 60 / 60, 2),2), ',', '')                as society_dur, "); // 社会项目机时
 		sql.append("       sum(_stat.used_times)                                     as used_times, "); // 使用次数
 		sql.append("       sum(_stat.test_sam_cnt)                                   as test_sam_cnt, "); // 测样数
 		sql.append("       sum(_stat.used_sam_cnt)                                   as used_sam_cnt, "); // 使用测样数
@@ -192,17 +192,17 @@ public class StatisticsDao {
 													  long startDate, long endDate){
 		
 		StringBuilder sql = new StringBuilder();
-		sql.append("select count(distinct _stat.equipment_id)                		 as eq_count, "); // 仪器数量
-		sql.append("	   replace(format(sum(round(_stat.fault_dur / 60 / 60, 2)),2), ',', '')                  as fault_dur, "); // 故障时长
-		sql.append("       replace(format(sum(round(_stat.appointment_dur / 60 / 60, 2)),2), ',', '')            as appointment_dur, "); // 预约机时
-		sql.append("       replace(format(sum(round(_stat.used_dur / 60 / 60, 2)),2), ',', '')                   as used_dur, "); // 使用机时
-		sql.append("       replace(format(sum(round(_stat.owner_used_dur / 60 / 60, 2)),2), ',', '')             as owner_used_dur, "); // 机主使用机时
-		sql.append("       replace(format(sum(round(_stat.open_dur / 60 / 60, 2)),2), ',', '')                   as open_dur, "); // 开放机时
-		sql.append("       replace(format(sum(round(_stat.valid_dur / 60 / 60, 2)),2), ',', '')                  as valid_dur, "); // 有效机时
-		sql.append("       replace(format(sum(round(_stat.test_dur / 60 / 60, 2)),2), ',', '')                   as test_dur, "); // 委托测试机时
-		sql.append("       replace(format(sum(round(_stat.scientific_dur / 60 / 60, 2)),2), ',', '')             as scientific_dur, "); //科研机时
-		sql.append("       replace(format(sum(round(_stat.teach_dur / 60 / 60, 2)),2), ',', '')                  as teach_dur, "); // 教学机时
-		sql.append("       replace(format(sum(round(_stat.society_dur / 60 / 60, 2)),2), ',', '')                as society_dur, "); // 社会项目机时
+		sql.append("select count(_stat.equipment_id)                		 as eq_count, "); // 仪器数量
+		sql.append("	   replace(format(sum(_stat.fault_dur),2), ',', '')                  as fault_dur, "); // 故障时长
+		sql.append("       replace(format(sum(_stat.appointment_dur),2), ',', '')            as appointment_dur, "); // 预约机时
+		sql.append("       replace(format(sum(_stat.used_dur),2), ',', '')                   as used_dur, "); // 使用机时
+		sql.append("       replace(format(sum(_stat.owner_used_dur),2), ',', '')             as owner_used_dur, "); // 机主使用机时
+		sql.append("       replace(format(sum(_stat.open_dur),2), ',', '')                   as open_dur, "); // 开放机时
+		sql.append("       replace(format(sum(_stat.valid_dur),2), ',', '')                  as valid_dur, "); // 有效机时
+		sql.append("       replace(format(sum(_stat.test_dur),2), ',', '')                   as test_dur, "); // 委托测试机时
+		sql.append("       replace(format(sum(_stat.scientific_dur),2), ',', '')             as scientific_dur, "); //科研机时
+		sql.append("       replace(format(sum(_stat.teach_dur),2), ',', '')                  as teach_dur, "); // 教学机时
+		sql.append("       replace(format(sum(_stat.society_dur),2), ',', '')                as society_dur, "); // 社会项目机时
 		sql.append("       sum(_stat.used_times)                                     as used_times, "); // 使用次数
 		sql.append("       sum(_stat.test_sam_cnt)                                   as test_sam_cnt, "); // 测样数
 		sql.append("       sum(_stat.used_sam_cnt)                                   as used_sam_cnt, "); // 使用测样数
@@ -232,10 +232,53 @@ public class StatisticsDao {
 		sql.append("       sum(_stat.patent_cnt)                                     as patent_cnt, "); // 专利数
 		sql.append("       sum(_stat.tea_patent_cnt)                                 as tea_patent_cnt, "); // 教师专利数
 		sql.append("       sum(_stat.stu_patent_cnt)                                 as stu_patent_cnt "); // 学生专利数
-		sql.append("from   v_equipment _eq, ");
-		sql.append("       s_day_stat _stat ");
-		sql.append("where  _eq.eq_id = _stat.equipment_id ");
-		sql.append("	   and _stat.time between ? and ? ");
+		sql.append("from   ");
+		sql.append("	   (select	");
+		sql.append("	   _eq.eq_id as equipment_id,");
+		sql.append("	   round(sum(_stat.fault_dur) / 60 / 60, 2) as fault_dur,");
+		sql.append("	   round(sum(_stat.appointment_dur) / 60 / 60, 2) as appointment_dur,");
+		sql.append("	   round(sum(_stat.used_dur) / 60 / 60, 2) as used_dur,");
+		sql.append("	   round(sum(_stat.owner_used_dur) / 60 / 60, 2) as owner_used_dur,");
+		sql.append("	   round(sum(_stat.open_dur) / 60 / 60, 2) as open_dur,");
+		sql.append("	   round(sum(_stat.valid_dur) / 60 / 60, 2) as valid_dur,");
+		sql.append("	   round(sum(_stat.test_dur) / 60 / 60, 2) as test_dur,");
+		sql.append("	   round(sum(_stat.scientific_dur) / 60 / 60, 2) as scientific_dur,");
+		sql.append("	   round(sum(_stat.teach_dur) / 60 / 60, 2) as teach_dur,");
+		sql.append("	   round(sum(_stat.society_dur) / 60 / 60, 2) as society_dur,");
+		sql.append("	   sum(_stat.used_times) as used_times,");
+		sql.append("	   sum(_stat.test_sam_cnt) as test_sam_cnt,");
+		sql.append("	   sum(_stat.used_sam_cnt) as used_sam_cnt,");
+		sql.append("	   sum(_stat.give_sam_cnt) as give_sam_cnt,");
+		sql.append("	   sum(_stat.owner_sam_cnt) as owner_sam_cnt,");
+		sql.append("	   sum(_stat.stu_sam_cnt) as stu_sam_cnt,");
+		sql.append("	   sum(_stat.used_charge) as used_charge,");
+		sql.append("	   sum(_stat.on_cam_charge) as on_cam_charge,");
+		sql.append("	   sum(_stat.off_cam_charge) as off_cam_charge,");
+		sql.append("	   sum(_stat.delegation_charge) as delegation_charge,");
+		sql.append("	   sum(_stat.earnings_charge) as earnings_charge,");
+		sql.append("	   sum(_stat.repair_cost) as repair_cost,");
+		sql.append("	   sum(_stat.train_cost) as train_cost,");
+		sql.append("	   sum(_stat.train_cnt) as train_cnt,");
+		sql.append("	   sum(_stat.train_stu) as train_stu,");
+		sql.append("	   sum(_stat.train_tea) as train_tea,");
+		sql.append("	   sum(_stat.train_oth) as train_oth,");
+		sql.append("	   sum(_stat.serv_scientific_cnt) as serv_scientific_cnt,");
+		sql.append("	   sum(_stat.serv_teach_cnt) as serv_teach_cnt,");
+		sql.append("	   sum(_stat.serv_society_cnt) as serv_society_cnt,");
+		sql.append("	   sum(_stat.essay_cnt) as essay_cnt,");
+		sql.append("	   sum(_stat.three_search) as three_search,");
+		sql.append("	   sum(_stat.core_publication) as core_publication,");
+		sql.append("	   sum(_stat.awards_cnt) as awards_cnt,");
+		sql.append("	   sum(_stat.national_awards_cnt) as national_awards_cnt,");
+		sql.append("	   sum(_stat.provincial_awards_cnt) as provincial_awards_cnt,");
+		sql.append("	   sum(_stat.patent_cnt) as patent_cnt,");
+		sql.append("	   sum(_stat.tea_patent_cnt) as tea_patent_cnt,");
+		sql.append("	   sum(_stat.stu_patent_cnt) as stu_patent_cnt");
+		sql.append("	from	");
+		sql.append("	   v_equipment _eq, s_day_stat _stat	");
+		sql.append("	where	");
+		sql.append("	   _eq.eq_id = _stat.equipment_id	");
+		sql.append("	   and _stat.time between ? and ?	");
 		
 		List<Object> paramValue = new ArrayList<Object>();
 		List<Integer> paramType = new ArrayList<Integer>();
@@ -277,6 +320,8 @@ public class StatisticsDao {
 		if (StringUtils.isNotEmpty(user) && !"null".equals(user)) { // 使用者查询
 			sql.append(" and _stat.user_id in (" + user + ")");
 		}
+		
+		sql.append("	group by _eq.eq_id) _stat	");
 		
 		// 遍历数据类型
 		int[] typeArray = new int[paramType.size()];
