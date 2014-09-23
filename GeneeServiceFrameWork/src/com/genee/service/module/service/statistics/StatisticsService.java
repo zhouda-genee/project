@@ -9,6 +9,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 
 import com.genee.service.framework.core.base.PageSupport;
+import com.genee.service.module.pojo.AxisEntity;
 import com.genee.service.module.pojo.EquipmentIndexEntity;
 
 @Path("/statistics")
@@ -85,5 +86,16 @@ public interface StatisticsService {
 			@FormParam("user") String user, 
 			@FormParam("dstart") long dstart,
 			@FormParam("dend") long dend);
+	
+	@Path("/eqindex/chart")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@POST
+	public List<AxisEntity> queryChartIndex(
+			@FormParam("obj_type") String objType, 
+			@FormParam("obj_value") String objValue, 
+			@FormParam("index") String index, 
+			@FormParam("dstart") String dstart, 
+			@FormParam("dend") String dend,
+			@FormParam("dtype") String dateType);
 	
 }

@@ -5,11 +5,9 @@ package com.genee.web.module.controller.statistics;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -26,12 +24,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import sun.rmi.log.LogOutputStream;
-
-import com.genee.web.framework.utils.json.JsonUtil;
 import com.genee.web.framework.core.base.controller.BaseController;
 import com.genee.web.framework.utils.dateutil.DateUtil;
 import com.genee.web.framework.utils.http.HttpClientUtil;
+import com.genee.web.framework.utils.json.JsonUtil;
 import com.genee.web.framework.utils.poi.ExcelUtil;
 import com.genee.web.framework.utils.prop.PropertiesUtil;
 import com.genee.web.module.constants.ContentType;
@@ -65,13 +61,6 @@ public class ResultController extends BaseController {
 
 	@RequestMapping(value = "search", method = RequestMethod.GET)
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
-		Map<String, String> sessionMap = new HashMap<String, String>();
-		sessionMap.put(SessionAttributeType.USER_ID, "1");
-		sessionMap.put(SessionAttributeType.USER_NAME, "技术支持");
-		sessionMap.put(SessionAttributeType.ROLE, "1");
-		sessionMap.put(SessionAttributeType.ROLE_NAME, "校级管理员");
-//		sessionMap.put(SessionAttributeType.LAB_ID, "2");
-		request.getSession().setAttribute(SessionAttributeType.PARAM_USER, sessionMap);
 		return "statistics/indexlist/resultlist";
 	}
 
@@ -86,8 +75,7 @@ public class ResultController extends BaseController {
 	public void getRoleIndexType(HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		Map<String, Object> sessionMap = (Map<String, Object>)
-		request.getSession().getAttribute(SessionAttributeType.PARAM_USER);
+		Map<String, Object> sessionMap = (Map<String, Object>) request.getSession().getAttribute(SessionAttributeType.PARAM_USER);
 		String roleId = sessionMap.get(SessionAttributeType.ROLE).toString();
 		List<IndexTypeEntity> entities = userService.queryIndexTypeEntityByRole(roleId);
 		result.put("result", entities);
@@ -105,8 +93,7 @@ public class ResultController extends BaseController {
 	@RequestMapping(value = "roleindex", method = RequestMethod.GET)
 	public void getRoleIndex(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		Map<String, Object> sessionMap = (Map<String, Object>)
-		request.getSession().getAttribute(SessionAttributeType.PARAM_USER);
+		Map<String, Object> sessionMap = (Map<String, Object>) request.getSession().getAttribute(SessionAttributeType.PARAM_USER);
 		String roleId = sessionMap.get(SessionAttributeType.ROLE).toString();
 		List<IndexEntity> entities = userService.queryIndexEntityByRole(roleId);
 		result.put("result", entities);

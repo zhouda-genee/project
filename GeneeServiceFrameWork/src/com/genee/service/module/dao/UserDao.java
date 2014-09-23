@@ -93,4 +93,27 @@ public class UserDao {
 		return MapToBeanUtil.MapToBean(BaseEntity.class,
 				baseDao.queryForList(param));
 	}
+	
+	/**
+	 * 
+	 * @Title: queryCreateUser 
+	 * @Description: 查找某时间段内某组织机构下注册的人数 
+	 * @param @param startDate
+	 * @param @param endDate
+	 * @param @param orgIds
+	 * @param @return
+	 * @return int
+	 * @throws
+	 */
+	public int queryActivateUser(long startDate, long endDate, String orgIds){
+		String sql = "select count(u.id) as num "
+				+ "from _r_user_tag _r_u_t, user u "
+				+ "where _r_u_t.id1 = u.id "
+				+ "and u.atime between ? and ? "
+				+ "and _r_u_t.id2 in (" + orgIds + ")";
+		JdbcTemplateParam param = new JdbcTemplateParam(sql, new Object[] {
+				startDate, endDate }, new int[] { java.sql.Types.INTEGER,
+				java.sql.Types.INTEGER });
+		return baseDao.queryForInt(param);
+	}
 }

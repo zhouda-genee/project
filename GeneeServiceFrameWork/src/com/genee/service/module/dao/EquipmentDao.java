@@ -57,4 +57,27 @@ public class EquipmentDao extends TagDao {
 		TagEntity entity = this.queryRootTag(Long.parseLong(identity));
 		return entity;
 	}
+	
+	/**
+	 * 
+	 * @Title: queryCreateEquipment 
+	 * @Description: 统计某时间段内 
+	 * @param @param startDate
+	 * @param @param endDate
+	 * @param @param orgIds
+	 * @param @return
+	 * @return int
+	 * @throws
+	 */
+	public int queryCreateEquipment(long startDate, long endDate, String orgIds){
+		String sql = "select count(e.id) as num "
+				+ "from _r_tag_equipment _r_u_e, equipment e "
+				+ "where _r_u_e.id2 = e.id "
+				+ "and e.ctime between ? and ? "
+				+ "and _r_u_e.id1 in (" + orgIds + ") ";
+		JdbcTemplateParam param = new JdbcTemplateParam(sql, 
+				new Object[]{startDate, endDate}, 
+				new int[]{java.sql.Types.INTEGER, java.sql.Types.INTEGER});
+		return baseDao.queryForInt(param);
+	}
 }

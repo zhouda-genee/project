@@ -6,14 +6,29 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.genee.service.framework.core.base.PageSupport;
+import com.genee.service.framework.utils.datautil.DateUtil;
 import com.genee.service.framework.utils.timestamp.TimestampUtil;
+import com.genee.service.module.constants.ChartOrgType;
+import com.genee.service.module.dao.EquipmentDao;
+import com.genee.service.module.dao.LabDao;
 import com.genee.service.module.dao.StatisticsDao;
+import com.genee.service.module.dao.UserDao;
+import com.genee.service.module.pojo.AxisEntity;
 import com.genee.service.module.pojo.EquipmentIndexEntity;
 
 public class StatisticsServiceImpl implements StatisticsService {
 	
 	@Autowired
 	private StatisticsDao statisticsDao;
+	
+	@Autowired
+	private UserDao userDao;
+	
+	@Autowired
+	private LabDao LabDao;
+	
+	@Autowired
+	private EquipmentDao equipmentDao;
 
 	@Override
 	public PageSupport<EquipmentIndexEntity> queryEquipmentIndex(String eq_name, String eq_type,
@@ -71,6 +86,20 @@ public class StatisticsServiceImpl implements StatisticsService {
 				eq_contact, eq_incharge, lab_org, lab, user, dstart,
 				dend);
 		
+	}
+
+	@Override
+	public List<AxisEntity> queryChartIndex(String objType, String objValue,
+			String index, String dstart, String dend, String dateType) {
+		
+		// 组织机构
+		if (ChartOrgType.ORG.equals(objType)){
+			dstart += " 00:00:00";
+			dend += " 23:59:59";
+			long lStartDate = TimestampUtil.dateToTimestamp10(DateUtil.string2Timestamp(dstart));
+			long lEndDate = TimestampUtil.dateToTimestamp10(DateUtil.string2Timestamp(dend));
+		}
+		return null;
 	}
 
 }

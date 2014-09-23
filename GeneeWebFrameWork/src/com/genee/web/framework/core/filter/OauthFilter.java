@@ -12,7 +12,6 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +21,6 @@ import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
 
-import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
 import com.genee.web.framework.core.context.SpringContext;
@@ -34,7 +32,6 @@ import com.genee.web.module.enums.RoleEnum;
 import com.genee.web.module.pojo.UserEntity;
 import com.genee.web.module.service.statistics.UserService;
 
-@WebFilter(description = "oauth过滤器", urlPatterns = { "/abc" })
 public class OauthFilter extends HttpServlet implements Filter {
        
 	private static final long serialVersionUID = 1L;
@@ -44,14 +41,14 @@ public class OauthFilter extends HttpServlet implements Filter {
 					request_token_url, // 获取code地址
 					access_token_url, // 获取accesstoken地址
 					user_info_url, // 获取用户信息地址
-					callback_url; // 回调地址
+					callback_url, // 回调地址
+					oauth_error; // 授权失败页面
 	
 	// oauth请求参数
 	private static final String METHOD = "user/get_username";
 	private static final String GRANT_TYPE = "authorization_code";
 	private static final String SCOPE_USER = "user";
 	private static final String RESPONSE_TYPE = "code";
-	private static final String STATE = "state";
 	// 内部参数
 	private static final String PARAM_CODE = "code";
 	private static final String PARAM_ACCESS_TOKEN = "access_token";
@@ -87,9 +84,6 @@ public class OauthFilter extends HttpServlet implements Filter {
 						+ "&scope=" + SCOPE_USER);
 				return;
 			} else {
-				// 请求页面
-				String backUrl = httpServletRequest.getParameter(STATE);
-				backUrl = new String(new BASE64Decoder().decodeBuffer(backUrl));
 				// 根据code获取accesstoken
 				String accessResult = getAccessToken(code);
 				JSONObject accessObject = JSONObject.fromObject(accessResult);
@@ -117,7 +111,7 @@ public class OauthFilter extends HttpServlet implements Filter {
 						
 						if (StringUtils.isEmpty(role)){
 							// 没有角色跳回请求者页面
-							responseSendRedirect(httpServletResponse, backUrl);
+							responseSendRedirect(httpServletResponse, oauth_error);
 							return;
 						}
 						// 如果包含课题组PI,则去查找该课题组PI对应的课题组
@@ -132,12 +126,12 @@ public class OauthFilter extends HttpServlet implements Filter {
 						session.setAttribute(SessionAttributeType.PARAM_USER, param);
 					} else {
 						// 不成功跳回请求者页面
-						responseSendRedirect(httpServletResponse, backUrl);
+						responseSendRedirect(httpServletResponse, oauth_error);
 						return;
 					}
 				} else {
 					// 获取令牌失败，跳回请求者页面
-					responseSendRedirect(httpServletResponse, backUrl);
+					responseSendRedirect(httpServletResponse, oauth_error);
 					return;
 				}
 			}
@@ -153,6 +147,7 @@ public class OauthFilter extends HttpServlet implements Filter {
 		access_token_url = prop.getProperty("access_token_url");
 		user_info_url = prop.getProperty("user_info_url");
 		callback_url = prop.getProperty("callback_url");
+		oauth_error = prop.getProperty("error_page");
 	}
 	
 	private void responseSendRedirect(HttpServletResponse response, String url) throws IOException{

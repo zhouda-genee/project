@@ -30,12 +30,12 @@ public class IndexUsedDurationTest extends BaseTest {
 	public void test() throws NumberFormatException, ParseException {
 		
 		Map<String, EquipmentIndexEntity> equipments = new HashMap<String, EquipmentIndexEntity>();
-		EquipmentIndexEntity equipmentIndexEntity = new EquipmentIndexEntity(UUID.randomUUID().toString(), 20, "739", 1314806400000L);
-		equipmentIndexEntity.setUsedDur((long)123.4);
-		equipments.put("20#739", equipmentIndexEntity);
+//		EquipmentIndexEntity equipmentIndexEntity = new EquipmentIndexEntity(UUID.randomUUID().toString(), 20, "739", 1314806400000L);
+//		equipmentIndexEntity.setUsedDur((long)123.4);
+//		equipments.put("20#739", equipmentIndexEntity);
 		
-		String startDate = "2011-09-01 00:00:00";
-		String endDate = "2011-09-01 23:59:59";
+		String startDate = "2014-09-17 00:00:00";
+		String endDate = "2014-09-17 23:59:59";
 		
 		long lStartDate = sdf.parse(startDate).getTime() / 1000L;
 		long lEndDate = sdf.parse(endDate).getTime() / 1000L;

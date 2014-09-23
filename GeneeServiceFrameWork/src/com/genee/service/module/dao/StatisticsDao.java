@@ -157,7 +157,8 @@ public class StatisticsDao {
 					sortName.equals("delegation_charge") ||
 					sortName.equals("earnings_charge") ||
 					sortName.equals("repair_cost") ||
-					sortName.equals("train_cost_fudangao"))
+					sortName.equals("train_cost_fudangao") ||
+					sortName.equals("innet_dur"))
 				_sql = "select * from (" + _sql + ") a order by replace(" + sortName + ",',','') + 0 " + sort;
 			else
 				_sql = "select * from (" + _sql + ") a order by " + sortName + " " + sort;

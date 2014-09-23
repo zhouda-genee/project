@@ -36,4 +36,27 @@ public class LabDao {
 		return MapToBeanUtil.MapToBean(BaseEntity.class,
 				baseDao.queryForList(param));
 	}
+	
+	/**
+	 * 
+	 * @Title: queryCreateLab 
+	 * @Description: 统计某时间段内新注册的课题组
+	 * @param @param startDate
+	 * @param @param endDate
+	 * @param @param orgIds
+	 * @param @return
+	 * @return int
+	 * @throws
+	 */
+	public int queryActivateLab(long startDate, long endDate, String orgIds){
+		String sql = "select count(l.id) as num "
+				+ "from _r_tag_lab _r_u_l, lab l "
+				+ "where _r_u_l.id2 = l.id "
+				+ "and l.atime between ? and ? "
+				+ "and _r_u_l.id1 in (" + orgIds + ")";
+		JdbcTemplateParam param = new JdbcTemplateParam(sql, 
+				new Object[]{startDate, endDate}, 
+				new int[]{java.sql.Types.INTEGER, java.sql.Types.INTEGER});
+		return baseDao.queryForInt(param);
+	}
 }

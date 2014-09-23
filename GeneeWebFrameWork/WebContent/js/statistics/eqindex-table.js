@@ -106,10 +106,19 @@ function fillSearchItem() {
 	$("#s_eq_name").html($("#eq_name").val());
 	
 	// 仪器类型
-	$("#s_eq_type").html($("#eq_type_name").val());
+	if ($("#eq_type_name").val() != ""){
+		$("#s_eq_type").html($("#eq_type_name").val());
+	} else {
+		$("#s_eq_type").html("全部");
+	}
+	
 	
 	// 仪器组织机构
-	$("#s_eq_org").html($("#eq_org_name").val());
+	if ($("#eq_org_name").val() != ""){
+		$("#s_eq_org").html($("#eq_org_name").val());
+	} else {
+		$("#s_eq_org").html("全部");
+	}
 	
 	// 仪器负责人
 	var incharge_tokens = $("#eq_incharge_tokenfield").tokenfield('getTokens');
@@ -134,7 +143,12 @@ function fillSearchItem() {
 	$("#s_eq_contact").html(contact_label);
 	
 	// 课题组组织机构
-	$("#s_lab_org").html($("#lab_org_name").val());
+	if ($("#lab_org_name").val() != ""){
+		$("#s_lab_org").html($("#lab_org_name").val());
+	} else {
+		$("#s_lab_org").html("全部");
+	}
+	
 	
 	// 课题组
 	var lab_tokens = $("#lab_tokenfield").tokenfield('getTokens');

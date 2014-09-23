@@ -10,5 +10,5 @@
 		session.invalidate();
 	%>
 	<script>
-		javascript:window.close()
+		javascript:window.close();
 	</script>
